@@ -18,12 +18,14 @@ class UserProfile extends React.Component {
                             <Text style={{ fontSize: 24, color: 'white' }}>Profile</Text>
                             <Text style={{ fontSize: 12, color: 'white' }}>Profile details</Text>
                         </View>
-                        <TouchableOpacity><Image source={require('../assests/notification.png')} style={{ width: 19, height: 19 }} /></TouchableOpacity>
+                        <TouchableOpacity ><Image source={require('../assests/notification.png')} style={{ width: 19, height: 19, marginTop: 5 }} /></TouchableOpacity>
                     </View>
                 </ImageBackground>
-                <View style={[styles.viewPad, { flex: 0, alignItems: 'center', height: 62, borderBottomColor: '#F2F2F2', borderBottomWidth: 1}]}>
+                <View style={[styles.viewPad, { backgroundColor: 'white', flex: 0, alignItems: 'center', height: 62, borderBottomColor: '#F2F2F2', borderBottomWidth: 1}]}>
                     <Text style={{fontSize: 24, fontWeight: '600'}}>Jeremiah Nwaeze</Text>
-                    <Image source={require('../assests/settings.png')} style={{ width: 19, height: 19 }} />
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditProfile')}>
+                        <Image source={require('../assests/settings.png')} style={{ width: 19, height: 19 }} />
+                    </TouchableOpacity>
                 </View>
                 <View style={{ backgroundColor: color.white}}>
                     <Text style={{ color: '#828282', fontSize: 12, paddingLeft: 23, padding: 20}}>PAYMENTS</Text>

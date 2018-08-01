@@ -13,30 +13,19 @@ import CreditCardScreen from "../Screens/CreditCardScreen";
 import TermsScreen from "../Screens/TermsScreen";
 import BookingScreen from "../Screens/BookingScreen";
 import UserProfileScreen from "../Screens/UserProfileScreen";
+import EditProfile from "../Components/EditProfile";
 import TabIcons from "../Atoms/TabIcons";
-
-export const displayIcon = ({route, tintColor, focused}) => {
-    if (route === 'Booking') {
-        return (
-            <Image
-            source={require('../assests/images/wallet.png')}
-            style={{height: 24, width: 24}}
-            />
-        );
-    } else {
-        <Icon name="ios-person" color={tintColor}/>
-    }
-}
+import stackNav from "./StackNav";
 
 const CustomTabNavigator = createBottomTabNavigator(
     {
-        Booking: {
+        WorkRaven: {
             screen: BookingScreen
         },
         Profile: {
-            screen: UserProfileScreen
+            screen: stackNav
         },
-        PBooking: {
+        Booking: {
             screen: BookingScreen
         },
         Invite: {

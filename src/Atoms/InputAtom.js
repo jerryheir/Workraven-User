@@ -14,7 +14,7 @@ class InputAtom extends React.PureComponent {
                <Label style={styles.label}>{this.props.label}</Label>
                 <Input
                     onChangeText={this.props.onChangeText}
-                    value={this.props.defaultValue}
+                    value={this.props.value}
                     keyboardType={this.props.keyboardType}
                     secureTextEntry={this.props.secureTextEntry}
                     placeholder={this.props.placeholder}

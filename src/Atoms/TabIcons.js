@@ -6,7 +6,7 @@ import { color } from "../Styles/Color";
 class TabIcons extends React.Component {
     display = () => {
         const {name, tintColor, focused} = this.props;
-        if (name === "Booking") {
+        if (name === "WorkRaven") {
             return (
                 <View>
                     <ImageBackground
@@ -27,7 +27,7 @@ class TabIcons extends React.Component {
                     <Text style={{fontSize: 10, color: tintColor }}>Jeremiah</Text>
                 </View>
             )
-        } else if (name === "PBooking") {
+        } else if (name === "Booking") {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
                     <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />

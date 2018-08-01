@@ -15,8 +15,8 @@ import InputAtom from '../Atoms/InputAtom';
 
 class PhoneVerification extends Component {
     state = {
-      phone: 0,
-      otp: 0,
+      phone: '',
+      otp: '',
       disabled: true,
       buttonText: 'Send Verification Number'
     }

@@ -7,7 +7,7 @@ import ButtonAtom from "../Atoms/ButtonAtom";
 class ForgotPassword extends React.Component {
     state = {
         email: '',
-        otp: 0,
+        otp: '',
         showOTP: ''
     }
 
