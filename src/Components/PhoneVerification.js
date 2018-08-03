@@ -18,39 +18,72 @@ class PhoneVerification extends Component {
       phone: '',
       otp: '',
       disabled: true,
-      buttonText: 'Send Verification Number'
+      buttonText: 'SEND VERIFICATION NUMBER'
     }
 
 handleSubmit = () => {
+  const { navigation } = this.props;
+  const data = navigation.getParam('data', 'Empty Results');
   const { phone } = this.state;
-  if (phone.length === 0) {
-    return Alert.alert('Please input your Number')
-  } else {
-    this.setState({ disabled: false, buttonText: 'Verify' })
-  /*this.props.signin(userData)
-  .then(()=> {
-    // this.props.navigation.navigate('HomeDashboard')
-  }).catch(error => {
-      // Alert.alert(error.response.data.message, 'This user does not exist')
-      this.refs.toast.show('Wrong Email or Password!')
-    })*/
+  let num = phone.replace(".", '');
+  if(isNaN(num) || phone.length === 0 || phone.length < 10){
+        Alert.alert('Enter correct number format');
+  }
+  else {
+    fetch('http://progoapi.ml/v1/users/signup?type=user', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+            phone: this.state.phone
+          }),
+        }) .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status !== 'success') {
+            this.refs.toast.show('An error occurred!')
+          } else {
+            this.setState({ disabled: false, buttonText: 'VERIFY' });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.refs.toast.show('Wrong Email or Password');
+        })
   }
 }
 sendOtp = () => {
   const { otp } = this.state;
-  if (otp.length === 0) {
-    return Alert.alert('Enter the OTP you received!')
+  let num = otp.replace(".", '');
+  if (otp.length === 0 || isNaN(num)) {
+    return Alert.alert('Enter the OTP you received!');
   } else if (otp.length < 7) {
-    return Alert.alert('Please enter correct OTP')
+    return Alert.alert('Please enter valid OTP');
   } else {
-    this.props.navigation.navigate('CreditCard');
-  /*this.props.signin(userData)
-  .then(()=> {
-    // this.props.navigation.navigate('HomeDashboard')
-  }).catch(error => {
-      // Alert.alert(error.response.data.message, 'This user does not exist')
-      this.refs.toast.show('Wrong Email or Password!')
-    })*/
+    fetch('http://progoapi.ml/v1/users/signup?type=user', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            otp: this.state.otp
+          }),
+        }) .then((response) => response.json())
+        .then((responseJson) => {
+          if (responseJson.status !== 'success') {
+            this.refs.toast.show('An error occurred!')
+          } else {
+            this.props.navigation.navigate('CreditCard');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.refs.toast.show('Incorrect OTP entered');
+        })
   }
 }
   render() {

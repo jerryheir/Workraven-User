@@ -1,11 +1,43 @@
 import React from "react";
 import { Image, ImageBackground, View, Text } from "react-native";
 import { Icon } from "native-base";
+import { retrieveItem } from "../Functions";
 import { color } from "../Styles/Color";
 
 class TabIcons extends React.Component {
+    componentDidMount() {
+        const userId = retrieveItem(userId);
+        const token = retrieveItem(token);
+        fetch(`http://progoapi.ml/v1/users/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-user-token': token
+          }
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+            this.username = responseJson.firstname;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+
+    retrieveItem = async (key) => {
+        try {
+          const retrievedItem =  await AsyncStorage.getItem(key);
+          const item = JSON.parse(retrievedItem);
+          return item;
+        } catch (error) {
+          console.log(error.message);
+        }
+        return
+    }
+
     display = () => {
-        const {name, tintColor, focused} = this.props;
+        const { name, tintColor, focused } = this.props;
         if (name === "WorkRaven") {
             return (
                 <View>
@@ -31,7 +63,7 @@ class TabIcons extends React.Component {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
                     <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
-                    <Text style={{fontSize: 10, color: tintColor }}>{name}</Text>
+                    <Text style={{fontSize: 10, color: tintColor }}>{this.username}</Text>
                 </View>
             )
         }

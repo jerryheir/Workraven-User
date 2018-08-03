@@ -38,13 +38,6 @@ handleSubmit = () => {
     return Alert.alert('Password cannot be empty')
   } else {
     this.props.onPress(this.state);
-  /*this.props.signin(userData)
-  .then(()=> {
-    // this.props.navigation.navigate('HomeDashboard')
-  }).catch(error => {
-      // Alert.alert(error.response.data.message, 'This user does not exist')
-      this.refs.toast.show('Wrong Email or Password!')
-    })*/
   }
 }
   render() {

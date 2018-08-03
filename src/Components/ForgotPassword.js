@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, KeyboardAvoidingView } from "react-native";
-import LoginWrapper from "../Components/LoginWrapper";
+import LoginWrapper from "./LoginWrapper";
 import InputAtom from "../Atoms/InputAtom";
 import ButtonAtom from "../Atoms/ButtonAtom";
 

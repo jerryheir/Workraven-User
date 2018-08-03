@@ -26,21 +26,16 @@ class CreditCard extends Component {
     onChange = (form) => console.log(form);
 
     handleSubmit = () => {
-        /*const { cvc, cardNumber, date } = this.state;
+        const { cvc, cardNumber, date } = this.state;
+        let numb = cvc.replace(".", '');
+        let num = cardNumber.replace(".", '');
         if (cvc.length === 0 || cardNumber.length === 0 || date.length === 0) {
             return Alert.alert('Please enter all card details')
-        } else if (typeof cvc !== 'number' || typeof cardNumber !== 'number' ) {
+        } else if (isNaN(num) || isNaN(numb) ) {
             return Alert.alert('Please enter correct details')
-        } else {*/
-            this.props.navigation.navigate('Terms');
-        /*this.props.signin(userData)
-        .then(()=> {
-            // this.props.navigation.navigate('HomeDashboard')
-        }).catch(error => {
-            // Alert.alert(error.response.data.message, 'This user does not exist')
-            this.refs.toast.show('Wrong Email or Password!')
-            })*/
-        // }
+        } else {
+            this.props.navigation.navigate('Terms', { cardInfocvc: cvc, cardInfoCardNo: cardNumber });
+        }
     }
     showView = () => {
         this.setState({ showInput: true, buttonText: 'CONTINUE' })
