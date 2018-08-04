@@ -17,8 +17,8 @@ import { color } from '../Styles/Color';
 
 class SignUpForm extends Component {
     state = {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       address: ''
@@ -26,9 +26,9 @@ class SignUpForm extends Component {
 
 handleSubmit = () => {
   // const userData = this.state;
-  const { email, password, firstName, lastName, address } = this.state;
+  const { email, password, firstname, lastname, address } = this.state;
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (email.length === 0 || password.length === 0 || firstName.length === 0 || lastName.length === 0 || address.length === 0) {
+  if (email.length === 0 || password.length === 0 || firstname.length === 0 || lastname.length === 0 || address.length === 0) {
     return Alert.alert('All fields are required')
   } else if (reg.test(this.state.email) !== true || email.length < 8) {
     return Alert.alert('Please enter a correct email format')
@@ -46,15 +46,15 @@ handleSubmit = () => {
       <View style={styles.container}>
       <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 64, justifyContent: 'space-between'}}>
         <InputAtom
-          onChangeText={firstName => this.setState({ firstName })}
-          value={this.state.firstName}
+          onChangeText={firstname => this.setState({ firstname })}
+          value={this.state.firstname}
           label="First Name"
           keyboardType="default"
           style={{width: '40%'}}
         />
         <InputAtom
-          onChangeText={lastName => this.setState({ lastName })}
-          value={this.state.lastName}
+          onChangeText={lastname => this.setState({ lastname })}
+          value={this.state.lastname}
           label="Last Name"
           keyboardType="default"
           style={{width: '44%'}}

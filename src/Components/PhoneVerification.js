@@ -23,7 +23,8 @@ class PhoneVerification extends Component {
 
 handleSubmit = () => {
   const { navigation } = this.props;
-  const data = navigation.getParam('data', 'Empty Results');
+  const state = navigation.getParam('state', '');
+  console.log(state);
   const { phone } = this.state;
   let num = phone.replace(".", '');
   if(isNaN(num) || phone.length === 0 || phone.length < 10){
@@ -37,16 +38,20 @@ handleSubmit = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-            phone: this.state.phone
+            'firstname': state.firstname,
+            'lastname': state.lastname,
+            'email': state.email,
+            'password': state.password,
+            'address': state.address,
+            'phone': this.state.phone
           }),
         }) .then((response) => response.json())
         .then((responseJson) => {
-          if (responseJson.status !== 'success') {
-            this.refs.toast.show('An error occurred!')
-          } else {
+          console.log(responseJson);
+          if (responseJson.status === "success"){
             this.setState({ disabled: false, buttonText: 'VERIFY' });
+          } else {
+            Alert.alert(responseJson.message)
           }
         })
         .catch((error) => {
@@ -56,28 +61,30 @@ handleSubmit = () => {
   }
 }
 sendOtp = () => {
-  const { otp } = this.state;
-  let num = otp.replace(".", '');
-  if (otp.length === 0 || isNaN(num)) {
+  const { otp, phone } = this.state;
+  const { navigation } = this.props;
+  const state = navigation.getParam('state', '');
+  if (otp.length === 0) {
     return Alert.alert('Enter the OTP you received!');
-  } else if (otp.length < 7) {
+  } else if (otp.length <= 5) {
     return Alert.alert('Please enter valid OTP');
   } else {
-    fetch('http://progoapi.ml/v1/users/signup?type=user', {
+    fetch(`http://progoapi.ml/v1/users/${phone}/verify_otp`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            otp: this.state.otp
+            'otp': this.state.otp
           }),
         }) .then((response) => response.json())
         .then((responseJson) => {
+          console.log(responseJson);
           if (responseJson.status !== 'success') {
             this.refs.toast.show('An error occurred!')
           } else {
-            this.props.navigation.navigate('CreditCard');
+            this.props.navigation.navigate('CreditCard', { email: state.email, password: state.password });
           }
         })
         .catch((error) => {
@@ -106,7 +113,7 @@ sendOtp = () => {
           label="Phone Number"
           placeholder="000-0000-000"
           keyboardType="numeric"
-          maxLength={10}
+          maxLength={11}
         />
         <InputAtom
           onChangeText={otp => this.setState({ otp })}

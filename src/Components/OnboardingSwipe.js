@@ -28,11 +28,10 @@ export default class OnboardingSwipe extends React.Component {
      this.props.navigation.navigate('Auth');
    }
    onMomentumScrollEnd = (a, state, context) => {
-    console.log(state, context.state);
-    var index = index++;
-    if (index === 3) {
+    console.log(state);
+    if (state === 2) {
       console.log('Index is ' + index )
-      this.skip()
+      this.skip();
     }
    }
 

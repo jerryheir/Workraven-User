@@ -1,4 +1,5 @@
 import React from "react";
+import { Alert } from "react-native";
 import SignUpWrapper from "../Components/SignUpWrapper";
 import SignUpForm from "../Components/SignUpForm";
 
@@ -10,7 +11,9 @@ class SignUpScreen extends React.Component {
                 subHeaderText="Create an account to start using WorkRaven"
                 navigation={this.props.navigation}
                 >
-                    <SignUpForm onPress={(state)=> {this.props.navigation.navigate('Phone', { data: state }); console.log(state)}}/>
+                    <SignUpForm onPress={(state)=> {
+                        this.props.navigation.navigate('Phone', { state });
+                    }}/>
                 </SignUpWrapper>
         )
     }
