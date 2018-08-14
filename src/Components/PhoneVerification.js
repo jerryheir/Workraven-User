@@ -119,7 +119,6 @@ sendOtp = () => {
           onChangeText={otp => this.setState({ otp })}
           value={this.state.otp}
           label="Verification Number"
-          secureTextEntry={true}
           disabledItem={this.state.disabled}
           disabled={this.state.disabled}
           maxLength={7}

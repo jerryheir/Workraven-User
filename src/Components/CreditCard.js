@@ -26,7 +26,8 @@ class CreditCard extends Component {
     onChange = (form) => console.log(form);
 
     handleSubmit = () => {
-        const { cvc, cardNumber, date } = this.state;
+      this.props.navigation.navigate('Terms');
+        /*const { cvc, cardNumber, date } = this.state;
         let numb = cvc.replace(".", '');
         let num = cardNumber.replace(".", '');
         if (cvc.length === 0 || cardNumber.length === 0 || date.length === 0) {
@@ -35,7 +36,7 @@ class CreditCard extends Component {
             return Alert.alert('Please enter correct details')
         } else {
             this.props.navigation.navigate('Terms', { cardInfocvc: cvc, cardInfoCardNo: cardNumber });
-        }
+        }*/
     }
     showView = () => {
         this.setState({ showInput: true, buttonText: 'CONTINUE' })

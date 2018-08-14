@@ -5,7 +5,7 @@ import { retrieveItem } from "../Functions";
 import { color } from "../Styles/Color";
 
 class TabIcons extends React.Component {
-    componentDidMount() {
+    /*componentDidMount() {
         const userId = retrieveItem(userId);
         const token = retrieveItem(token);
         fetch(`http://progoapi.ml/v1/users/${userId}`, {
@@ -23,7 +23,7 @@ class TabIcons extends React.Component {
         .catch((error) => {
           console.log(error);
         })
-    }
+    }*/
 
     retrieveItem = async (key) => {
         try {
@@ -63,7 +63,7 @@ class TabIcons extends React.Component {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
                     <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
-                    <Text style={{fontSize: 10, color: tintColor }}>{this.username}</Text>
+                    <Text style={{fontSize: 10, color: tintColor }}>{name}</Text>
                 </View>
             )
         }

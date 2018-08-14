@@ -29,7 +29,7 @@ class LoginForm extends Component {
       }
     }
 
-    handleSubmit = () => {
+    handleSubmit = async () => {
       const { email, password }= this.state;
       const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (email.length === 0 || password.length === 0) {
@@ -41,6 +41,7 @@ class LoginForm extends Component {
       } else if (password.length === 0) {
         return Alert.alert('Password cannot be empty')
       } else {
+        console.log(this.state.email, this.state.password)
         fetch('http://progoapi.ml/v1/users/login?type=user', {
           method: 'POST',
           headers: {
@@ -53,11 +54,12 @@ class LoginForm extends Component {
           }),
         }) .then((response) => response.json())
         .then((responseJson) => {
+          console.log(responseJson);
           if (responseJson.status !== 'success') {
             this.refs.toast.show('Wrong Email or Password')
           } else {
-            const token = responseJson.token;
-            const decoded = jwt_decode(token);
+            const { token } = responseJson.data;
+            const decoded = await jwt_decode(token);
             this.storeItem('token', decoded);
             const type = decoded.type.name;
             const userId = decoded.id;

@@ -1,5 +1,4 @@
 import React from "react";
-import { Alert } from "react-native";
 import SignUpWrapper from "../Components/SignUpWrapper";
 import SignUpForm from "../Components/SignUpForm";
 

@@ -12,7 +12,7 @@ class LoginScreen extends React.Component {
                 signUp={()=> this.props.navigation.navigate('Sign')}
                 buttonText="Signup"
                 >
-                    <LoginForm />
+                    <LoginForm navigation={this.props.navigation} />
                 </LoginWrapper>
         )
     }
