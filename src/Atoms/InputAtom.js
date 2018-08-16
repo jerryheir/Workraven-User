@@ -36,9 +36,9 @@ export default InputAtom;
 
 const styles = StyleSheet.create({
     input: {
-        height: 35,
+        height: 50,
         color: color.inputPurple,
-        fontSize: 12,
+        fontSize: 18,
         padding: 0,
         paddingTop: 0,
         paddingBottom: 0,
@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
         borderBottomColor: 'transparent'
     },
     label: {
-        fontSize: 12,
+        fontSize: 14,
         paddingLeft: 5,
-        marginBottom: 10,
-        top: -3
+        marginBottom: 0,
+        top: -9
     },
     item: {
         //height: 32,
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     view: {
-        height: 40,
+        height: 50,
         marginBottom: 20,
         backgroundColor: color.white,
         shadowColor: 'rgba(0, 0, 0, 0.2)',
         shadowOpacity: 1.5,
         shadowOffset: { width: 0, height: 1.5 },
-        paddingBottom: 10
+        paddingBottom: 0
     }
 })

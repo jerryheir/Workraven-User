@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,
-    height: 37
+    height: 50
   },
   image: {
     height: 14,

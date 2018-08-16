@@ -55,14 +55,14 @@ class TabIcons extends React.Component {
         } else if (name === "Profile") {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
-                    <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
+                    <Icon name="ios-person-outline" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
                     <Text style={{fontSize: 10, color: tintColor }}>Jeremiah</Text>
                 </View>
             )
         } else if (name === "Booking") {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
-                    <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
+                    <Icon name="ios-at" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
                     <Text style={{fontSize: 10, color: tintColor }}>{name}</Text>
                 </View>
             )
@@ -70,7 +70,7 @@ class TabIcons extends React.Component {
         else if (name === "Invite") {
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', height: 62 }}>
-                    <Icon name="ios-person" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
+                    <Icon name="md-share" style={{ color: tintColor, alignSelf: 'center', textAlign: 'center', fontSize: 25}} />
                     <Text style={{fontSize: 10, color: tintColor }} >{name}</Text>
                 </View>
             )
