@@ -17,6 +17,7 @@ export default class MapComponent extends React.Component {
            longitudeDelta: 0.0121,
          }}
        >
+       {this.props.children}
        </MapView>
      </View>
    );
@@ -27,8 +28,8 @@ const styles = StyleSheet.create({
     container: {
       ...StyleSheet.absoluteFillObject,
       flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
+      // justifyContent: 'flex-end',
+      // alignItems: 'center',
     },
     map: {
       ...StyleSheet.absoluteFillObject,

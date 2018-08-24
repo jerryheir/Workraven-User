@@ -12,10 +12,9 @@ import PhoneVerificationScreen from "../Screens/PhoneVerificationScreen";
 import CreditCardScreen from "../Screens/CreditCardScreen";
 import TermsScreen from "../Screens/TermsScreen";
 import BookingScreen from "../Screens/BookingScreen";
-import UserProfileScreen from "../Screens/UserProfileScreen";
-import EditProfile from "../Components/EditProfile";
 import TabIcons from "../Atoms/TabIcons";
 import stackNav from "./StackNav";
+import Invite from "../Components/Invite";
 
 const CustomTabNavigator = createBottomTabNavigator(
     {
@@ -29,7 +28,7 @@ const CustomTabNavigator = createBottomTabNavigator(
             screen: BookingScreen
         },
         Invite: {
-            screen: BookingScreen
+            screen: Invite
         }
     },
     {

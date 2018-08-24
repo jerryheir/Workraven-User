@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { color } from '../Styles/Color';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 export default class  LoginWrapper extends Component {
   render() {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   imageMap: {
     height: 150,
-    width: SCREEN_WIDTH,
+    width: '100%'
   },
   pointerContainer: {
     marginTop: 20,

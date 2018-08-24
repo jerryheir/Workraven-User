@@ -19,6 +19,7 @@ target 'workRavenUser' do
       'RCTNetwork',
       'RCTSettings',
       'RCTText',
+      'RCTCameraRoll',
       'RCTVibration',
       'RCTWebSocket',
     ]
@@ -37,6 +38,11 @@ target 'workRavenUser' do
     pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support GoogleMaps on iOS
     pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
     pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
+
+    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+    pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
+
   end
   
   post_install do |installer|
