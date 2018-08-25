@@ -4,6 +4,7 @@ import { color } from "../Styles/Color";
 import InputAtom from "../Atoms/InputAtom";
 import ButtonAtom from "../Atoms/ButtonAtom";
 import Toast from 'react-native-easy-toast'
+import ImageAtom from "../Atoms/ImageAtom";
 
 // const { width, height } = Dimensions.get('window');
 class EditProfile extends React.Component {
@@ -21,25 +22,7 @@ class EditProfile extends React.Component {
     render(){
         return (
             <ScrollView style={{ backgroundColor: 'white' }}>
-                <View style={styles.fab}>
-                    <TouchableOpacity activeOpacity={0.5} style={{ padding: 10 }}>
-                        <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
-                    </TouchableOpacity>
-                </View>
-                <ImageBackground
-                source={require('../assests/images/profile_top_banner.png')} 
-                style={styles.imageBackground}
-                >
-                    <View style={styles.viewPad}>
-                        <View>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                                <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
-                            </TouchableOpacity>
-                            <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
-                            <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
-                        </View>
-                    </View>
-                </ImageBackground>
+                <ImageAtom />
                 <View style={styles.container}>
                     <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 64, justifyContent: 'space-between'}}>
                         <InputAtom

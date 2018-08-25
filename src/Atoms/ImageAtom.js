@@ -16,6 +16,7 @@ import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 // import CameraRollPicker from 'react-native-camera-roll-picker';
 import ImagePicker from "react-native-image-crop-picker";
+import { color } from "../Styles/Color";
 // React native 0.55.4 is currently migrating to a new React API.
 // Some warnings are expected in this version.
 YellowBox.ignoreWarnings([
@@ -88,31 +89,64 @@ export default class ImageAtom extends React.PureComponent {
           console.log(error);
 
         })
+        // this.setState({ loading: false })
     })
     .catch((error) => {
-      console.log(error);
-
+      console.log(error, 'YAY');
+        this.setState({ loading: false });
     })
   }
 
     render(){
-      const dpr = this.state.dp ? (<TouchableOpacity
-        onPress={()=>this.showPicker()}>
-        <Image 
-        style={{ width: 100, height: 100, margin: 5 }}
-        source={{ uri: this.state.dp }}
-        />
-        </TouchableOpacity>) : (
-          <TouchableOpacity onPress={()=>this.showPicker()}>
-            <Text>Change Picture</Text>
+      const dpr = this.state.dp ? (
+        <View>
+        <View style={styles.fab}>
+        <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
+            <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
+        </TouchableOpacity>
+        </View>
+        <ImageBackground
+        source={{ uri: this.state.dp }} 
+        style={styles.imageBackground}
+        >
+            <View style={styles.viewPad}>
+                <View>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                        <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
+                    <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
+                </View>
+            </View>
+        </ImageBackground> 
+        </View>
+      ) : (
+        <View>
+          <View style={styles.fab}>
+          <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.7} style={{ padding: 10 }}>
+              <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
           </TouchableOpacity>
+          </View>
+          <ImageBackground
+          source={require('../assests/images/profile_top_banner.png')} 
+          style={styles.imageBackground}
+          >
+              <View style={styles.viewPad}>
+                  <View>
+                      <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                          <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
+                      </TouchableOpacity>
+                      <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
+                      <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
+                  </View>
+              </View>
+          </ImageBackground>
+          </View>
         );
 
-      const dps = this.state.loading ? <ActivityIndicator animating={this.state.loading} /> : (
+      const dps = this.state.loading ? (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator animating={this.state.loading} /></View>) : (
         <View style={styles.container}>
-          <View style={{ flexDirection: 'row' }}>
             { dpr }
-          </View>
         </View>
       );
 
@@ -126,9 +160,10 @@ export default class ImageAtom extends React.PureComponent {
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      // flex: .5,
+      height: 226,
+      // justifyContent: 'center',
+      // alignItems: 'center',
       backgroundColor: '#F5FCFF',
     },
     gallery: {
@@ -136,6 +171,35 @@ export default class ImageAtom extends React.PureComponent {
       textAlign: 'center',
       margin: 10,
       paddingTop: 100
+    },
+    imageBackground: {
+      width: '100%',
+      height: 226,
+      paddingTop: 20,
+      // backgroundColor: 'rgba(0, 0 , 0, .5)'
+    },
+    viewPad: {
+        flex: 1,
+        paddingLeft: 21,
+        paddingRight: 21,
+        padding: 16,
+        // flexDirection: 'row',
+        // justifyContent: 'space-between'
+    },
+    fab: {
+        position: "absolute",
+        top: 200,
+        right: 30,
+        height: 52,
+        width: 52,
+        borderRadius: 27,
+        backgroundColor: color.white,
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowOpacity: 1.5,
+        shadowOffset: { width: 0, height: 2 },
+        zIndex: 999,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
   });
 
