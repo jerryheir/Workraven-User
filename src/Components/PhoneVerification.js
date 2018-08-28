@@ -31,7 +31,7 @@ handleSubmit = () => {
         Alert.alert('Enter correct number format');
   }
   else {
-    fetch('http://progoapi.ml/v1/users/signup?type=user', {
+    fetch('https://progoapi.ml/v1/users/signup?type=user', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -69,7 +69,7 @@ sendOtp = () => {
   } else if (otp.length <= 5) {
     return Alert.alert('Please enter valid OTP');
   } else {
-    fetch(`http://progoapi.ml/v1/users/${phone}/verify_otp`, {
+    fetch(`https://progoapi.ml/v1/users/${phone}/verify_otp`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

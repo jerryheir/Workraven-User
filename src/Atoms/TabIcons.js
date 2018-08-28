@@ -8,7 +8,7 @@ class TabIcons extends React.Component {
     /*componentDidMount() {
         const userId = retrieveItem(userId);
         const token = retrieveItem(token);
-        fetch(`http://progoapi.ml/v1/users/${userId}`, {
+        fetch(`https://progoapi.ml/v1/users/${userId}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',

@@ -6,10 +6,10 @@ import GridBookingAtom from "../Atoms/GridBookingAtom";
 export default class Booking extends Component {
   render() {
     const items = [
-      { name: 'Jeremiah N.', color: "#D8E3BA", date: '14/02', amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' }, { name: 'Emmanuel', date: '14/02', color: "#D8E3BA", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' },
-      { name: 'Promise', date: '14/02', color: "#70D4FF", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' }, { name: 'Tochi', date: '14/02', amount: 'N 5,000', color: "#F2F2F2" ,issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' },
-      { name: 'Nwaeze', date: '14/02', color: "#ECFF0F", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/'}, { name: 'Goodness O.', date: '14/02', color:"#ECFF0F", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' },
-      { name: 'Blessing', date: '14/02', color: "#70D4FF", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' }, { name: 'Panda Panda', date: '14/02', color: "#D8E3BA", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'http://www.dhhd.com/' },
+      { name: 'Jeremiah N.', color: "#D8E3BA", date: '14/02', amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' }, { name: 'Emmanuel', date: '14/02', color: "#D8E3BA", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' },
+      { name: 'Promise', date: '14/02', color: "#70D4FF", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' }, { name: 'Tochi', date: '14/02', amount: 'N 5,000', color: "#F2F2F2" ,issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' },
+      { name: 'Nwaeze', date: '14/02', color: "#ECFF0F", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/'}, { name: 'Goodness O.', date: '14/02', color:"#ECFF0F", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' },
+      { name: 'Blessing', date: '14/02', color: "#70D4FF", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' }, { name: 'Panda Panda', date: '14/02', color: "#D8E3BA", amount: 'N 5,000', issue: 'Broken Pipe', uri: 'https://www.dhhd.com/' },
     ];
     const itemWidth = Dimensions.get('window').width / 2 - 60;
     return (

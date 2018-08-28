@@ -4,4 +4,4 @@ export const data = [
         order: 'You made a request for a plumber',
         time: '12 mins ago'
     }
-]
+];
