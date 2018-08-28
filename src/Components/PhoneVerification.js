@@ -97,8 +97,8 @@ sendOtp = () => {
     const { disabled, otp } = this.state;
     return (
       <View style={styles.container}>
-      <View style={{ height: 240, width: 240, alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
-        <Image 
+      <View style={{ height: 120, width: 120, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginBottom: 25 }}>        
+      <Image 
         source={disabled || otp.length !== 7 ? require('../assests/phone.png') : require('../assests/phone2.png')} 
         style={styles.image} 
         />
@@ -111,7 +111,7 @@ sendOtp = () => {
           onChangeText={phone => this.setState({ phone })}
           value={this.state.phone}
           label="Phone Number"
-          placeholder="000-0000-000"
+          placeholder=""
           keyboardType="numeric"
           maxLength={11}
         />
@@ -152,11 +152,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,
-    height: 37
+    height: 50
   },
   image: {
-    height: 127,
-    width: 127,
+    height: 100,
+    width: 100,
     alignSelf: 'center'
   }
 });

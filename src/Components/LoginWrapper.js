@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { color } from '../Styles/Color';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 export default class  LoginWrapper extends Component {
   render() {
@@ -37,11 +37,8 @@ export default class  LoginWrapper extends Component {
             {this.props.children}
           </View>
         {this.props.forgetPassword && 
-        <TouchableOpacity
-         onPress={this.props.forgetPassword}
-        >
-          <Text style={styles.passText}>Forgot Password?</Text>
-        </TouchableOpacity>}
+        <View style={styles.viewForText}><Text onPress={this.props.forgetPassword} style={styles.passText}>Forgot Password?</Text></View>
+        }
         <View style={styles.footer}>
           <Text
           style={styles.footerText}
@@ -70,7 +67,7 @@ const styles = StyleSheet.create({
   },
   imageMap: {
     height: 150,
-    width: SCREEN_WIDTH,
+    width: '100%'
   },
   pointerContainer: {
     marginTop: 20,
@@ -105,15 +102,18 @@ const styles = StyleSheet.create({
   formContainer: {
    marginTop: 20,
   },
+  viewForText: {
+    width: 180,
+    alignSelf: 'center',
+    paddingTop: 21,
+    marginBottom: 25,
+    paddingBottom: 21,
+  },
   passText: {
     textAlign: 'center',
     color: '#C190C7',
     fontWeight: 'bold',
-    fontSize: 12,
-    lineHeight: 19,
-    borderBottomWidth: 1,
-    marginBottom: 25,
-    borderBottomColor: '#C190C7',
+    fontSize: 12
   },
   footer: {
     width: Dimensions.get('window').width - 64,

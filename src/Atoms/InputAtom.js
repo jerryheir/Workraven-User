@@ -4,6 +4,9 @@ import { color } from "../Styles/Color";
 import { Input, Item, Label } from "native-base";
 
 class InputAtom extends React.PureComponent {
+    state = {
+        top: 0
+    }
     render(){
         return (
             <View style={[styles.view, this.props.style]}>
@@ -11,7 +14,7 @@ class InputAtom extends React.PureComponent {
             style={styles.item}
             disabled={this.props.disabledItem}
             >
-               <Label style={styles.label}>{this.props.label}</Label>
+               <Label style={[styles.label, { top: this.state.top }]}>{this.props.label}</Label>
                 <Input
                     onChangeText={this.props.onChangeText}
                     value={this.props.value}
@@ -25,6 +28,7 @@ class InputAtom extends React.PureComponent {
                     disabled={this.props.disabled}
                     style={styles.input}
                     maxLength={this.props.maxLength}
+                    onFocus={()=> this.setState({ top: -9 })}
                 />
             </Item>
             </View>
@@ -36,34 +40,38 @@ export default InputAtom;
 
 const styles = StyleSheet.create({
     input: {
-        height: 35,
+        height: 50,
         color: color.inputPurple,
-        fontSize: 12,
+        fontSize: 18,
         padding: 0,
         paddingTop: 0,
         paddingBottom: 0,
         marginTop: 0,
-        borderBottomColor: 'transparent'
+        borderColor: 'transparent'
     },
     label: {
-        fontSize: 12,
+        fontSize: 14,
         paddingLeft: 5,
-        marginBottom: 10,
-        top: -3
+        marginBottom: 0,
+        color: "#696969",
+        // top: -9
+        top: 0
     },
     item: {
         //height: 32,
-        backgroundColor: color.white,
-        borderBottomColor: 'transparent',
-        marginBottom: 0
+        backgroundColor: 'transparent',
+        //borderBottomColor: 'transparent',
+        marginBottom: 0,
+        borderColor: 'transparent'
     },
     view: {
-        height: 40,
-        marginBottom: 20,
+        height: 50,
+        marginBottom: 26,
         backgroundColor: color.white,
         shadowColor: 'rgba(0, 0, 0, 0.2)',
         shadowOpacity: 1.5,
         shadowOffset: { width: 0, height: 1.5 },
-        paddingBottom: 10
+        paddingBottom: 0,
+        borderColor: 'transparent'
     }
 })

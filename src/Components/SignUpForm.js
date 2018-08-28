@@ -85,17 +85,19 @@ handleSubmit = () => {
         text={'SIGN UP'}
         normal={true}
         />
-        <View>
-            <Text style={{ fontSize: 14, textAlign: 'center', paddingTop: 15}}>OR</Text>
-            <Text style={{ fontSize: 14, textAlign: 'center', padding: 10 }}>Sign up with:</Text>
-            <View style={{ flexDirection: 'row', alignSelf: 'center'}}>
-                <TouchableOpacity style={styles.circle}>
-                    <Image source={require('../assests/images/google_logo.png')} style={styles.image} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.circle}>
-                    <Image source={require('../assests/images/facebook_logo.png')} style={styles.image} />
-                </TouchableOpacity>
-            </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 14 }}>
+          <View>
+            <Text style={{ fontSize: 12, textAlign: 'center', padding: 8, paddingBottom: 0, color: color.darkGray }}>OR</Text>
+            <Text style={{ fontSize: 12, textAlign: 'center', color: color.darkGray  }}>Sign up with:</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignSelf: 'center'}}>
+              <TouchableOpacity style={styles.circle}>
+                  <Image source={require('../assests/images/google_logo.png')} style={styles.image} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.circle}>
+                  <Image source={require('../assests/images/facebook_logo.png')} style={styles.image} />
+              </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -125,11 +127,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#BE64FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,
-    height: 37
+    height: 45
   },
   image: {
     height: 14,
