@@ -59,7 +59,7 @@ class LoginForm extends Component {
             this.refs.toast.show('Wrong Email or Password')
           } else {
             const { token } = responseJson.data;
-            const decoded = await jwt_decode(token);
+            const decoded = jwt_decode(token);
             this.storeItem('token', decoded);
             const type = decoded.type.name;
             const userId = decoded.id;

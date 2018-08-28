@@ -25,8 +25,6 @@ YellowBox.ignoreWarnings([
     'Module RNFetchBlob requires main queue setup',
 ]);
 
-// const ImagePicker = NativeModules.ImageCropPicker;
-
 const config = {
   apiKey: "AIzaSyDmNFWR9pDVNq__U0dp5G409U4xmJUwUxQ",
   authDomain: "image-upload-84f38.firebaseapp.com",
