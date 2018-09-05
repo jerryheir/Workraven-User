@@ -6,8 +6,11 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  KeyboardAvoidingView
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { color } from '../Styles/Color';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
@@ -15,6 +18,7 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 export default class  LoginWrapper extends Component {
   render() {
     return (
+        <KeyboardAwareScrollView>
         <View
         style={styles.container}
         >
@@ -33,9 +37,10 @@ export default class  LoginWrapper extends Component {
           {this.props.subHeaderText}
           </Text>
         </View>
-          <View style={styles.formContainer}>
+        <View
+        style={styles.formContainer}>
             {this.props.children}
-          </View>
+        </View>
         {this.props.forgetPassword && 
         <View style={styles.viewForText}><Text onPress={this.props.forgetPassword} style={styles.passText}>Forgot Password?</Text></View>
         }
@@ -55,6 +60,7 @@ export default class  LoginWrapper extends Component {
         </View>
         </View>
         </View>
+        </KeyboardAwareScrollView>
     );
   }
 }
@@ -63,10 +69,10 @@ export default class  LoginWrapper extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF'
   },
   imageMap: {
-    height: 150,
+    height: Platform.OS === 'ios' ? 150 : 150,
     width: '100%'
   },
   pointerContainer: {
@@ -96,8 +102,7 @@ const styles = StyleSheet.create({
    marginLeft: 0,
    color: '#828282',
    fontWeight: 'normal',
-   fontSize: 13,
-   lineHeight: 18,
+   fontSize: 13
   },
   formContainer: {
    marginTop: 20,
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
     width: 180,
     alignSelf: 'center',
     paddingTop: 21,
-    marginBottom: 25,
+    marginBottom: Platform.OS === 'ios' ? 25 : 0,
     paddingBottom: 21,
   },
   passText: {
@@ -119,8 +124,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 64,
     borderTopWidth: 2,
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: 0,
     borderTopColor: '#F2F2F2',
   },
   footerButton: {
@@ -149,9 +152,8 @@ const styles = StyleSheet.create({
   },
   footerButtonText: {
     color: '#4F4F4F',
-    alignSelf: 'center',
+    textAlign: 'center',
     fontSize: 10,
-    lineHeight: 14,
     fontWeight: '700',
   }
 });

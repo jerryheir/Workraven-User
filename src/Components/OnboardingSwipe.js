@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ButtonAtom from '../Atoms/ButtonAtom';
@@ -43,6 +44,9 @@ class Parallelogram extends React.Component {
   }
 }
 
+const width = Platform.OS === 'ios' ? 235 : 200;
+const height = Platform.OS === 'ios' ? 325 : 275;
+
 export default class OnboardingSwipe extends React.Component {
     state = {
          autoplay: true,
@@ -60,7 +64,6 @@ export default class OnboardingSwipe extends React.Component {
    }
    onMomentumScrollEnd = (a, state, context) => {
     if (state.index === 2) {
-      console.log('Index is ' + state.index)
       this.skip();
     }
    }
@@ -76,7 +79,7 @@ export default class OnboardingSwipe extends React.Component {
           <View>
             <View style={styles.cover}>
               <Image
-                style={{ height: 325, width: 235.5 }}
+                style={{ height: height, width: width }}
                 source={require('../assests/onboarding2.png')}
               />
             </View>
@@ -92,7 +95,7 @@ export default class OnboardingSwipe extends React.Component {
           <View>
             <View style={styles.cover}>
               <Image
-                style={{ height: 325, width: 235.5 }}
+                style={{ height: height, width: width }}
                 source={require('../assests/onboarding1.png')}
               />
             </View>
@@ -108,7 +111,7 @@ export default class OnboardingSwipe extends React.Component {
           <View>
             <View style={styles.cover}>
               <Image
-                style={{ height: 325, width: 235.5 }}
+                style={{ height: height, width: width }}
                 source={require('../assests/onboarding3.png')}
               />
             </View>
@@ -150,18 +153,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   firstText: {
-    height: 18,
-    paddingBottom: 16,
     fontSize: 14,
-    lineHeight: 18,
-    alignSelf: 'center',
+    textAlign: 'center',
     color: '#4F4F4F',
     fontWeight: 'bold',
-
   },
   secondText: {
     fontSize: 14,
-    lineHeight: 15,
     paddingTop: 8,
     paddingLeft: 38,
     paddingRight: 38,

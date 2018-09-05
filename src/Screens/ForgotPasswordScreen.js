@@ -7,7 +7,7 @@ class ForgotPasswordScreen extends React.Component {
     }
     render(){
         return (
-            <ForgotPassword onPress={this.handleSubmit} />
+            <ForgotPassword navigation={this.props.navigation} onPress={this.handleSubmit} />
         )
     }
 }

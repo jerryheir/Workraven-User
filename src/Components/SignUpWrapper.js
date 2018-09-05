@@ -3,16 +3,20 @@ import {
   View,
   Text,
   StyleSheet,
+  Platform,
   Dimensions,
+  ScrollView,
   KeyboardAvoidingView
 } from 'react-native';
 import { color } from '../Styles/Color';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default class  SignUpWrapper extends Component {
+export default class SignUpWrapper extends Component {
   render() {
     return (
+        <KeyboardAwareScrollView>
         <View style={styles.container}>
             <View style={styles.secondContainer}>
                 <View style={{ width: SCREEN_WIDTH - 64, alignSelf: 'center'}}>
@@ -38,6 +42,7 @@ export default class  SignUpWrapper extends Component {
                 </View>
             </View>
         </View>
+        </KeyboardAwareScrollView>
     );
   }
 }
@@ -47,6 +52,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    justifyContent: 'space-between'
+    // height: Dimensions.get('screen').height
   },
   imageMap: {
     height: 150,
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
      resizeMode: 'contain'
    },
   secondContainer: {
-    marginTop: 60,
+    marginTop: Platform.OS === 'ios' ? 60 : 20,
     backgroundColor: '#FFFFFF',
     flex: 1,
   },
@@ -93,9 +100,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 0,
-    borderTopColor: '#F2F2F2',
+    borderTopColor: '#F2F2F2'
   },
   footerText: {
     textAlign: 'center',

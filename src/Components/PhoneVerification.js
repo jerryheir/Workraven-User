@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  Platform,
+  ScrollView,
   KeyboardAvoidingView
 } from 'react-native';
 // import { signin } from '../actions/auth/auth.actions';
@@ -103,10 +105,7 @@ sendOtp = () => {
         style={styles.image} 
         />
       </View>
-      <KeyboardAvoidingView
-      keyboardVerticalOffset={10}
-      behavior="padding"
-      >
+      <View>
         <InputAtom
           onChangeText={phone => this.setState({ phone })}
           value={this.state.phone}
@@ -119,11 +118,12 @@ sendOtp = () => {
           onChangeText={otp => this.setState({ otp })}
           value={this.state.otp}
           label="Verification Number"
+          style={this.state.disabled ? { backgroundColor: "#C0C0C0" } : {backgroundColor: color.white }}
           disabledItem={this.state.disabled}
           disabled={this.state.disabled}
           maxLength={7}
         />
-      </KeyboardAvoidingView>
+      </View>
         <Toast ref="toast"/>
         <ButtonAtom
         style={styles.buttonContainer}
@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#BE64FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: Platform.OS === 'ios' ? 10 : 20,
+    marginBottom: Platform.OS === 'ios' ? 0 : 40,
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,

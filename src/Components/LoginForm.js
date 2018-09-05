@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Dimensions,
   KeyboardAvoidingView,
+  Platform,
   AsyncStorage
 } from 'react-native';
-// import { signin } from '../actions/auth/auth.actions';
 import Toast from 'react-native-easy-toast'
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
@@ -75,9 +75,7 @@ class LoginForm extends Component {
     }
   render() {
     return (
-      <KeyboardAvoidingView         
-      keyboardVerticalOffset={50}
-      behavior="padding"
+      <View         
       style={styles.container}
       >
         <InputAtom
@@ -99,7 +97,7 @@ class LoginForm extends Component {
         text={'LOGIN'}
         normal={true}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
@@ -108,9 +106,9 @@ export default LoginForm; // connect(null, {signin})(SignInForm);
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    width: Dimensions.get('window').width - 64,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 0,
+    width: Dimensions.get('window').width - 66,
     alignSelf: 'center'
   },
   buttonContainer: {

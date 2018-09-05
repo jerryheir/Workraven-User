@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { color } from "../Styles/Color";
 import { Input, Item, Label } from "native-base";
 
@@ -8,8 +8,9 @@ class InputAtom extends React.PureComponent {
         top: 0
     }
     render(){
+        if (Platform.OS === 'ios') {
         return (
-            <View style={[styles.view, this.props.style]}>
+            <View style={[styles.itemView, this.props.style]}>
             <Item floatingLabel 
             style={styles.item}
             disabled={this.props.disabledItem}
@@ -33,6 +34,31 @@ class InputAtom extends React.PureComponent {
             </Item>
             </View>
         )
+    } else if (Platform.OS === 'android') {
+        return (
+            <Item floatingLabel 
+            style={[styles.itemView, this.props.style]}
+            disabled={this.props.disabledItem}
+            >
+               <Label style={{fontSize: 14,paddingLeft: 10, marginBottom: 20, paddingBottom: 30,marginBottom: 0,color: "#696969"}} /*style={[styles.label]}*/>{this.props.label}</Label>
+                <Input
+                    onChangeText={this.props.onChangeText}
+                    value={this.props.value}
+                    keyboardType={this.props.keyboardType}
+                    secureTextEntry={this.props.secureTextEntry}
+                    placeholder={this.props.placeholder}
+                    placeholderTextColor={color.gray}
+                    onSubmitEditing={this.props.onSubmitEditing}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    disabled={this.props.disabled}
+                    style={styles.input}
+                    maxLength={this.props.maxLength}
+                    onFocus={this.props.onFocus}
+                />
+            </Item>
+        )
+    }
     }
 }
 
@@ -54,8 +80,8 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         marginBottom: 0,
         color: "#696969",
-        // top: -9
-        top: 0
+        top: 0,
+        zIndex: 999
     },
     item: {
         //height: 32,
@@ -72,6 +98,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 1.5,
         shadowOffset: { width: 0, height: 1.5 },
         paddingBottom: 0,
-        borderColor: 'transparent'
+        borderColor: 'transparent',
+        elevation: 3
+    },
+    itemView: {
+        height: 45,
+        marginBottom: 26,
+        backgroundColor: color.white,
+        paddingBottom: 0,
+        borderColor: 'transparent',
+        elevation: 3
     }
 })

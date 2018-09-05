@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         color: '#FFFFFF',
-        fontWeight: '500',
+        fontWeight: 'bold',
         fontSize: 12
     }
 })

@@ -7,6 +7,7 @@ import {
   Alert,
   StyleSheet,
   Dimensions,
+  Platform,
   Image
 } from 'react-native';
 // import { signin } from '../actions/auth/auth.actions';
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
     paddingBottom: 10,
+    marginBottom: Platform.OS === 'android' ? 10 : 0,
     width: Dimensions.get('window').width - 64,
     alignSelf: 'center'
   },

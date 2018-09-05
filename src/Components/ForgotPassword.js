@@ -19,7 +19,7 @@ class ForgotPassword extends React.Component {
         if (this.state.showOTP === "") {
             return (
                 <ButtonAtom
-                style={styles.buttonContainer}
+                style={[styles.buttonContainer, { marginBottom: 50 }]}
                 onPress={this.showAndSend}
                 text={'SEND'}
                 normal={true}
@@ -36,7 +36,7 @@ class ForgotPassword extends React.Component {
                     returnKeyType="done"
                     />
                     <ButtonAtom
-                    style={styles.buttonContainer}
+                    style={[styles.buttonContainer, { marginBottom: 0, marginTop: -3 }]}
                     onPress={this.props.onPress}
                     text={'VERIFY'}
                     normal={true}
@@ -50,13 +50,13 @@ class ForgotPassword extends React.Component {
                 <LoginWrapper
                 headerText="Shoot!"
                 subHeaderText="Enter your email below, and you will be given an OTP in order to be able to reset your password..."
-                signUp={()=> { ()=> {this.props.navigation.navigate('Sign')}}}
+                signUp={()=> {this.props.navigation.navigate('Sign')}}
                 buttonText={'Signup'}
                 >
                 <KeyboardAvoidingView
                 keyboardVerticalOffset={50}
                 behavior="padding"
-                style={{ width: Dimensions.get('window').width - 64, alignSelf: 'center', marginBottom: 100}}>
+                style={{ width: Dimensions.get('window').width - 64, alignSelf: 'center', marginBottom: 80}}>
                     <InputAtom
                     onChangeText={email => this.setState({ email })}
                     value={this.state.email}
