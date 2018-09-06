@@ -8,12 +8,13 @@ export const data = [
 
 const address = '13 Razaq Eletu, Lekki';
 const phone = '09099433594';
+const username = 'Sule'
 
 export const chatList = [
     {
         key: '1',
         type: 'raven',
-        body: 'Hello Sule,\nHaving a good day, are we?',
+        body: `Hello ${username},\nHaving a good day, are we?`,
         additional: ''
     },
     {
