@@ -8,10 +8,10 @@ class ButtonAtom extends React.PureComponent {
         loading: true
     }
     clicked = () => {
-        this.setState({ loading: false })
+        this.setState({ loading: false });
         setTimeout(() => {
-            this.setState({ loading: true })
-        }, 3000);
+            this.setState({ loading: true });
+        }, 1500);
     }
     showLoader = () => {
         if (this.state.loading) {
@@ -19,7 +19,9 @@ class ButtonAtom extends React.PureComponent {
                 <TouchableOpacity
                 style={this.props.style}
                 disabled={this.props.disabled ? this.props.disabled : false}
-                onPress={this.clicked && this.props.onPress}
+                onPress={()=>{this.clicked()
+                    this.props.onPress()
+                }}
                 >
                     <Text style={this.props.normal ? styles.buttonText : styles.footerText}>{this.props.text}</Text>
                 </TouchableOpacity>

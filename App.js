@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import { StyleSheet, View} from 'react-native';
-// import MapComponent from './src/Components/MapComponent';
-// import ImageAtom from './src/Atoms/ImageAtom';
-// import ChatPage from './src/Components/ChatPage';
-import Routes from './src/Navigation/Routes';
+// import Routes from './src/Navigation/Routes';
+import CreditCardScreen from './src/Screens/CreditCardScreen';
 
 export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/*<ImageAtom /><ChatPage />*/}
-        <Routes />
+        {/*<Routes />*/}
+        <CreditCardScreen />
       </View>
     );
   }

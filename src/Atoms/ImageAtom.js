@@ -4,17 +4,15 @@ import {
     Text,
     View,
     Alert,
-    CameraRoll,
     YellowBox,
     Image,
     ImageBackground,
     ActivityIndicator,
-    NativeModules,
     TouchableOpacity
   } from 'react-native';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
-// import CameraRollPicker from 'react-native-camera-roll-picker';
+
 import ImagePicker from "react-native-image-crop-picker";
 import { color } from "../Styles/Color";
 // React native 0.55.4 is currently migrating to a new React API.
@@ -50,8 +48,9 @@ export default class ImageAtom extends React.PureComponent {
     // const { uid } = this.state.user
     const uid = "12345"
     ImagePicker.openPicker({
-      width: 300, // '100%',
-      height: 300,
+      compressImageMaxWidth: 300, // '100%',
+      compressImageMaxHeight: 300,
+      compressImageQuality: Platform.OS === 'ios' ? 0.5 : 0.7,
       cropping: false,
       mediaType: 'photo'
     }).then(image => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {connect} from 'react-redux';
 import {
   View,
   Alert,
@@ -8,31 +7,22 @@ import {
   Text
 } from 'react-native';
 import { CheckBox } from "native-base";
-// import { signin } from '../actions/auth/auth.actions';
 import Toast from 'react-native-easy-toast'
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
 import { color } from '../Styles/Color';
 
 class Terms extends Component {
-    state = {
-      checked: false
-    }
+state = {
+  checked: false
+}
 
 handleSubmit = () => {
-  // const userData = this.state;
   const { checked }= this.state;
   if (checked === false) {
     return Alert.alert('Please accept our Terms and Conditions')
   } else {
     this.props.navigation.navigate('Welcome');
-  /*this.props.signin(userData)
-  .then(()=> {
-    // this.props.navigation.navigate('HomeDashboard')
-  }).catch(error => {
-      // Alert.alert(error.response.data.message, 'This user does not exist')
-      this.refs.toast.show('Wrong Email or Password!')
-    })*/
   }
 }
   render() {
@@ -61,7 +51,7 @@ handleSubmit = () => {
   }
 }
 
-export default Terms; // connect(null, {signin})(SignInForm);
+export default Terms;
 
 const styles = StyleSheet.create({
   container: {

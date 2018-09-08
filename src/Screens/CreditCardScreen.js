@@ -2,7 +2,7 @@ import React from "react";
 import SignUpWrapper from "../Components/SignUpWrapper";
 import CreditCard from "../Components/CreditCard";
 
-class PhoneVerificationScreen extends React.Component {
+class CreditCardScreen extends React.Component {
     render(){
         return (
                 <SignUpWrapper
@@ -16,4 +16,4 @@ class PhoneVerificationScreen extends React.Component {
     }
 }
 
-export default PhoneVerificationScreen;
+export default CreditCardScreen;

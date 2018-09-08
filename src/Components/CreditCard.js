@@ -19,27 +19,19 @@ class CreditCard extends Component {
       cvc: '',
       cardNumber: '',
       date: '',
-      showInput: false,
       buttonText: 'ADD A PAYMENT METHOD'
     }
 
     onChange = (form) => console.log(form);
 
     handleSubmit = () => {
-      this.props.navigation.navigate('Terms');
-        /*const { cvc, cardNumber, date } = this.state;
-        let numb = cvc.replace(".", '');
-        let num = cardNumber.replace(".", '');
+      // this.props.navigation.navigate('Terms');
+        const { cvc, cardNumber, date } = this.state;
         if (cvc.length === 0 || cardNumber.length === 0 || date.length === 0) {
             return Alert.alert('Please enter all card details')
-        } else if (isNaN(num) || isNaN(numb) ) {
-            return Alert.alert('Please enter correct details')
         } else {
             this.props.navigation.navigate('Terms', { cardInfocvc: cvc, cardInfoCardNo: cardNumber });
-        }*/
-    }
-    showView = () => {
-        this.setState({ showInput: true, buttonText: 'CONTINUE' })
+        }
     }
     displayView = () => {
         return (
@@ -53,8 +45,7 @@ class CreditCard extends Component {
                 shadowOpacity: 1.5,
                 shadowOffset: { width: 0, height: 1.5 }}}
             >
-                <CreditCardInput onChange={this.onChange} />
-                    {/*<InputAtom
+                    <InputAtom
                     onChangeText={cardNumber => this.setState({ cardNumber })}
                     value={this.state.cardNumber}
                     label="Card Number"
@@ -76,13 +67,12 @@ class CreditCard extends Component {
                     keyboardType="numeric"
                     maxLength={3}
                     />
-                    </View>*/}
+                    </View>
             </View>
         )
     }
 
   render() {
-    const { showInput } = this.state;
     return (
       <View style={styles.container}>
       <View style={{ height: '60%', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
@@ -91,12 +81,12 @@ class CreditCard extends Component {
         style={styles.image} 
         />
       </View>
-      {showInput === true && 
+      {
         this.displayView()
       }
         <ButtonAtom
-        style={[styles.buttonContainer, { backgroundColor: showInput ? "#BE64FF" : "#C190C7" }]}
-        onPress={showInput ? this.handleSubmit : this.showView}
+        style={[styles.buttonContainer, { backgroundColor: "#BE64FF" }]}
+        onPress={this.handleSubmit}
         text={this.state.buttonText}
         normal={true}
         />
@@ -105,7 +95,7 @@ class CreditCard extends Component {
   }
 }
 
-export default CreditCard; // connect(null, {signin})(SignInForm);
+export default CreditCard;
 
 const styles = StyleSheet.create({
   container: {

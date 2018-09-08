@@ -53,11 +53,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     justifyContent: 'space-between'
-    // height: Dimensions.get('screen').height
   },
   imageMap: {
     height: 150,
-    width: SCREEN_WIDTH,
+    width: '100%',
   },
   pointerContainer: {
     marginTop: 20,
