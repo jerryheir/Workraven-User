@@ -25,17 +25,6 @@ class TabIcons extends React.Component {
         })
     }*/
 
-    retrieveItem = async (key) => {
-        try {
-          const retrievedItem =  await AsyncStorage.getItem(key);
-          const item = JSON.parse(retrievedItem);
-          return item;
-        } catch (error) {
-          console.log(error.message);
-        }
-        return
-    }
-
     display = () => {
         const { name, tintColor, focused } = this.props;
         if (name === "WorkRaven") {

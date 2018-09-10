@@ -1,187 +1,172 @@
 import React from "react";
-import {
-    StyleSheet,
-    Text,
+import { 
+    Platform,
+    ScrollView, 
+    Dimensions, 
     View,
-    Alert,
-    CameraRoll,
-    YellowBox,
-    Image,
-    ImageBackground,
-    ActivityIndicator,
-    NativeModules,
-    TouchableOpacity
-  } from 'react-native';
-import * as firebase from 'firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
-// import CameraRollPicker from 'react-native-camera-roll-picker';
-import ImagePicker from "react-native-image-crop-picker";
+    StyleSheet,
+    Alert
+ } from "react-native";
 import { color } from "../Styles/Color";
-// React native 0.55.4 is currently migrating to a new React API.
-// Some warnings are expected in this version.
-YellowBox.ignoreWarnings([
-    'Warning: isMounted(...) is deprecated',
-    'Module RCTImageLoader requires main queue setup',
-    'Module RNFetchBlob requires main queue setup',
-]);
+import InputAtom from "../Atoms/InputAtom";
+import ButtonAtom from "../Atoms/ButtonAtom";
+import Toast from 'react-native-easy-toast'
+import ImageAtom from "../Atoms/ImageAtom";
 
-const config = {
-  apiKey: "AIzaSyDmNFWR9pDVNq__U0dp5G409U4xmJUwUxQ",
-  authDomain: "image-upload-84f38.firebaseapp.com",
-  databaseURL: "https://image-upload-84f38.firebaseio.com",
-  projectId: "image-upload-84f38",
-  storageBucket: "image-upload-84f38.appspot.com",
-  messagingSenderId: "839714486165"
-}
-firebase.initializeApp(config);
-
-export default class ImageAtom extends React.PureComponent {
-  state = {
-    loading: false,
-    dp: null
-  }
-
-  showPicker = () => {
-    this.setState({ loading: true });
-    const Blob = RNFetchBlob.polyfill.Blob
-    const fs = RNFetchBlob.fs
-    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-    window.Blob = Blob
-    // const { uid } = this.state.user
-    const uid = "12345"
-    ImagePicker.openPicker({
-      width: 300, // '100%',
-      height: 300,
-      cropping: false,
-      mediaType: 'photo'
-    }).then(image => {
-      const imagePath = image.path
-      let uploadBlob = null
-      const imageRef = firebase.storage().ref(uid).child('dp.jpg')
-      let mime = 'image/jpg'
-      fs.readFile(imagePath, 'base64')
-        .then((data) => {
-          // console.log(data);
-          return Blob.build(data, { type: `${mime};BASE64` })
-      })
-      .then((blob) => {
-          uploadBlob = blob
-          return imageRef.put(blob, { contentType: mime })
-        })
-        .then(() => {
-          uploadBlob.close()
-          return imageRef.getDownloadURL()
-        })
-        .then((url) => {
-          // URL of the image uploaded on Firebase storage
-          // Alert.alert(url);
-          let userData = {}
-          let obj = {}
-          obj["loading"] = false
-          obj["dp"] = url
-          this.setState(obj);
-          Alert.alert(url);
-          console.log(url);
+class EditProfile extends React.Component {
+    async componentDidMount() {
+        const userId = await retrieveItem('userId');
+        const token = await retrieveItem('encoded'); 
+        //retrieveItem('userId').then((data)=>{
+        //    console.log(data, 'userId');
+        //})
+        //retrieveItem('encoded').then((d)=>{
+        //    console.log(d, 'token');
+        //})
+        fetch(`https://progoapi.tk/v1/users/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-user-token': token
+          }
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+            this.setState({ 
+                firstName: responseJson.data.firstname,
+                lastName: responseJson.data.lastname,
+                address: responseJson.data.address,
+                email: responseJson.data.email
+            });
         })
         .catch((error) => {
           console.log(error);
-
         })
-    })
-    .catch((error) => {
-      console.log(error, 'YAY');
-        this.setState({ loading: false });
-    })
-  }
-
-    render(){
-      const dpr = this.state.dp ? (
-        <View>
-        <View style={styles.fab}>
-        <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
-            <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
-        </TouchableOpacity>
-        </View>
-        <ImageBackground
-        source={{ uri: this.state.dp }} 
-        style={styles.imageBackground}
-        >
-            <View style={styles.viewPad}>
-                <View>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
-                    <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
-                </View>
-            </View>
-        </ImageBackground> 
-        </View>
-      ) : (
-        <View>
-          <View style={styles.fab}>
-          <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.7} style={{ padding: 10 }}>
-              <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
-          </TouchableOpacity>
-          </View>
-          <ImageBackground
-          source={require('../assests/images/profile_top_banner.png')} 
-          style={styles.imageBackground}
-          >
-              <View style={styles.viewPad}>
-                  <View>
-                      <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                          <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
-                      </TouchableOpacity>
-                      <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
-                      <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
-                  </View>
-              </View>
-          </ImageBackground>
-          </View>
-        );
-
-      const dps = this.state.loading ? (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator animating={this.state.loading} /></View>) : (
-        <View style={styles.container}>
-            { dpr }
-        </View>
-      );
-
-      return (
-        <View style={styles.container}>
-          { dps }
-        </View>
-      )
+    }
+    state = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: ''
+    }
+  
+  handleSubmit = async () => {
+    const token = await retrieveItem('encoded');
+    const userId = await retrieveItem('userId');
+    const { firstName, lastName, address } = this.state;
+    if (firstName.length === 0 || lastName.length === 0 || address.length === 0) {
+      return Alert.alert('All fields are required')
+    } else {
+      fetch(`https://progoapi.tk/v1/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'x-user-token': token
+            },
+            body: JSON.stringify({
+              firstname: firstName,
+              lastname: lastName,
+              address: address
+            }),
+          }) .then((response) => response.json())
+          .then((responseJson) => {
+            if (responseJson.status === 'success') {
+              this.props.navigation.goBack();
+            } else {
+              console.log(responseJson);
+              Alert.alert('An error occured, please try again');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            this.refs.toast.show('Error');
+          })
     }
   }
-  
-  const styles = StyleSheet.create({
+    render(){
+        return (
+            <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
+                <ImageAtom navigation={this.props.navigation}/>
+                <View style={styles.container}>
+                    <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 64, justifyContent: 'space-between'}}>
+                        <InputAtom
+                        onChangeText={firstName => this.setState({ firstName })}
+                        value={this.state.firstName}
+                        label="First Name"
+                        keyboardType="default"
+                        style={{width: '40%' }}
+                        />
+                        <InputAtom
+                        onChangeText={lastName => this.setState({ lastName })}
+                        value={this.state.lastName}
+                        label="Last Name"
+                        keyboardType="default"
+                        style={{width: '44%' }}
+                        />
+                    </View>
+                        <InputAtom
+                        onChangeText={address => this.setState({ address })}
+                        value={this.state.address}
+                        label="Address"
+                        keyboardType="default"
+                        />
+                        <InputAtom
+                        onChangeText={email => this.setState({ email })}
+                        value={this.state.email}
+                        label="Email"
+                        keyboardType="email-address"
+                        disabledItem={true}
+                        disabled={true}
+                        style={{ backgroundColor: '#F2F2F2'}}
+                        />
+                        <Toast ref="toast"/>
+                        <ButtonAtom
+                        style={styles.buttonContainer}
+                        onPress={this.handleSubmit}
+                        text={'UPDATE'}
+                        normal={true}
+                        />
+                </View>
+            </ScrollView>
+        );
+    }
+}
+export default EditProfile;
+
+const styles = StyleSheet.create({
     container: {
-      // flex: .5,
-      height: 226,
-      // justifyContent: 'center',
-      // alignItems: 'center',
-      backgroundColor: '#F5FCFF',
+      flex:1,
+      paddingTop: 15,
+      paddingBottom: 10,
+      width: Dimensions.get('window').width - 64,
+      alignSelf: 'center',
+      backgroundColor: 'white',
+      marginTop: 29
     },
-    gallery: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-      paddingTop: 100
+    buttonContainer: {
+      backgroundColor: '#BE64FF',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: Platform.OS === 'android' ? 10 : 0,
+      borderWidth: 1,
+      borderColor: '#C190C7',
+      borderRadius: 25,
+      height: 50
     },
     imageBackground: {
-      width: '100%',
-      height: 226,
-      paddingTop: 20,
-      // backgroundColor: 'rgba(0, 0 , 0, .5)'
+        width: '100%',
+        height: 226,
+        paddingTop: 20
     },
     viewPad: {
         flex: 1,
         paddingLeft: 21,
         paddingRight: 21,
         padding: 16,
-        // flexDirection: 'row',
-        // justifyContent: 'space-between'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     fab: {
         position: "absolute",
@@ -196,6 +181,7 @@ export default class ImageAtom extends React.PureComponent {
         shadowOffset: { width: 0, height: 2 },
         zIndex: 999,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        overflow: 'visible'
     }
-  });
+});
