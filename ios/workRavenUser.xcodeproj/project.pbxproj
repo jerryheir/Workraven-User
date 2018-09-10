@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -54,6 +55,7 @@
 		B1EEE9274274421088CF6AE4 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 635B6470F69E466792544644 /* Feather.ttf */; };
 		B21C4E63D62B4D1AB5888E6A /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE0B96C72B834C96B0402A36 /* OFL.txt */; };
 		C034B812212F115F00F89761 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C034B811212F110400F89761 /* libRNFetchBlob.a */; };
+		C097C856214480E500F3E455 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C097C82C214480D900F3E455 /* libART.a */; };
 		C09C1335210B51980045E364 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		C0D754052130257F0063BE30 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D753E3213024020063BE30 /* libRCTCameraRoll.a */; };
 		C34C342F5B0C49478BEC20EF /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84CDE637929E4D2C8B7BD14D /* Roboto_medium.ttf */; };
@@ -349,6 +351,20 @@
 			remoteGlobalIDString = A15C300E1CD25C330074CB35;
 			remoteInfo = RNFetchBlob;
 		};
+		C097C82B214480D900F3E455 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C097C826214480D900F3E455 /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = ART;
+		};
+		C097C82D214480D900F3E455 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C097C826214480D900F3E455 /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 323A12871E5F266B004975B8;
+			remoteInfo = "ART-tvOS";
+		};
 		C0D753E2213024020063BE30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C0D753D9213024020063BE30 /* RCTCameraRoll.xcodeproj */;
@@ -407,6 +423,7 @@
 		BA28329FE09F44DA8D618E33 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		BDA18EA6F6DF40C3B4C01AC3 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		C034B7E7212F110400F89761 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
+		C097C826214480D900F3E455 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		C0D753D9213024020063BE30 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		CD2AF94CB26B44B0A6FFBA9A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		CE0B96C72B834C96B0402A36 /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; };
@@ -431,6 +448,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C097C856214480E500F3E455 /* libART.a in Frameworks */,
 				C0D754052130257F0063BE30 /* libRCTCameraRoll.a in Frameworks */,
 				C034B812212F115F00F89761 /* libRNFetchBlob.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -621,6 +639,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C097C826214480D900F3E455 /* ART.xcodeproj */,
 				C0D753D9213024020063BE30 /* RCTCameraRoll.xcodeproj */,
 				C034B7E7212F110400F89761 /* RNFetchBlob.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -697,6 +716,15 @@
 			isa = PBXGroup;
 			children = (
 				C034B811212F110400F89761 /* libRNFetchBlob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C097C827214480D900F3E455 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C097C82C214480D900F3E455 /* libART.a */,
+				C097C82E214480D900F3E455 /* libART-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -832,6 +860,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 3C4YXPA3BG;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -855,6 +886,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = C097C827214480D900F3E455 /* Products */;
+					ProjectRef = C097C826214480D900F3E455 /* ART.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1189,6 +1224,20 @@
 			remoteRef = C034B810212F110400F89761 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C097C82C214480D900F3E455 /* libART.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libART.a;
+			remoteRef = C097C82B214480D900F3E455 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C097C82E214480D900F3E455 /* libART-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libART-tvOS.a";
+			remoteRef = C097C82D214480D900F3E455 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C0D753E3213024020063BE30 /* libRCTCameraRoll.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1464,6 +1513,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 3C4YXPA3BG;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = workRavenUser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1484,6 +1534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3C4YXPA3BG;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = workRavenUser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

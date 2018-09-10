@@ -33,7 +33,6 @@ class Parallelogram extends React.Component {
   render(){
     return (
       <View style={styles.parallelogram}>
-        
         <View style={styles.parallelogramInner}>
           {this.props.children}
         </View>

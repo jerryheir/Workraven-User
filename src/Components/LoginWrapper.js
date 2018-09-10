@@ -13,8 +13,6 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { color } from '../Styles/Color';
 
-const SCREEN_WIDTH = Dimensions.get('screen').width;
-
 export default class  LoginWrapper extends Component {
   render() {
     return (
@@ -22,7 +20,7 @@ export default class  LoginWrapper extends Component {
         <View
         style={styles.container}
         >
-        <View>
+        <View style={{ width: '100%'}}>
           <Image
             style={styles.imageMap}
             source={require('../assests/images/map_backgroundclear.png')}

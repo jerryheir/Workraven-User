@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
-import { StyleSheet, View} from 'react-native';
-// import MapComponent from './src/Components/MapComponent';
-// import ImageAtom from './src/Atoms/ImageAtom';
-// import ChatPage from './src/Components/ChatPage';
+import { StyleSheet, View, YellowBox} from 'react-native';
 import Routes from './src/Navigation/Routes';
+
+
+YellowBox.ignoreWarnings([
+  'Warning: isMounted(...) is deprecated',
+  'Module RCTImageLoader requires main queue setup',
+  'Module RNFetchBlob requires main queue setup',
+]);
 
 export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/*<ImageAtom /><ChatPage />*/}
         <Routes />
       </View>
     );

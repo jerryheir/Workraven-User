@@ -102,7 +102,7 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm; // connect(null, {signin})(SignInForm);
+export default LoginForm;
 
 const styles = StyleSheet.create({
   container: {

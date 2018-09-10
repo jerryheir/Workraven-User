@@ -19,54 +19,41 @@ class CreditCard extends Component {
       cvc: '',
       cardNumber: '',
       date: '',
-      showInput: false,
       buttonText: 'ADD A PAYMENT METHOD'
     }
 
     onChange = (form) => console.log(form);
 
     handleSubmit = () => {
-      this.props.navigation.navigate('Terms');
-        /*const { cvc, cardNumber, date } = this.state;
-        let numb = cvc.replace(".", '');
-        let num = cardNumber.replace(".", '');
+        const { cvc, cardNumber, date } = this.state;
         if (cvc.length === 0 || cardNumber.length === 0 || date.length === 0) {
             return Alert.alert('Please enter all card details')
-        } else if (isNaN(num) || isNaN(numb) ) {
-            return Alert.alert('Please enter correct details')
         } else {
             this.props.navigation.navigate('Terms', { cardInfocvc: cvc, cardInfoCardNo: cardNumber });
-        }*/
-    }
-    showView = () => {
-        this.setState({ showInput: true, buttonText: 'CONTINUE' })
+        }
     }
     displayView = () => {
         return (
             <View style={{
-                position: "absolute",
-                height: 290,
-                paddingTop: 8,
+                height: 200,
+                paddingTop: 20,
                 borderRadius: 2,
-                backgroundColor: color.white,
-                shadowColor: 'rgba(0, 0, 0, 0.2)',
-                shadowOpacity: 1.5,
-                shadowOffset: { width: 0, height: 1.5 }}}
+                backgroundColor: color.white
+              }}
             >
-                <CreditCardInput onChange={this.onChange} />
-                    {/*<InputAtom
+                    <InputAtom
                     onChangeText={cardNumber => this.setState({ cardNumber })}
                     value={this.state.cardNumber}
                     label="Card Number"
                     keyboardType="numeric"
                     />
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <InputAtom
                     onChangeText={date => this.setState({ date })}
                     value={this.state.date}
                     label="Expiry date"
-                    placeholder="MM/YY"
                     keyboardType="numeric"
+                    style={{ width: '43%'}}
                     maxLength={5}
                     />
                     <InputAtom
@@ -74,29 +61,29 @@ class CreditCard extends Component {
                     value={this.state.cvc}
                     label="CVC"
                     keyboardType="numeric"
+                    style={{ width: '43%' }}
                     maxLength={3}
                     />
-                    </View>*/}
+                    </View>
             </View>
         )
     }
 
   render() {
-    const { showInput } = this.state;
     return (
       <View style={styles.container}>
-      <View style={{ height: '60%', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
+      <View style={{ height: '18%', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}>
         <Image 
         source={require('../assests/images/card.png')} 
         style={styles.image} 
         />
       </View>
-      {showInput === true && 
+      {
         this.displayView()
       }
         <ButtonAtom
-        style={[styles.buttonContainer, { backgroundColor: showInput ? "#BE64FF" : "#C190C7" }]}
-        onPress={showInput ? this.handleSubmit : this.showView}
+        style={[styles.buttonContainer, { backgroundColor: "#BE64FF" }]}
+        onPress={this.handleSubmit}
         text={this.state.buttonText}
         normal={true}
         />
@@ -105,26 +92,26 @@ class CreditCard extends Component {
   }
 }
 
-export default CreditCard; // connect(null, {signin})(SignInForm);
+export default CreditCard;
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 47,
     width: Dimensions.get('window').width - 64,
     alignSelf: 'center'
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 80,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,
     height: 50
   },
   image: {
-    height: 170,
+    height: 130,
     width: 170,
     alignSelf: 'center'
   }
