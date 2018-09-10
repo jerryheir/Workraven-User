@@ -14,6 +14,9 @@ class ButtonAtom extends React.PureComponent {
         }, 1500);
     }
     showLoader = () => {
+        
+    }
+    render(){
         if (this.state.loading) {
             return (
                 <TouchableOpacity
@@ -34,13 +37,6 @@ class ButtonAtom extends React.PureComponent {
             )
         }
     }
-    render(){
-        return (
-            <View>
-                {this.showLoader()}
-            </View>
-        )
-    }
 }
 
 export default ButtonAtom;
@@ -48,12 +44,10 @@ export default ButtonAtom;
 const styles = StyleSheet.create({
     footerText: {
         alignSelf: 'center',
-        marginTop: 30,
         color: '#FFFFFF',
         fontSize: 15,
         fontWeight: 'bold',
-        height: 15,
-        lineHeight: 15,
+        height: 15
     },
     buttonText: {
         textAlign: 'center',

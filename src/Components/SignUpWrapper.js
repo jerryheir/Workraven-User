@@ -16,7 +16,11 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default class SignUpWrapper extends Component {
   render() {
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView
+        keyboardShouldPersistTaps='always'
+        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'interactive'}
+        style={{ backgroundColor: '#FFF' }}
+        >
         <View style={styles.container}>
             <View style={styles.secondContainer}>
                 <View style={{ width: SCREEN_WIDTH - 64, alignSelf: 'center'}}>

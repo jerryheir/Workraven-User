@@ -39,7 +39,7 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>progoapi.ml</key>
+			<key>progoapi.tk</key>
 			<dict>
 				<key>NSAllowsArbitraryLoads</key>
 				<true/>
