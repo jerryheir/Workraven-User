@@ -22,7 +22,7 @@ class EditProfile extends React.Component {
     render(){
         return (
             <ScrollView style={{ backgroundColor: 'white' }}>
-                <ImageAtom />
+                <ImageAtom navigation={this.props.navigation} />
                 <View style={styles.container}>
                     <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 64, justifyContent: 'space-between'}}>
                         <InputAtom

@@ -10,7 +10,7 @@ class InputAtom extends React.PureComponent {
     render(){
         if (Platform.OS === 'ios') {
         return (
-            <View style={[styles.itemView, this.props.style]}>
+            <View style={[styles.view, this.props.style]}>
             <Item floatingLabel 
             style={styles.item}
             disabled={this.props.disabledItem}
