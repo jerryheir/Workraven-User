@@ -11,18 +11,58 @@ import Toast from 'react-native-easy-toast'
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
 import { color } from '../Styles/Color';
+import jwt_decode from "jwt-decode";
+import { storeItem, retrieveItem } from '../Functions';
 
 class Terms extends Component {
 state = {
-  checked: false
+  checked: false,
+  code: ''
 }
 
-handleSubmit = () => {
+handleSubmit = async () => {
   const { checked }= this.state;
   if (checked === false) {
     return Alert.alert('Please accept our Terms and Conditions')
   } else {
+    const goodEmail = await this.props.navigation.getParam('email', 'No email');
+    const goodPass = await this.props.navigation.getParam('password', 'No Password');
+
+    const email = (goodEmail == 'No email') ? await retrieveItem('email') : goodEmail;
+    const password = (goodPass == 'No Password') ? await retrieveItem('password') : goodPass;
+    console.log(email, password);
+    storeItem('terms', true);
     this.props.navigation.navigate('Welcome');
+    fetch('https://progoapi.tk/v1/users/login?type=user', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          }),
+        }) .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson)
+          if (responseJson.status !== 'success') {
+            this.refs.toast.show('Wrong Email or Password')
+          } else {
+            const { token } = responseJson.data;
+            const decoded = jwt_decode(token);
+            storeItem('token', decoded);
+            storeItem('encoded', token);
+            const type = decoded.type.name;
+            const userId = decoded.id;
+            storeItem('userId', userId);
+          this.props.navigation.navigate('Tabs', { userId, type, param: "NEW_USER" });
+         }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.refs.toast.show('Wrong Email or Password');
+        })
   }
 }
   render() {

@@ -130,7 +130,8 @@ export default class OnboardingSwipe extends React.Component {
           text={'Skip'}
           />
           <ButtonAtom
-          style={(this.state.disabled === true) ? styles.disabled : styles.footer}
+          style={[ styles.disabled, { backgroundColor: this.state.disabled ? '#d4c1dd' : '#BE64FF' } ]}
+          //style={(this.state.disabled === true) ? styles.disabled : styles.footer}
           disabled={this.state.disabled}
           onPress={this.goToLogin}
           text={'Next'}
@@ -174,14 +175,17 @@ const styles = StyleSheet.create({
   },
   disabled: {
     height: 70,
-    width: SCREEN_WIDTH,
+    width: '100%',
     backgroundColor: '#d4c1dd',
+    justifyContent: 'center',
+    alignItems: 'center'
    },
   footer: {
     height: 70,
-    width: SCREEN_WIDTH,
+    width: '100%',
     backgroundColor: '#BE64FF',
-
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   parallelogram: {
     width: 150,

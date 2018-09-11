@@ -16,8 +16,6 @@ import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from "react-native-image-crop-picker";
 import { color } from "../Styles/Color";
 import { storeItem, retrieveItem } from "../Functions";
-// React native 0.55.4 is currently migrating to a new React API.
-// Some warnings are expected in this version.
 YellowBox.ignoreWarnings([
     'Warning: isMounted(...) is deprecated',
     'Module RCTImageLoader requires main queue setup',
@@ -74,13 +72,11 @@ export default class ImageAtom extends React.PureComponent {
           return imageRef.getDownloadURL()
         })
         .then((url) => {
-          // URL of the image uploaded on Firebase storage
-          // Alert.alert(url);
           let userData = {}
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
-          obj["old"] = ''
+          obj["old"] = url
           this.setState(obj);
           storeItem('imageUrl', url);
           Alert.alert(url);
@@ -90,7 +86,6 @@ export default class ImageAtom extends React.PureComponent {
           console.log(error);
 
         })
-        // this.setState({ loading: false })
     })
     .catch((error) => {
       console.log(error, 'YAY');
@@ -106,7 +101,7 @@ export default class ImageAtom extends React.PureComponent {
       }).catch((error)=>{
         console.log(error);
       }).done();
-      const dpr = this.state.dp ? (
+      const dpr = (this.state.dp) ? (
         <View style={{flex:1}}>
         <View style={styles.fab}>
         <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
@@ -128,7 +123,7 @@ export default class ImageAtom extends React.PureComponent {
             </View>
         </ImageBackground> 
         </View>
-      ) : (this.state.dp === null && this.state.old !== '') ? (
+      ) : (this.state.old !== '') ? (
         <View style={{flex:1}}>
         <View style={styles.fab}>
         <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>

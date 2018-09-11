@@ -42,7 +42,7 @@ class LoginForm extends Component {
         return Alert.alert('Password cannot be empty')
       } else {
         console.log(this.state.email, this.state.password)
-        fetch('https://progoapi.ml/v1/users/login?type=user', {
+        fetch('https://progoapi.tk/v1/users/login?type=user', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

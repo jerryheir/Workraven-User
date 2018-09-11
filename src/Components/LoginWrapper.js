@@ -16,7 +16,11 @@ import { color } from '../Styles/Color';
 export default class  LoginWrapper extends Component {
   render() {
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView
+        keyboardShouldPersistTaps='always'
+        keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'interactive'}
+        style={{ backgroundColor: '#FFF' }}
+        >
         <View
         style={styles.container}
         >

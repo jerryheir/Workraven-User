@@ -3,14 +3,38 @@ import { ImageBackground, ScrollView, FlatList, TouchableOpacity, Dimensions, Im
 import { data } from "../config/data";
 import NotificationListAtom from "../Atoms/NotificationListAtom";
 import { color } from "../Styles/Color";
+import { storeItem, retrieveItem } from '../Functions';
 
-// const { width, height } = Dimensions.get('window');
 class UserProfile extends React.Component {
+    async componentDidMount() {
+        const userId = await retrieveItem('userId');
+        const token = await retrieveItem('encoded');
+        const pic = await retrieveItem('imageUrl');
+        fetch(`https://progoapi.tk/v1/users/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-user-token': token
+          }
+        }).then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({ firstname: responseJson.data.firstname, lastname: responseJson.data.lastname, pic });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    state = {
+        firstname: '',
+        lastname: '',
+        pic: ''
+    }
     render(){
         return (
             <ScrollView>
                 <ImageBackground
-                source={require('../assests/images/profile_top_banner.png')} 
+                source={this.state.pic !== '' ? { uri: this.state.pic } : require('../assests/images/profile_top_banner.png')} 
                 style={styles.imageBackground}
                 >
                     <View style={styles.viewPad}>
@@ -22,7 +46,7 @@ class UserProfile extends React.Component {
                     </View>
                 </ImageBackground>
                 <View style={[styles.viewPad, { backgroundColor: 'white', flex: 0, alignItems: 'center', height: 62, borderBottomColor: '#F2F2F2', borderBottomWidth: 1}]}>
-                    <Text style={{fontSize: 24, fontWeight: '600'}}>Jeremiah Nwaeze</Text>
+                    <Text style={{fontSize: 24, fontWeight: '600'}}>{this.state.firstname + ' ' + this.state.lastname}</Text>
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditProfile')}>
                         <Image source={require('../assests/settings.png')} style={{ width: 19, height: 19 }} />
                     </TouchableOpacity>
