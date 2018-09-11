@@ -8,19 +8,21 @@ import {
     Image,
     ImageBackground,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
   } from 'react-native';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
-
 import ImagePicker from "react-native-image-crop-picker";
 import { color } from "../Styles/Color";
+import { storeItem, retrieveItem } from "../Functions";
 // React native 0.55.4 is currently migrating to a new React API.
 // Some warnings are expected in this version.
 YellowBox.ignoreWarnings([
     'Warning: isMounted(...) is deprecated',
     'Module RCTImageLoader requires main queue setup',
     'Module RNFetchBlob requires main queue setup',
+    'Setting a timer for a long period of time, i.e. multiple minutes',
 ]);
 
 const config = {
@@ -36,7 +38,8 @@ firebase.initializeApp(config);
 export default class ImageAtom extends React.PureComponent {
   state = {
     loading: false,
-    dp: null
+    dp: null,
+    old: ''
   }
 
   showPicker = () => {
@@ -48,7 +51,7 @@ export default class ImageAtom extends React.PureComponent {
     // const { uid } = this.state.user
     const uid = "12345"
     ImagePicker.openPicker({
-      compressImageMaxWidth: 300, // '100%',
+      compressImageMaxWidth: 300, // '100%', try 500 some other time
       compressImageMaxHeight: 300,
       compressImageQuality: Platform.OS === 'ios' ? 0.5 : 0.7,
       cropping: false,
@@ -60,7 +63,6 @@ export default class ImageAtom extends React.PureComponent {
       let mime = 'image/jpg'
       fs.readFile(imagePath, 'base64')
         .then((data) => {
-          // console.log(data);
           return Blob.build(data, { type: `${mime};BASE64` })
       })
       .then((blob) => {
@@ -78,7 +80,9 @@ export default class ImageAtom extends React.PureComponent {
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
+          obj["old"] = ''
           this.setState(obj);
+          storeItem('imageUrl', url);
           Alert.alert(url);
           console.log(url);
         })
@@ -86,6 +90,7 @@ export default class ImageAtom extends React.PureComponent {
           console.log(error);
 
         })
+        // this.setState({ loading: false })
     })
     .catch((error) => {
       console.log(error, 'YAY');
@@ -94,8 +99,15 @@ export default class ImageAtom extends React.PureComponent {
   }
 
     render(){
+      retrieveItem('imageUrl').then((data)=>{
+        if(data != null){
+            this.setState({ old: data });
+        }
+      }).catch((error)=>{
+        console.log(error);
+      }).done();
       const dpr = this.state.dp ? (
-        <View>
+        <View style={{flex:1}}>
         <View style={styles.fab}>
         <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
             <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
@@ -116,8 +128,30 @@ export default class ImageAtom extends React.PureComponent {
             </View>
         </ImageBackground> 
         </View>
+      ) : (this.state.dp === null && this.state.old !== '') ? (
+        <View style={{flex:1}}>
+        <View style={styles.fab}>
+        <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
+            <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
+        </TouchableOpacity>
+        </View>
+        <ImageBackground
+        source={{ uri: this.state.old }} 
+        style={styles.imageBackground}
+        >
+            <View style={styles.viewPad}>
+                <View>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                        <Image style={{height: 14, width: 10, marginLeft: 20, paddingBottom: 8, overflow: 'visible'}} source={require('../assests/pointer2.png')}/>
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 24, color: color.white }}>Edit Profile</Text>
+                    <Text style={{ fontSize: 12, color: color.white }}>Change your profile details</Text>
+                </View>
+            </View>
+        </ImageBackground> 
+        </View>
       ) : (
-        <View>
+        <View style={{flex:1}}>
           <View style={styles.fab}>
           <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.7} style={{ padding: 10 }}>
               <Image source={require('../assests/camera.png')} style={{ height: 17, width: 16, overflow: 'visible' }}/>
@@ -156,11 +190,8 @@ export default class ImageAtom extends React.PureComponent {
   
   const styles = StyleSheet.create({
     container: {
-      // flex: .5,
       height: 226,
-      // justifyContent: 'center',
-      // alignItems: 'center',
-      backgroundColor: '#F5FCFF',
+      backgroundColor: '#F5FCFF'
     },
     gallery: {
       fontSize: 20,
@@ -171,20 +202,17 @@ export default class ImageAtom extends React.PureComponent {
     imageBackground: {
       width: '100%',
       height: 226,
-      paddingTop: 20,
-      // backgroundColor: 'rgba(0, 0 , 0, .5)'
+      paddingTop: 20
     },
     viewPad: {
         flex: 1,
         paddingLeft: 21,
         paddingRight: 21,
-        padding: 16,
-        // flexDirection: 'row',
-        // justifyContent: 'space-between'
+        padding: 16
     },
     fab: {
         position: "absolute",
-        top: 200,
+        top: 196,
         right: 30,
         height: 52,
         width: 52,
