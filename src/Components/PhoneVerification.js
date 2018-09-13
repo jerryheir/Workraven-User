@@ -47,13 +47,44 @@ class PhoneVerification extends Component {
       color: color.primary
     }
 
-    callSubmit = () => {
-      console.log('Call button was clicked...');
-    }
+callSubmit = () => {
+  console.log('Call button was clicked...');
+}
 
-    handleSubmit1 = () => {
-      Alert.alert('Backend yet to implement it');
-    }
+handleSubmit1 = () => {
+  const { navigation } = this.props;
+  const state = navigation.getParam('state', '');
+  console.log(state);
+  const { phone } = this.state;
+  if(phone.length === 0 || phone.length < 10){
+        Alert.alert('Enter correct number format');
+  }
+  else {
+    fetch('https://progoapi.tk/v1/users/resend_otp', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            'phone': this.state.phone
+          }),
+        }) .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          if (responseJson.status === "success"){
+            this.setState({ disabled: false, buttonText: 'VERIFY MY OTP', button: true, color: '#C190C7' });
+          } else {
+            Alert.alert(responseJson.message)
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          Alert.alert('Some internal error occured!!!');
+          this.refs.toast.show('Wrong Email or Password');
+        })
+  }
+}
 
 handleSubmit = () => {
   const { navigation } = this.props;
