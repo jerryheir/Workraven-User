@@ -4,6 +4,7 @@ import {
     Text,
     View,
     Alert,
+    CameraRoll,
     YellowBox,
     Image,
     ImageBackground,
