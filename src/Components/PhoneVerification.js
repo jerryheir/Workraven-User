@@ -51,6 +51,10 @@ class PhoneVerification extends Component {
       console.log('Call button was clicked...');
     }
 
+    handleSubmit1 = () => {
+      Alert.alert('Backend yet to implement it');
+    }
+
 handleSubmit = () => {
   const { navigation } = this.props;
   const state = navigation.getParam('state', '');
@@ -152,6 +156,7 @@ sendOtp = () => {
           style={this.state.disabled ? { backgroundColor: "#C0C0C0" } : {backgroundColor: color.white }}
           disabledItem={this.state.disabled}
           disabled={this.state.disabled}
+          keyboardType="numeric"
           maxLength={5}
         />
       </View>
@@ -167,7 +172,7 @@ sendOtp = () => {
         <TinyWhiteButton 
           text={'RESEND OTP'}
           style={{height: 40, width: 120, marginRight: 24 }}
-          onPress={this.handleSubmit}
+          onPress={this.handleSubmit1}
         />
         <TinyWhite
           text={'CALL'}

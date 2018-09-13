@@ -9,6 +9,7 @@ class UserProfile extends React.Component {
     async componentDidMount() {
         const userId = await retrieveItem('userId');
         const token = await retrieveItem('encoded');
+        console.log(token);
         const pic = await retrieveItem('imageUrl');
         fetch(`https://progoapi.tk/v1/users/${userId}`, {
           method: 'GET',
@@ -19,7 +20,7 @@ class UserProfile extends React.Component {
           }
         }).then((response) => response.json())
         .then((responseJson) => {
-            this.setState({ firstname: responseJson.data.firstname, lastname: responseJson.data.lastname, pic });
+            this.setState({ firstname: responseJson.data.firstname, lastname: responseJson.data.lastname, pic: pic !== null ? pic : '' });
         })
         .catch((error) => {
           console.log(error);
@@ -30,11 +31,19 @@ class UserProfile extends React.Component {
         lastname: '',
         pic: ''
     }
+
+    returnData = (pic) => {
+        if (pic !== null) {
+            storeItem('imageUrl', pic);
+        }
+        this.setState({ pic: pic });
+    }
+
     render(){
         return (
             <ScrollView>
-                <ImageBackground
-                source={this.state.pic !== '' ? { uri: this.state.pic } : require('../assests/images/profile_top_banner.png')} 
+                {this.state.pic !== '' ? (<ImageBackground
+                source={{ uri: this.state.pic }} 
                 style={styles.imageBackground}
                 >
                     <View style={styles.viewPad}>
@@ -44,10 +53,23 @@ class UserProfile extends React.Component {
                         </View>
                         <TouchableOpacity ><Image source={require('../assests/notification.png')} style={{ width: 19, height: 19, marginTop: 5 }} /></TouchableOpacity>
                     </View>
-                </ImageBackground>
+                </ImageBackground>) :
+                (<ImageBackground
+                source={require('../assests/images/profile_top_banner.png')} 
+                style={styles.imageBackground}
+                >
+                    <View style={styles.viewPad}>
+                        <View>
+                            <Text style={{ fontSize: 24, color: 'white' }}>Profile</Text>
+                            <Text style={{ fontSize: 12, color: 'white' }}>Profile details</Text>
+                        </View>
+                        <TouchableOpacity ><Image source={require('../assests/notification.png')} style={{ width: 19, height: 19, marginTop: 5 }} /></TouchableOpacity>
+                    </View>
+                </ImageBackground>)
+                }
                 <View style={[styles.viewPad, { backgroundColor: 'white', flex: 0, alignItems: 'center', height: 62, borderBottomColor: '#F2F2F2', borderBottomWidth: 1}]}>
                     <Text style={{fontSize: 24, fontWeight: '600'}}>{this.state.firstname + ' ' + this.state.lastname}</Text>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditProfile')}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditProfile', { returnData: this.returnData })}>
                         <Image source={require('../assests/settings.png')} style={{ width: 19, height: 19 }} />
                     </TouchableOpacity>
                 </View>

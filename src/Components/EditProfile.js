@@ -52,7 +52,7 @@ class EditProfile extends React.Component {
     const { firstName, lastName, address } = this.state;
     const pic = await retrieveItem('imageUrl');
 
-    const body = pic === null ? {
+    const body = (pic === null) ? {
       firstname: firstName,
       lastname: lastName,
       address: address
@@ -77,6 +77,7 @@ class EditProfile extends React.Component {
           .then((responseJson) => {
             if (responseJson.status === 'success') {
               this.props.navigation.goBack();
+              this.props.navigation.state.params.returnData( pic );
             } else {
               console.log(responseJson);
               Alert.alert('An error occured, please try again');

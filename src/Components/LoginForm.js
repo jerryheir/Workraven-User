@@ -61,6 +61,7 @@ class LoginForm extends Component {
             const { token } = responseJson.data;
             const decoded = jwt_decode(token);
             this.storeItem('token', decoded);
+            this.storeItem('encoded', token);
             const type = decoded.type.name;
             const userId = decoded.id;
             this.storeItem('userId', userId);

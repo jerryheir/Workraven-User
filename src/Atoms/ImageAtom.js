@@ -36,7 +36,7 @@ firebase.initializeApp(config);
 export default class ImageAtom extends React.PureComponent {
   state = {
     loading: false,
-    dp: null,
+    dp: '',
     old: ''
   }
 
@@ -56,7 +56,7 @@ export default class ImageAtom extends React.PureComponent {
       mediaType: 'photo'
     }).then(image => {
       const imagePath = image.path
-      let uploadBlob = null
+      let uploadBlob = '';
       const imageRef = firebase.storage().ref(uid).child('dp.jpg')
       let mime = 'image/jpg'
       fs.readFile(imagePath, 'base64')
@@ -94,14 +94,7 @@ export default class ImageAtom extends React.PureComponent {
   }
 
     render(){
-      retrieveItem('imageUrl').then((data)=>{
-        if(data != null){
-            this.setState({ old: data });
-        }
-      }).catch((error)=>{
-        console.log(error);
-      }).done();
-      const dpr = (this.state.dp) ? (
+      const dpr = (this.state.dp !== '') ? (
         <View style={{flex:1}}>
         <View style={styles.fab}>
         <TouchableOpacity onPress={()=>this.showPicker()} activeOpacity={0.5} style={{ padding: 10 }}>
@@ -109,7 +102,7 @@ export default class ImageAtom extends React.PureComponent {
         </TouchableOpacity>
         </View>
         <ImageBackground
-        source={{ uri: this.state.dp }} 
+        source={{ uri: this.state.dp } || require('../assests/images/profile_top_banner.png')} 
         style={styles.imageBackground}
         >
             <View style={styles.viewPad}>
