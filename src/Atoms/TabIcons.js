@@ -69,6 +69,14 @@ class TabIcons extends React.Component {
         }
     }
     render(){
+        retrieveItem('firstname').then((data)=>{
+            if (data !== null ){
+                this.setState({ username: data });
+            } else {
+                console.log('Firstname in storage is empty');
+            }
+        })
+        .done();
         return (
             <View>
                 {this.display()}
