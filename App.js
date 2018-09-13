@@ -10,11 +10,12 @@ YellowBox.ignoreWarnings([
   "Can't call",
 ]);
 
+AsyncStorage.removeItem('firstname').then(()=>{
+  console.log('Old name cleared');
+});
+
 export default class App extends Component {
   render() {
-    AsyncStorage.removeItem('firstname').then(()=>{
-      console.log('Old name cleared');
-    });
     return (
       <View style={styles.container}>
         <Routes />
