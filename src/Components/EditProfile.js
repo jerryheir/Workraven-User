@@ -18,6 +18,14 @@ class EditProfile extends React.Component {
     async componentDidMount() {
         const userId = await retrieveItem('userId');
         const token = await retrieveItem('encoded'); 
+        const pic = await retrieveItem('imageUrl');
+        if (pic !== null) {
+          this.setState({ pic: pic });
+        } else {
+          this.setState({ pic: '' });
+        }
+
+
         fetch(`https://progoapi.tk/v1/users/${userId}`, {
           method: 'GET',
           headers: {
@@ -32,7 +40,8 @@ class EditProfile extends React.Component {
                 firstName: responseJson.data.firstname,
                 lastName: responseJson.data.lastname,
                 address: responseJson.data.address,
-                email: responseJson.data.email
+                email: responseJson.data.email,
+                pic: responseJson.data.image_url === '' ? '' : responseJson.data.image_url === null ? '' : responseJson.data.image_url 
             });
         })
         .catch((error) => {
@@ -43,7 +52,8 @@ class EditProfile extends React.Component {
         firstName: '',
         lastName: '',
         email: '',
-        address: ''
+        address: '',
+        pic: ''
     }
   
   handleSubmit = async () => {
@@ -77,7 +87,7 @@ class EditProfile extends React.Component {
           .then((responseJson) => {
             if (responseJson.status === 'success') {
               this.props.navigation.goBack();
-              this.props.navigation.state.params.returnData( pic );
+              this.props.navigation.state.params.returnData( pic, firstName, lastName );
             } else {
               console.log(responseJson);
               Alert.alert('An error occured, please try again');

@@ -35,6 +35,14 @@ const config = {
 firebase.initializeApp(config);
 
 export default class ImageAtom extends React.PureComponent {
+  async componentDidMount(){
+    const pic = await retrieveItem('imageUrl');
+      if (pic !== null) {
+        this.setState({ dp: pic });
+      } else {
+        this.setState({ dp: '' });
+      }
+  }
   state = {
     loading: false,
     dp: '',

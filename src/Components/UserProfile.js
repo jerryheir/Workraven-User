@@ -32,11 +32,11 @@ class UserProfile extends React.Component {
         pic: ''
     }
 
-    returnData = (pic) => {
+    returnData = (pic, firstname, lastname) => {
         if (pic !== null) {
             storeItem('imageUrl', pic);
         }
-        this.setState({ pic: pic });
+        this.setState({ pic: pic, firstname: firstname, lastname: lastname });
     }
 
     render(){
