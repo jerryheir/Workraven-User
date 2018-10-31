@@ -26,6 +26,7 @@ target 'workRavenUser' do
   
     # React Native third party dependencies podspecs
     pod 'DoubleConversion', :podspec => "#{rn_path}/third-party-podspecs/DoubleConversion.podspec"
+    
     pod 'glog', :podspec => "#{rn_path}/third-party-podspecs/glog.podspec"
     # If you are using React Native <0.54, you will get the following error:
     # "The name of the given podspec `GLog` doesn't match the expected one `glog`"

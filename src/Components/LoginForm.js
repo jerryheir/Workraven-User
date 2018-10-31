@@ -6,7 +6,6 @@ import {
   Alert,
   StyleSheet,
   Dimensions,
-  KeyboardAvoidingView,
   Platform,
   AsyncStorage
 } from 'react-native';

@@ -20,6 +20,7 @@ class InputAtom extends React.PureComponent {
                     onChangeText={this.props.onChangeText}
                     value={this.props.value}
                     keyboardType={this.props.keyboardType}
+                    returnKeyType='next'
                     secureTextEntry={this.props.secureTextEntry}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={color.gray}

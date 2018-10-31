@@ -9,7 +9,7 @@ class TinyWhiteButton extends React.PureComponent {
             style={[styles.skip, this.props.style]}
             onPress={this.props.onPress}
             >
-                <Text style={styles.text}>{this.props.text}</Text>
+                <Text style={[styles.text, this.props.textStyle]}>{this.props.text}</Text>
             </TouchableOpacity>
         )
     }

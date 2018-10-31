@@ -8,9 +8,7 @@ import {
   Image,
   Platform,
   Text,
-  TouchableOpacity,
-  ScrollView,
-  KeyboardAvoidingView
+  TouchableOpacity
 } from 'react-native';
 // import { signin } from '../actions/auth/auth.actions';
 import Toast from 'react-native-easy-toast'
@@ -115,7 +113,7 @@ handleSubmit = () => {
           if (responseJson.status === "success"){
             this.setState({ disabled: false, buttonText: 'VERIFY MY OTP', button: true, color: '#C190C7' });
           } else {
-            Alert.alert(responseJson.message)
+            Alert.alert(responseJson.message);
           }
         })
         .catch((error) => {

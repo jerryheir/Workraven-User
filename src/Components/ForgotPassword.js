@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import LoginWrapper from "./LoginWrapper";
 import InputAtom from "../Atoms/InputAtom";
 import ButtonAtom from "../Atoms/ButtonAtom";
@@ -53,9 +53,7 @@ class ForgotPassword extends React.Component {
                 signUp={()=> {this.props.navigation.navigate('Sign')}}
                 buttonText={'Signup'}
                 >
-                <KeyboardAvoidingView
-                keyboardVerticalOffset={50}
-                behavior="padding"
+                <View
                 style={{ width: Dimensions.get('window').width - 64, alignSelf: 'center', marginBottom: 80}}>
                     <InputAtom
                     onChangeText={email => this.setState({ email })}
@@ -66,7 +64,7 @@ class ForgotPassword extends React.Component {
                     <View>
                         {this.display()}
                     </View>
-                </KeyboardAvoidingView>
+                </View>
                 </LoginWrapper>
         )
     }

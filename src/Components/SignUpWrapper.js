@@ -4,9 +4,7 @@ import {
   Text,
   StyleSheet,
   Platform,
-  Dimensions,
-  ScrollView,
-  KeyboardAvoidingView
+  Dimensions
 } from 'react-native';
 import { color } from '../Styles/Color';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -17,6 +15,8 @@ export default class SignUpWrapper extends Component {
   render() {
     return (
         <KeyboardAwareScrollView
+        // scrollEnabled={Platform.OS === 'ios' ? false : true}
+        overScrollMode='never'
         keyboardShouldPersistTaps='always'
         keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'interactive'}
         style={{ backgroundColor: '#FFF' }}
@@ -31,13 +31,11 @@ export default class SignUpWrapper extends Component {
                     {this.props.subHeaderText}
                     </Text>
                 </View>
-                <KeyboardAvoidingView
-                keyboardVerticalOffset={50}
-                behavior="padding"
+                <View
                 style={styles.formContainer}
                 >
                     {this.props.children}
-                </KeyboardAvoidingView>
+                </View>
                 <View style={styles.footer}>
                     <Text
                     style={styles.footerText}

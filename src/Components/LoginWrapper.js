@@ -6,9 +6,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
-  ScrollView
+  Platform
 } from 'react-native';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { color } from '../Styles/Color';
@@ -17,6 +15,8 @@ export default class  LoginWrapper extends Component {
   render() {
     return (
         <KeyboardAwareScrollView
+        // scrollEnabled={Platform.OS === 'ios' ? false : true}
+        overScrollMode='never'
         keyboardShouldPersistTaps='always'
         keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'interactive'}
         style={{ backgroundColor: '#FFF' }}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   imageMap: {
-    height: Platform.OS === 'ios' ? 150 : 150,
+    height: Platform.OS === 'ios' ? 145 : 150,
     width: '100%'
   },
   pointerContainer: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     width: 180,
     alignSelf: 'center',
     paddingTop: 21,
-    marginBottom: Platform.OS === 'ios' ? 25 : 0,
+    marginBottom: Platform.OS === 'ios' ? 15 : 0,
     paddingBottom: 21,
   },
   passText: {

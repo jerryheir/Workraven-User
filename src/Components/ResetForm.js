@@ -4,8 +4,7 @@ import {
   View,
   Alert,
   StyleSheet,
-  Dimensions,
-  KeyboardAvoidingView
+  Dimensions
 } from 'react-native';
 // import { signin } from '../actions/auth/auth.actions';
 import Toast from 'react-native-easy-toast';
@@ -41,9 +40,7 @@ handleSubmit = () => {
   render() {
     // const { navigate } = this.props.navigation;
     return (
-      <KeyboardAvoidingView
-      keyboardVerticalOffset={50}
-      behavior="padding"
+      <View
       style={styles.container}>
         <InputAtom
           onChangeText={password => this.setState({ password })}
@@ -64,7 +61,7 @@ handleSubmit = () => {
         text={'UPDATE'}
         normal={true}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
