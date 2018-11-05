@@ -95,12 +95,12 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "23.0.1" // "27.0.3"
+    buildToolsVersion "26.0.2" // "27.0.3"
 
     defaultConfig {
         applicationId "com.workravenuser"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 22 // or 27
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -142,7 +142,7 @@ dependencies {
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:27.1.0"
+    compile "com.android.support:appcompat-v7:25.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 

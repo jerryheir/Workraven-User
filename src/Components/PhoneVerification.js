@@ -11,7 +11,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 // import { signin } from '../actions/auth/auth.actions';
-import Toast from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast';
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
 import { color } from '../Styles/Color';
