@@ -1,0 +1,12 @@
+{
+    "appName": "workRavenUserZcCTw",
+    "roleName": "pinpointLambdaRole897b282a",
+    "cloudWatchPolicyName": "cloudWatchPolicy897b282a",
+    "pinpointPolicyName": "pinpointPolicy897b282a",
+    "authPolicyName": "pinpoint_amplify_897b282a",
+    "unauthPolicyName": "pinpoint_amplify_897b282a",
+    "authRoleName": "workavenser-20181109154249-authRole",
+    "unauthRoleName": "workavenser-20181109154249-unauthRole",
+    "IAMPrefix": "369045518279",
+    "appId": "b440e545049d41e780d6c5e6a74a7663"
+}

@@ -1,39 +1,14 @@
-import React, {Component} from 'react';
-import { StyleSheet, View, YellowBox, AsyncStorage } from 'react-native';
-import Routes from './src/Navigation/Routes';
-// import MarkerAtom from "./src/Atoms/MarkerAtom";
-// import TinyWhiteButton from "./src/Atoms/TinyWhiteButton";
-// import MapComponent from './src/Components/MapComponent';
+import React, { Component } from 'react';
+import { PushNotificationIOS, View, Text, AlertIOS, Alert, TouchableOpacity, TextInput } from 'react-native';
 
-YellowBox.ignoreWarnings([
-  'Warning: isMounted(...) is deprecated',
-  'Module RCTImageLoader requires main queue setup',
-  'Module RNFetchBlob requires main queue setup',
-  "Can't call",
-  "Remote",
-  "Warning: Can't call setState"
-]);
-
-AsyncStorage.removeItem('firstname').then(()=>{
-  console.log('Old name cleared');
-});
-
-export default class App extends Component {
-  render() {
+export default class App extends React.Component {
+  render(){
     return (
-      <View style={styles.container}>
-        <Routes />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{ fontFamily: 'Lato-Thin', fontSize: 36 }}>Hello from the other side with Lato</Text>
+        <Text>Font Set Up Complete!!! Normal font</Text>
+        <Text style={{ fontFamily: 'HindGuntur-Bold', fontSize: 36 }}>Integrity is better than fame with HindGuntur</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#c0c0c0' // #fff
-  }
-});
-
-// [GMSServices provideAPIKey:@"AIzaSyA4Px93uD9nzyzcMvVtk0g3yR1oicwTzbE"];
-

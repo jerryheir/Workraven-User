@@ -87,8 +87,8 @@ class EditProfile extends React.Component {
           .then((responseJson) => {
             if (responseJson.status === 'success') {
               storeItem('firstname',firstName);
-              this.props.navigation.goBack();
               this.props.navigation.state.params.returnData( pic, firstName, lastName );
+              this.props.navigation.goBack();
             } else {
               console.log(responseJson);
               Alert.alert('An error occured, please try again');

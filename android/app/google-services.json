@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "561431580673",
+    "firebase_url": "https://push-notify-a66f2.firebaseio.com",
+    "project_id": "push-notify-a66f2",
+    "storage_bucket": "push-notify-a66f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561431580673:android:61dbb525c0a3ab58",
+        "android_client_info": {
+          "package_name": "com.workravenuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561431580673-ct59a6je1r3s9a77dbe779k2t1mgpmga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfUfr60Bf4qFfwF7c7jEkFxNp3BgPlqrk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

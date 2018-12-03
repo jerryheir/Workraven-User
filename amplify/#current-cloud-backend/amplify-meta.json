@@ -1,0 +1,79 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "workavenser-20181109154249-authRole",
+			"UnauthRoleArn": "arn:aws:iam::369045518279:role/workavenser-20181109154249-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::369045518279:role/workavenser-20181109154249-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "workavenser-20181109154249-deployment",
+			"UnauthRoleName": "workavenser-20181109154249-unauthRole",
+			"StackName": "workavenser-20181109154249",
+			"StackId": "arn:aws:cloudformation:us-east-1:369045518279:stack/workavenser-20181109154249/bbaf01b0-e42d-11e8-a0a0-500c28b4e461"
+		}
+	},
+	"notifications": {
+		"workRavenUserZcCTw": {
+			"service": "Pinpoint",
+			"output": {
+				"Name": "workRavenUserZcCTw",
+				"Id": "b440e545049d41e780d6c5e6a74a7663",
+				"Region": "us-east-1"
+			},
+			"lastPushTimeStamp": "2018-11-09T14:43:59.766Z"
+		}
+	},
+	"auth": {
+		"cognitoa4cda188": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/workavenser-20181109154249-deployment/amplify-cfn-templates/auth/cognitoa4cda188-cloudformation-template.yml",
+				"logicalId": "authcognitoa4cda188"
+			},
+			"lastPushTimeStamp": "2018-11-09T16:24:18.518Z",
+			"output": {
+				"IdentityPoolId": "us-east-1:bfe4f59e-fe00-4f44-b145-8043f9b72079",
+				"IdentityPoolName": "workravenuser_identitypool_302f7e85"
+			},
+			"lastPushDirHash": "LOJFdRr0M2NulH7lM305wJfUKy4="
+		}
+	},
+	"analytics": {
+		"workRavenUserZcCTw": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/workavenser-20181109154249-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+				"logicalId": "analyticsworkRavenUserZcCTw"
+			},
+			"lastPushTimeStamp": "2018-11-09T16:24:18.521Z",
+			"output": {
+				"appName": "workRavenUserZcCTw",
+				"Region": "us-east-1",
+				"Id": "b440e545049d41e780d6c5e6a74a7663"
+			},
+			"lastPushDirHash": "NaKpE7yJ5xXGoOpj9S1PopLwOTY="
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/workavenser-20181109154249-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2018-11-09T16:24:18.523Z",
+			"output": {
+				"CloudFrontSecureURL": "https://d3rnusyvvjouxa.cloudfront.net",
+				"S3BucketSecureURL": "https://workavenser-20181109170637--hostingbucket.s3.amazonaws.com",
+				"WebsiteURL": "http://workavenser-20181109170637--hostingbucket.s3-website-us-east-1.amazonaws.com",
+				"CloudFrontDistributionID": "E2BWKFC73OO0OH",
+				"Region": "us-east-1",
+				"HostingBucketName": "workavenser-20181109170637--hostingbucket",
+				"CloudFrontDomainName": "d3rnusyvvjouxa.cloudfront.net"
+			},
+			"lastPushDirHash": "SKH/MrVkuIHAnOmeYTgfIbXR29M="
+		}
+	}
+}

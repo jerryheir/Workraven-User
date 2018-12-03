@@ -63,28 +63,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the photo library.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app does not require access to the microphone.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires access to the camera.</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app does not require access to the microphone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -101,6 +87,48 @@
 		<string>rubicon-icon-font.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>HindGuntur-Bold.ttf</string>
+		<string>HindGuntur-Light.ttf</string>
+		<string>HindGuntur-Medium.ttf</string>
+		<string>HindGuntur-Regular.ttf</string>
+		<string>HindGuntur-SemiBold.ttf</string>
+		<string>Lato-Black.ttf</string>
+		<string>Lato-BlackItalic.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-BoldItalic.ttf</string>
+		<string>Lato-Hairline.ttf</string>
+		<string>Lato-HairlineItalic.ttf</string>
+		<string>Lato-Heavy.ttf</string>
+		<string>Lato-HeavyItalic.ttf</string>
+		<string>Lato-Italic.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+		<string>Lato-Medium.ttf</string>
+		<string>Lato-MediumItalic.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Lato-Semibold.ttf</string>
+		<string>Lato-SemiboldItalic.ttf</string>
+		<string>Lato-Thin.ttf</string>
+		<string>Lato-ThinItalic.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -1,4 +1,14 @@
 rootProject.name = 'workRavenUser'
+include ':react-native-paystack'
+project(':react-native-paystack').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-paystack/android')
+include ':amazon-cognito-identity-js'
+project(':amazon-cognito-identity-js').projectDir = new File(rootProject.projectDir, '../node_modules/amazon-cognito-identity-js/android')
+include ':react-native-maps'
+project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/lib/android')
+include ':@aws-amplify/pushnotification'
+project(':@aws-amplify/pushnotification').projectDir = new File(rootProject.projectDir, '../node_modules/@aws-amplify/pushnotification/android')
+include ':react-native-push-notification'
+project(':react-native-push-notification').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-push-notification/android')
 include ':react-native-fetch-blob'
 project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
 include ':react-native-image-crop-picker'

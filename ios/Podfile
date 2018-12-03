@@ -44,6 +44,10 @@ target 'workRavenUser' do
 
     pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
+    pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
+
+    pod 'Paystack'
+
   end
   
   post_install do |installer|

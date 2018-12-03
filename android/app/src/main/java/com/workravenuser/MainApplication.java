@@ -3,6 +3,11 @@ package com.workravenuser;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
+import com.amazonaws.RNAWSCognitoPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.amazonaws.amplify.pushnotification.RNPushNotificationPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -26,6 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPaystackPackage(),
+            new RNAWSCognitoPackage(),
+            new MapsPackage(),
+            new RNPushNotificationPackage(),
+            new ReactNativePushNotificationPackage(),
             new RNFetchBlobPackage(),
             new PickerPackage(),
             new VectorIconsPackage()

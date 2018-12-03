@@ -138,6 +138,11 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-paystack')
+    compile project(':amazon-cognito-identity-js')
+    compile project(':react-native-maps')
+    compile project(':@aws-amplify/pushnotification')
+    compile project(':react-native-push-notification')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-vector-icons')
