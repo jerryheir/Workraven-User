@@ -15,24 +15,22 @@ export default class SignUpWrapper extends Component {
   render() {
     return (
         <KeyboardAwareScrollView
-        // scrollEnabled={Platform.OS === 'ios' ? false : true}
         overScrollMode='never'
         keyboardShouldPersistTaps='always'
         keyboardDismissMode={Platform.OS === 'ios' ? 'on-drag' : 'interactive'}
         style={{ backgroundColor: '#FFF' }}
         >
         <View style={styles.container}>
-            <View style={styles.secondContainer}>
-                <View style={{ width: SCREEN_WIDTH - 64, alignSelf: 'center'}}>
+                <View style={{ width: SCREEN_WIDTH - 42, alignSelf: 'center', paddingTop: Platform.OS === "ios" ? 42 : 21 }}>
                     <Text style={styles.headerText}>
                         {this.props.headerText}
                     </Text>
                     <Text style={styles.headerContent}>
-                    {this.props.subHeaderText}
+                        {this.props.subHeaderText}
                     </Text>
                 </View>
                 <View
-                style={styles.formContainer}
+                style={[styles.formContainer, this.props.formContainerStyle]}
                 >
                     {this.props.children}
                 </View>
@@ -40,9 +38,8 @@ export default class SignUpWrapper extends Component {
                     <Text
                     style={styles.footerText}
                     >
-                    Already have an account? <Text onPress={()=>this.props.navigation.navigate('Auth')} style={{color: color.primary, fontSize: 12 }}>Login</Text></Text>
+                    Already have an account? <Text onPress={()=>this.props.navigation.navigate('Auth')} style={{color: color.primary, fontSize: 14, fontFamily: 'Lato-Heavy', }}>Login</Text></Text>
                 </View>
-            </View>
         </View>
         </KeyboardAwareScrollView>
     );
@@ -52,16 +49,15 @@ export default class SignUpWrapper extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#FFFFFF',
-    justifyContent: 'space-between'
+    height: Platform.OS === "ios" ? Dimensions.get('window').height : Dimensions.get('window').height - 30,
   },
   imageMap: {
     height: 150,
     width: '100%',
   },
   pointerContainer: {
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 23,
    },
    pointer: {
@@ -69,33 +65,33 @@ const styles = StyleSheet.create({
      height: 15,
      resizeMode: 'contain'
    },
-  secondContainer: {
-    marginTop: Platform.OS === 'ios' ? 60 : 20,
-    backgroundColor: '#FFFFFF',
-    flex: 1,
-  },
   headerText: {
    height: 46,
    fontSize: 24,
-   fontWeight: 'bold',
+   // fontWeight: 'bold',
    color: '#000000',
    marginTop: 15,
    marginLeft: 0,
+   fontFamily: 'Lato-Regular',
   },
   headerContent: {
-   height: 36,
+   // height: 36,
    width: 250,
    marginLeft: 0,
    color: '#828282',
    fontWeight: 'normal',
    fontSize: 13,
    lineHeight: 18,
+   fontFamily: 'Lato-Regular',
   },
   formContainer: {
-   marginTop: 20,
+    flex: 1,
+    marginTop: 20,
+    paddingTop: 10
+    // paddingBottom: 50
   },
   footer: {
-    width: Dimensions.get('window').width - 64,
+    width: Dimensions.get('window').width - 42,
     height: 64,
     borderTopWidth: 2,
     alignSelf: 'center',
@@ -105,9 +101,9 @@ const styles = StyleSheet.create({
   },
   footerText: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: 12,
     color: color.gray,
-    fontWeight: '700',
     marginTop: 10,
+    fontFamily: 'Lato-Regular',
   }
 });

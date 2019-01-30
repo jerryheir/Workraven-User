@@ -4,38 +4,45 @@ import { DotsLoader } from "react-native-indicator";
 import { color } from "../Styles/Color";
 
 class ButtonAtom extends React.PureComponent {
+    componentDidMount(){
+        this.timer = null;
+    }
     state = {
-        loading: true
+        loading: false,
+        disabled: false
     }
     clicked = () => {
-        this.setState({ loading: false });
-        setTimeout(() => {
-            this.setState({ loading: true });
+        this.setState({ loading: true, disabled: true });
+        this.timer = setTimeout(() => {
+            this.setState({ loading: false, disabled: false });
         }, 1500);
     }
     showLoader = () => {
-        
-    }
-    render(){
-        if (this.state.loading) {
+        if (!this.state.loading) {
             return (
-                <TouchableOpacity
-                style={this.props.style}
-                disabled={this.props.disabled ? this.props.disabled : false}
-                onPress={()=>{this.clicked()
-                    this.props.onPress()
-                }}
-                >
-                    <Text style={this.props.normal ? styles.buttonText : styles.footerText}>{this.props.text}</Text>
-                </TouchableOpacity>
+                <Text style={this.props.normal ? [styles.buttonText, this.props.textStyle] : [styles.footerText, this.props.textStyle]}>{this.props.text}</Text>
             )
         } else {
             return (
-                <View style={[this.props.style, { backgroundColor: '#FFF' }]}>
-                    <DotsLoader color={color.primary}/>
-                </View>
+                <DotsLoader color={color.primary}/>
             )
         }
+    }
+    componentWillUnmount(){
+        clearTimeout(this.timer);
+    }
+    render(){
+        return (
+            <TouchableOpacity
+            style={!this.state.loading ? this.props.style : [this.props.style, { backgroundColor: '#FFF' }]}
+            disabled={this.props.disabled ? this.props.disabled : this.state.disabled}
+            onPress={()=>{this.clicked()
+                this.props.onPress()
+            }}
+            >
+                {this.showLoader()}
+            </TouchableOpacity>
+        )
     }
 }
 
@@ -45,14 +52,13 @@ const styles = StyleSheet.create({
     footerText: {
         alignSelf: 'center',
         color: '#FFFFFF',
-        fontSize: 15,
-        fontWeight: 'bold',
-        height: 15
+        fontSize: 16,
+        fontFamily: 'Lato-Bold',
     },
     buttonText: {
         textAlign: 'center',
         color: '#FFFFFF',
-        fontWeight: 'bold',
-        fontSize: 12
+        fontSize: 12,
+        fontFamily: 'Lato-Bold',
     }
 })

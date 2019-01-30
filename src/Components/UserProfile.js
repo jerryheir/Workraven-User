@@ -4,14 +4,14 @@ import { data } from "../config/data";
 import NotificationListAtom from "../Atoms/NotificationListAtom";
 import { color } from "../Styles/Color";
 import { storeItem, retrieveItem } from '../Functions';
+import { BASE_URL } from '../config/api';
 
 class UserProfile extends React.Component {
     async componentDidMount() {
         const userId = await retrieveItem('userId');
         const token = await retrieveItem('encoded');
-        console.log(token);
         const pic = await retrieveItem('imageUrl');
-        fetch(`https://progoapi.tk/v1/users/${userId}`, {
+        fetch(`${BASE_URL}/v1/users/${userId}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',

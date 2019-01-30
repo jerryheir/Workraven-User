@@ -10,7 +10,7 @@ class NotificationListAtom extends React.PureComponent {
             style={styles.row}
             // onPress={this.props.onPress}
             >
-                <View style={styles.circle}><Icon name="ios-add" style={{ color: color.white, fontSize: 20, padding: 3, fontWeight: '600', }} /></View>
+                <View style={styles.circle}><Text style={{ color: color.white, fontSize: 20, fontWeight: 'bold', }}>+</Text></View>
                 <Text style={styles.text}>{this.props.order}</Text>
                 <Text style={[styles.text, {fontSize: 9, fontStyle: 'italic'}]}>{this.props.time}</Text>
             </TouchableOpacity>
@@ -34,12 +34,13 @@ const styles = StyleSheet.create({
         shadowColor: 'rgba(0, 0, 0, 0.3)',
         shadowOpacity: 2,
         shadowOffset: { width: 0, height: 2 },
+        elevation: 3,
         marginBottom: 10,
     },
     circle: {
-        height: 25,
-        width: 25,
-        borderRadius: 13,
+        height: 28,
+        width: 28,
+        borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FF8C8C',
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     text: {
         paddingLeft: 12,
         fontSize: 12,
-        color: '#4F4F4F'
+        color: '#4F4F4F',
+        fontFamily: 'Lato-Regular',
     }
 })

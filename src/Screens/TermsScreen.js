@@ -18,6 +18,7 @@ class TermsScreen extends React.Component {
                 headerText="Terms and Conditions"
                 subHeaderText="Enter a referral code if any..."
                 navigation={this.props.navigation}
+                formContainerStyle={{height: '75%' }}
                 >
                     <Terms navigation={this.props.navigation}/>
                 </SignUpWrapper>

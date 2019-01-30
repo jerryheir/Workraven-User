@@ -20,7 +20,9 @@ export default TinyWhiteButton;
 const styles = StyleSheet.create({
     text: {
         color: color.primary,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontSize: 12,
+        fontFamily: 'Lato-Regular',
     },
     skip: {
         backgroundColor: '#FFFFFF',

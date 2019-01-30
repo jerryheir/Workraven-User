@@ -10,9 +10,9 @@ import {
 import { color } from "../Styles/Color";
 import InputAtom from "../Atoms/InputAtom";
 import ButtonAtom from "../Atoms/ButtonAtom";
-import Toast from 'react-native-easy-toast';
 import ImageAtom from "../Atoms/ImageAtom";
 import { storeItem, retrieveItem } from '../Functions';
+import { BASE_URL } from '../config/api';
 
 class EditProfile extends React.Component {
     async componentDidMount() {
@@ -26,7 +26,7 @@ class EditProfile extends React.Component {
         }
 
 
-        fetch(`https://progoapi.tk/v1/users/${userId}`, {
+        fetch(`${BASE_URL}/v1/users/${userId}`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -75,7 +75,7 @@ class EditProfile extends React.Component {
     if (firstName.length === 0 || lastName.length === 0 || address.length === 0) {
       return Alert.alert('All fields are required')
     } else {
-      fetch(`https://progoapi.tk/v1/users/${userId}`, {
+      fetch(`${BASE_URL}/v1/users/${userId}`, {
             method: 'PUT',
             headers: {
               'Accept': 'application/json',
@@ -86,7 +86,7 @@ class EditProfile extends React.Component {
           }) .then((response) => response.json())
           .then((responseJson) => {
             if (responseJson.status === 'success') {
-              storeItem('firstname',firstName);
+              storeItem('firstname', firstName);
               this.props.navigation.state.params.returnData( pic, firstName, lastName );
               this.props.navigation.goBack();
             } else {
@@ -105,20 +105,22 @@ class EditProfile extends React.Component {
             <ScrollView style={{ backgroundColor: 'white', flex: 1 }}>
                 <ImageAtom navigation={this.props.navigation}/>
                 <View style={styles.container}>
-                    <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 64, justifyContent: 'space-between'}}>
+                    <View style={{ flexDirection: 'row', width: Dimensions.get('window').width - 42, justifyContent: 'space-between'}}>
                         <InputAtom
                         onChangeText={firstName => this.setState({ firstName })}
                         value={this.state.firstName}
                         label="First Name"
                         keyboardType="default"
-                        style={{width: '40%' }}
+                        style={{width: '46%' }}
+                        itemStyle={{ width: '46%' }}
                         />
                         <InputAtom
                         onChangeText={lastName => this.setState({ lastName })}
                         value={this.state.lastName}
                         label="Last Name"
                         keyboardType="default"
-                        style={{width: '44%' }}
+                        style={{width: '46%' }}
+                        itemStyle={{ width: '46%' }}
                         />
                     </View>
                         <InputAtom
@@ -136,7 +138,6 @@ class EditProfile extends React.Component {
                         disabled={true}
                         style={{ backgroundColor: '#F2F2F2'}}
                         />
-                        <Toast ref="toast"/>
                         <ButtonAtom
                         style={styles.buttonContainer}
                         onPress={this.handleSubmit}
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
       flex:1,
       paddingTop: 15,
       paddingBottom: 10,
-      width: Dimensions.get('window').width - 64,
+      width: Dimensions.get('window').width - 42,
       alignSelf: 'center',
       backgroundColor: 'white',
       marginTop: 29

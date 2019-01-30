@@ -1,30 +1,38 @@
 import React, { Component } from 'react';
-// import {connect} from 'react-redux';
 import {
   View,
-  Alert,
   StyleSheet,
   Dimensions,
+  Animated,
   Image,
   Platform,
   Text,
   TouchableOpacity
 } from 'react-native';
-// import { signin } from '../actions/auth/auth.actions';
-import Toast from 'react-native-easy-toast';
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
 import { color } from '../Styles/Color';
 import { storeItem } from "../Functions";
 import TinyWhiteButton from '../Atoms/TinyWhiteButton';
 import { Icon } from 'native-base';
+import * as Keychain from 'react-native-keychain';
+import jwt_decode from "jwt-decode";
+import { WR_SECRET_CODE, BASE_URL } from '../config/api';
+const CryptoJS = require("crypto-js");
 
 class TinyWhite extends React.PureComponent {
+  state = {
+    disabled: false
+  }
   render(){
       return (
           <TouchableOpacity
           style={[styles.skip, this.props.style]}
-          onPress={this.props.onPress}
+          disabled={this.state.disabled}
+          onPress={()=>{
+            this.props.onPress()
+            this.setState({ disabled: true })
+          }}
           >
               <Icon name={Platform.OS === 'ios' ? "ios-call" : "md-call"} 
               style={{ color: color.primary, fontSize: 18, marginRight: 10 }}
@@ -36,29 +44,98 @@ class TinyWhite extends React.PureComponent {
 }
 
 class PhoneVerification extends Component {
+  constructor(props) {
+    super(props);
+    this.error = new Animated.ValueXY({ x: 0, y: -100 });
+  }
     state = {
-      phone: '',
+      phone: '+234',
       otp: '',
       disabled: true,
       buttonText: 'SEND OTP TO PHONE',
       button: false,
-      color: color.primary
+      color: color.primary,
+      error: ''
+    }
+
+    phoneFormat = (phone) => {
+      switch(true){
+        case (phone === '+23408' && this.state.phone === '+2340'):
+          this.setState({ phone: '+2348' })
+          break;
+        case (phone === '+23407' && this.state.phone === '+2340'):
+          this.setState({ phone: '+2347' })
+          break;
+        case (phone === '+23409' && this.state.phone === '+2340'):
+          this.setState({ phone: '+2349' })
+          break;
+        case (this.state.phone === '+23401' || this.state.phone === '+23402' || this.state.phone === '+23403' || this.state.phone === '+23404' || this.state.phone === '+23405' || this.state.phone === '+23406' || this.state.phone === '+23400'):
+          this.setState({ phone: '+234' })
+          break;
+        case (this.state.phone.charAt(0) !== '+' || this.state.phone.charAt(1) !== '2' || this.state.phone.charAt(2) !== '3' || this.state.phone.charAt(3) !== '4'):
+          this.setState({ phone: '+234' })
+          break;
+        default:
+          this.setState({ phone })
+          break;
+      }
+    }
+
+    displayError = () =>{
+      Animated.timing(
+        this.error,
+        {
+          toValue: ({ x: 0, y: -400 }),
+          duration: 2500,
+          delay: 1000
+        }
+      ).start(()=>{
+        this.setState({ error: '' });
+        this.error.setValue({ x: 0, y: -100 })
+      })
     }
 
 callSubmit = () => {
   console.log('Call button was clicked...');
+  fetch(`${BASE_URL}/v1/users/call_with_otp`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'phone': this.state.phone
+    }),
+  }) .then((response) => response.json())
+  .then((responseJson) => {
+    console.log(responseJson);
+    if (responseJson.status === "success"){
+      this.setState({ disabled: false, buttonText: 'VERIFY MY OTP', button: true, color: '#C190C7' });
+    } else {
+      this.setState({ error: responseJson.message }, 
+      ()=>{
+          this.displayError()
+      })
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+    this.setState({ error: 'An Error occurred' }, 
+    ()=>{
+        this.displayError()
+    })
+  })
 }
 
 handleSubmit1 = () => {
-  const { navigation } = this.props;
-  const state = navigation.getParam('state', '');
-  console.log(state);
   const { phone } = this.state;
-  if(phone.length === 0 || phone.length < 10){
-        Alert.alert('Enter correct number format');
-  }
-  else {
-    fetch('https://progoapi.tk/v1/users/resend_otp', {
+  if(phone.length === 0 || phone.length < 14){
+        this.setState({ error: 'Enter correct number format' }, 
+          ()=>{
+              this.displayError()
+          })
+  } else {
+    fetch(`${BASE_URL}/v1/users/resend_otp`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -73,65 +150,97 @@ handleSubmit1 = () => {
           if (responseJson.status === "success"){
             this.setState({ disabled: false, buttonText: 'VERIFY MY OTP', button: true, color: '#C190C7' });
           } else {
-            Alert.alert(responseJson.message)
+            this.setState({ error: responseJson.message }, 
+            ()=>{
+              this.displayError()
+            })
           }
         })
         .catch((error) => {
           console.log(error);
-          Alert.alert('Some internal error occured!!!');
-          this.refs.toast.show('Wrong Email or Password');
+          this.setState({ error: 'An Error occured' }, 
+          ()=>{
+              this.displayError()
+          })
         })
   }
 }
 
-handleSubmit = () => {
+handleSubmit = async () => {
   const { navigation } = this.props;
-  const state = navigation.getParam('state', '');
-  console.log(state);
+  const state = await navigation.getParam('state', '');
+  const action = await navigation.getParam('action', '');
+  let obj = action === 'skip' ? {
+    'firstname': state.firstname,
+    'lastname': state.lastname,
+    'email': state.email,
+    'password': state.password,
+    'address': 'From Lagos Nigeria',
+    'phone': this.state.phone
+  } : {
+    'firstname': state.firstname,
+    'lastname': state.lastname,
+    'email': state.email,
+    'password': state.password,
+    'address': 'From Lagos Nigeria',
+    'auth_token': state.authorizationCode,
+    'reference_code': state.reference_code,
+    'phone': this.state.phone
+  };
+  console.log(obj);
   const { phone } = this.state;
-  if(phone.length === 0 || phone.length < 10){
-        Alert.alert('Enter correct number format');
+  if(phone.length === 0 || phone.length < 14){
+        this.setState({ error: 'Enter correct number format' }, 
+          ()=>{
+              this.displayError()
+        })
   }
   else {
-    fetch('https://progoapi.tk/v1/users/signup?type=user', {
+    fetch(`${BASE_URL}/v1/users/signup?type=user`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            'firstname': state.firstname,
-            'lastname': state.lastname,
-            'email': state.email,
-            'password': state.password,
-            'address': state.address,
-            'phone': this.state.phone
-          }),
+          body: JSON.stringify(obj),
         }) .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
           if (responseJson.status === "success"){
             this.setState({ disabled: false, buttonText: 'VERIFY MY OTP', button: true, color: '#C190C7' });
           } else {
-            Alert.alert(responseJson.message);
+            this.setState({ error: responseJson.message }, 
+            ()=>{
+                this.displayError()
+            })
           }
         })
         .catch((error) => {
           console.log(error);
-          this.refs.toast.show('Wrong Email or Password');
+          this.setState({ error: 'An Error occurred' }, 
+          ()=>{
+              this.displayError()
+          })
         })
   }
 }
-sendOtp = () => {
+sendOtp = async () => {
   const { otp, phone } = this.state;
   const { navigation } = this.props;
-  const state = navigation.getParam('state', '');
+  const state = await navigation.getParam('state', '');
+  const action = await navigation.getParam('action', '');
   if (otp.length === 0) {
-    return Alert.alert('Enter the OTP you received!');
+    this.setState({ error: 'Enter the OTP you received!' }, 
+    ()=>{
+        this.displayError()
+    })
   } else if (otp.length < 5) {
-    return Alert.alert('Please enter valid OTP');
+    this.setState({ error: 'Please enter valid OTP' }, 
+    ()=>{
+        this.displayError()
+    })
   } else {
-    fetch(`https://progoapi.tk/v1/users/${phone}/verify_otp`, {
+    fetch(`${BASE_URL}/v1/users/${phone}/verify_otp`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -144,18 +253,71 @@ sendOtp = () => {
         .then((responseJson) => {
           console.log(responseJson);
           if (responseJson.status !== 'success') {
-            this.refs.toast.show('An error occurred!');
+            this.setState({ error: 'Incorrect OTP entered or Phone number input' }, 
+            ()=>{
+                this.displayError()
+            })
           } else {
-            storeItem('phone', `${phone}`);
-            storeItem('email', state.email);
-            storeItem('password', state.password);
-            storeItem('terms', false);
-            this.props.navigation.navigate('CreditCard', { email: state.email, password: state.password });
+            let stage = CryptoJS.AES.encrypt('1', WR_SECRET_CODE); // 1 is phone verification passed
+            storeItem('stage', stage.toString())
+            storeItem(this.state.email+'terms', false);
+            const username = state.email;
+            const password = state.password;
+            fetch(`${BASE_URL}/v1/users/login?type=user`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: username,
+                password: password
+              }),
+            }) .then((response) => response.json())
+            .then((responseJson) => {
+              console.log(responseJson.status)
+              if (responseJson.status === "success") {
+                console.log('I ran. WTF')
+                  const token = responseJson.data.token;
+                  const decoded = jwt_decode(token);
+                  // let mainToken = CryptoJS.AES.encrypt(token, WR_SECRET_CODE);
+                  // let uId = CryptoJS.AES.encrypt(decoded.id, WR_SECRET_CODE);
+                  // let stage = CryptoJS.AES.encrypt('2', WR_SECRET_CODE);
+                  storeItem('terms', true);
+                  // storeItem('token', mainToken.toString());
+                  // storeItem('uId', uId.toString());
+                  // storeItem('stage', stage.toString());
+                  const userId = decoded.id;
+                  let obj = {
+                    token: token,
+                    userId: userId
+                  }
+                  let password = JSON.stringify(obj);
+                  Keychain.setGenericPassword(username, password);
+                  storeItem('newUser', true);
+                  navigation.navigate('Terms', { action: action, userId, token, param: "NEW_USER" });
+             }
+             else if (responseJson.status !== "success") {
+                this.setState({ error: 'An error occurred... Try again later' }, 
+                ()=>{
+                    this.displayError()
+                })
+              } 
+            })
+            .catch((error) => {
+              this.setState({ error: 'An error occurred... Try again later' }, 
+              ()=>{
+                  this.displayError()
+              })
+            })
           }
         })
         .catch((error) => {
           console.log(error);
-          this.refs.toast.show('Incorrect OTP entered or Phone number input');
+          this.setState({ error: 'An Error occurred' }, 
+          ()=>{
+              this.displayError()
+          })
         })
   }
 }
@@ -163,33 +325,58 @@ sendOtp = () => {
     const { disabled, otp } = this.state;
     return (
       <View style={styles.container}>
-      <View style={{ height: 120, width: 120, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginBottom: 25 }}>        
-      <Image 
-        source={disabled || otp.length !== 5 ? require('../assests/phone.png') : require('../assests/phone2.png')} 
-        style={styles.image} 
-        />
-      </View>
+            {
+              (this.state.error !== '') &&
+                <Animated.View style={{ 
+                  backgroundColor: '#BE64FF', 
+                  alignItems: 'center',
+                  borderRadius: 3,
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  right: this.error.x,
+                  top: this.error.y,
+                  zIndex: 999
+                }}>
+                  <Text style={{ fontSize: 12, color: 'white', padding: 10 }}>{this.state.error}</Text>
+                  <Icon 
+                  name="md-close" 
+                  style={{ color: 'white', fontSize: 20, padding: 10 }} 
+                  onPress={()=>this.setState({ error: '', disabled: false })}
+                  />
+                </Animated.View>
+            }
       <View>
-        <InputAtom
-          onChangeText={phone => this.setState({ phone })}
-          value={this.state.phone}
-          label="Phone Number"
-          placeholder=""
-          keyboardType="numeric"
-          maxLength={11}
-        />
-        <InputAtom
-          onChangeText={otp => this.setState({ otp, button: false, color: color.primary })}
-          value={this.state.otp}
-          label="OTP Here"
-          style={this.state.disabled ? { backgroundColor: "#C0C0C0" } : {backgroundColor: color.white }}
-          disabledItem={this.state.disabled}
-          disabled={this.state.disabled}
-          keyboardType="numeric"
-          maxLength={5}
-        />
+            <View style={{ height: 120, width: 120, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', marginBottom: 10 }}>        
+              <Image 
+              source={disabled || otp.length !== 5 ? require('../assests/phone.png') : require('../assests/phone2.png')} 
+              style={styles.image} 
+              />
+            </View>
+          <View>
+            <InputAtom
+              onChangeText={this.phoneFormat}
+              value={this.state.phone}
+              label="Phone Number"
+              labelIcon={true}
+              top={-3}
+              keyboardType="numeric"
+              maxLength={14}
+              itemStyle={{ height: 50 }}
+              input={{ height: 40 }}
+            />
+            <InputAtom
+              onChangeText={otp => this.setState({ otp, button: false, color: color.primary })}
+              value={this.state.otp}
+              label="OTP Here"
+              style={this.state.disabled ? { backgroundColor: "#C0C0C0" } : { backgroundColor: color.white }}
+              disabledItem={this.state.disabled}
+              disabled={this.state.disabled}
+              keyboardType="numeric"
+              maxLength={5}
+            />
+          </View>
       </View>
-        <Toast ref="toast"/>
+      <View style={{ }}>
         <ButtonAtom
           style={[disabled ? styles.buttonContainer : styles.buttonContainerNew, {backgroundColor: !disabled && otp.length !== 5 ? '#C190C7' : '#BE64FF'}]}
           onPress={this.state.disabled ? this.handleSubmit : this.sendOtp}
@@ -197,18 +384,20 @@ sendOtp = () => {
           disabled={this.state.button}
           normal={true}
         />
-        {this.state.disabled === false && <View style={{flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center'}}>
+        {!this.state.disabled && <View style={{flexDirection: 'row', width: Dimensions.get('window').width - 42, justifyContent: 'space-between', alignSelf: 'center', marginTop: 10 }}>
         <TinyWhiteButton 
           text={'RESEND OTP'}
-          style={{height: 40, width: 120, marginRight: 24 }}
+          textStyle={{ fontSize: 12, fontFamily: 'Lato-Regular', }}
+          style={{height: 30, width: Platform.OS === 'ios' ? 160 : 150, marginBottom: 0 }}
           onPress={this.handleSubmit1}
         />
         <TinyWhite
-          text={'CALL'}
-          style={{height: 40, width: 120, marginLeft: 24 }}
+          text={'USE CALL'}
+          style={{height: 30, width: Platform.OS === 'ios' ? 160 : 150 }}
           onPress={this.callSubmit}
         />
       </View>}
+      </View>
       </View>
     );
   }
@@ -218,15 +407,8 @@ export default PhoneVerification;
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: Platform.OS === 'ios' ? 50 : 10, // ios ? 70 : 20
-    width: Dimensions.get('window').width - 64,
-    alignSelf: 'center',
-    backgroundColor: '#FFF',
-    flex: 1
-  },
-  containerNew: {
-    paddingBottom: Platform.OS === 'ios' ? 5 : 0, // ios ? 70 : 20
-    width: Dimensions.get('window').width - 64,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 0,
+    width: Dimensions.get('window').width - 42,
     alignSelf: 'center',
     backgroundColor: '#FFF',
     flex: 1
@@ -235,23 +417,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#BE64FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Platform.OS === 'ios' ? 10 : 20,
-    marginBottom: Platform.OS === 'ios' ? 10 : 27, // ios ? 0 : 17
+    marginTop: Platform.OS === 'ios' ? 0 : 0,
+    marginBottom: Platform.OS === 'ios' ? 0 : 0, // ios ? 0 : 17
     borderWidth: 1,
     borderColor: '#C190C7',
-    borderRadius: 25,
-    height: 50
+    borderRadius: Platform.OS === 'ios' ? 23 : 21,
+    height: Platform.OS === 'ios' ? 46 : 42
   },
   buttonContainerNew: {
     backgroundColor: '#BE64FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Platform.OS === 'ios' ? 10 : 10,
-    marginBottom: Platform.OS === 'ios' ? 10 : 10, // ios ? 0 : 17
+    marginTop: Platform.OS === 'ios' ? 0 : 0,
+    marginBottom: Platform.OS === 'ios' ? 0 : 0, // ios ? 0 : 17
     borderWidth: 1,
     borderColor: '#C190C7',
-    borderRadius: 25,
-    height: 50
+    borderRadius: Platform.OS === 'ios' ? 23 : 21,
+    height: Platform.OS === 'ios' ?46 : 42
   },
   image: {
     height: 100,
@@ -260,7 +442,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: color.primary,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontSize: 12,
+    fontFamily: 'Lato-Regular'
   },
   skip: {
       backgroundColor: '#FFFFFF',
@@ -270,7 +454,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       borderColor: '#C190C7',
       alignSelf: 'center',
-      marginBottom: 15,
       shadowColor: 'rgba(0, 0, 0, 0.2)',
       shadowOpacity: 1,
       shadowOffset: { width: 0, height: 1 },

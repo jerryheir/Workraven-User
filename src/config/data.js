@@ -26,7 +26,7 @@ export const chatList = [
     {
         key: '3',
         type: 'reply',
-        body: [ "No one", "Carpenters", "Electricians", "Bricklayers", "Plumbers", "Home appliance repairers" ],
+        body: [ "Carpenters", "Electricians", "Bricklayers", "Plumbers", "Home appliance repairers" ],
         additional: ''
     },
     {
@@ -98,6 +98,100 @@ export const chatList = [
         key: '11',
         type: 'reply',
         body: ["Edit?", "Yes! Continue"],
+        additional: ''
+    }
+];
+
+
+export const ratingThreeFourList = [
+    {
+        key: '1',
+        type: 'raven',
+        body: `How can we improve WorkRaven?`,
+        additional: ''
+    },
+    {
+        key: '2',
+        type: 'reply',
+        body: [ "Get More Pro’s", "Customer Service", "App Navigation", "Reduce ETA", "Pro’s appearance" ],
+        additional: ''
+    },
+    {
+        key: '3',
+        type: 'raven',
+        body: 'Please tell us more about your experience?',
+        additional: ''
+    },
+    {
+        key: '4',
+        type: 'reply',
+        body: 'text-input',
+        additional: ''
+    },
+    {
+        key: '5',
+        type: 'raven',
+        body: 'Thank you for using WorkRaven',
+        additional: ''
+    },
+];
+
+export const ratingOneTwoList = [
+    {
+        key: '1',
+        type: 'raven',
+        body: `This is a very poor rating. What was the problem?`,
+        additional: ''
+    },
+    {
+        key: '2',
+        type: 'reply',
+        body: [ "Poor work done", "Pro was rude", "Bad Customer Service ", "App not easy to use", "Long wait time" ],
+        additional: ''
+    },
+    {
+        key: '3',
+        type: 'raven',
+        body: 'Tell me a little more about it',
+        additional: ''
+    },
+    {
+        key: '4',
+        type: 'reply',
+        body: 'text-input',
+        additional: ''
+    },
+    {
+        key: '5',
+        type: 'raven',
+        body: 'Noted. We apologize this and we hope to improve on that. Thank you for using WorkRaven',
+        additional: ''
+    }
+];
+
+export const ratingFiveList = [
+    {
+        key: '1',
+        type: 'raven',
+        body: `Yay! What did you like the most about Workraven?`,
+        additional: ''
+    },
+    {
+        key: '2',
+        type: 'reply',
+        body: [ "Excellent service", "Customer Service", "Work Done", "WR made my day", "Ease of use" ],
+        additional: ''
+    },
+    {
+        key: '3',
+        type: 'raven',
+        body: 'Thanks for your feedback! Please share your experience',
+        additional: ''
+    },
+    {
+        key: '4',
+        type: 'reply',
+        body: 'share-reply',
         additional: ''
     }
 ];

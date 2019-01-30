@@ -11,7 +11,7 @@ class SignUpScreen extends React.Component {
                 navigation={this.props.navigation}
                 >
                     <SignUpForm onPress={(state)=> {
-                        this.props.navigation.navigate('Phone', { state });
+                        this.props.navigation.navigate('CreditCard', { state });
                     }}/>
                 </SignUpWrapper>
         )

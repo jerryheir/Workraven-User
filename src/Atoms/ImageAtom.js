@@ -13,7 +13,7 @@ import {
     Platform
   } from 'react-native';
 import * as firebase from 'firebase';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import ImagePicker from "react-native-image-crop-picker";
 import { color } from "../Styles/Color";
 import { storeItem, retrieveItem } from "../Functions";

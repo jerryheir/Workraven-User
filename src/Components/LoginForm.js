@@ -1,47 +1,68 @@
 import React, { Component } from 'react';
-// import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
 import {
   View,
-  Alert,
+  Text,
   StyleSheet,
   Dimensions,
   Platform,
+  Animated,
   AsyncStorage
 } from 'react-native';
-import Toast from 'react-native-easy-toast'
+import { Icon } from "native-base";
 import ButtonAtom from '../Atoms/ButtonAtom';
 import InputAtom from '../Atoms/InputAtom';
+import { BASE_URL } from '../config/api';
+import * as Keychain from 'react-native-keychain';
 
 class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+    this.error = new Animated.ValueXY({ x: 0, y: -100 });
+  }
     state = {
       email: '',
-      password: ''
+      password: '',
+      error: '',
+      disabled: false
     }
 
-    storeItem = async (key, item) => {
-      try {
-        const jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
-          return jsonOfItem;
-      } catch (error) {
-        console.log(error.message);
-      }
+    displayError = () => {
+      Animated.timing(
+        this.error,
+        {
+          toValue: ({ x: 0, y: -400 }),
+          duration: 2500,
+          delay: 1000
+        }
+      ).start(()=>{
+        this.setState({ error: '', disabled: false });
+        this.error.setValue({ x: 0, y: -100 })
+      })
     }
 
     handleSubmit = () => {
+      this.setState({ disabled: true })
       const { email, password }= this.state;
       const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (email.length === 0 || password.length === 0) {
-        return Alert.alert('Please fill all fields')
-      } else if (reg.test(this.state.email) !== true || email.length < 8) {
-        return Alert.alert('Please enter a correct email format')
+        this.setState({ error: 'Please fill all fields' }, 
+        ()=>{
+          this.displayError()
+        })
+      } else if (email.length < 8) {
+        this.setState({ error: 'Please enter a correct email format' }, 
+        ()=>{
+          this.displayError()
+        })
       } else if(password.length < 7) {
-        Alert.alert('Password length should not be less than 7')
-      } else if (password.length === 0) {
-        return Alert.alert('Password cannot be empty')
+        this.setState({ error: 'Incorrect details. Please try again later.' }, 
+        ()=>{
+          this.displayError()
+        })
       } else {
         console.log(this.state.email, this.state.password)
-        fetch('https://progoapi.tk/v1/users/login?type=user', {
+        fetch(`${BASE_URL}/v1/users/login?type=user`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -55,21 +76,31 @@ class LoginForm extends Component {
         .then((responseJson) => {
           console.log(responseJson);
           if (responseJson.status !== 'success') {
-            this.refs.toast.show('Wrong Email or Password')
+            this.setState({ error: 'Unsuccessful. Please try again later' }, 
+            ()=>{
+              this.displayError()
+            })
           } else {
+            let username = this.state.email;
             const { token } = responseJson.data;
             const decoded = jwt_decode(token);
-            this.storeItem('token', decoded);
-            this.storeItem('encoded', token);
-            const type = decoded.type.name;
             const userId = decoded.id;
-            this.storeItem('userId', userId);
-            this.props.navigation.navigate('Tabs', { userId, type })
+            let obj = {
+              token: token,
+              userId: userId
+            }
+            let password = JSON.stringify(obj);
+            Keychain.setGenericPassword(username, password).then(()=>{
+              this.props.navigation.navigate('Tabs');
+            })
           }
         })
         .catch((error) => {
           console.log(error);
-          this.refs.toast.show('Wrong Email or Password');
+          this.setState({ error: 'An error occurred. Please try again'}, 
+          ()=>{
+            this.displayError()
+          })
         })
       }
     }
@@ -78,25 +109,56 @@ class LoginForm extends Component {
       <View         
       style={styles.container}
       >
-        <InputAtom
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-          label="Email"
-          keyboardType="email-address"
-        />
-        <InputAtom
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-          label="Password"
-          secureTextEntry={true}
-        />
-        <Toast ref="toast"/>
-        <ButtonAtom
-        style={styles.buttonContainer}
-        onPress={this.handleSubmit}
-        text={'LOGIN'}
-        normal={true}
-        />
+      {
+        (this.state.error !== '') &&
+        <Animated.View style={{ 
+          backgroundColor: '#BE64FF', 
+          alignItems: 'center',
+          borderRadius: 3,
+          flexDirection: 'row',
+          position: 'absolute',
+          right: this.error.x,
+          top: this.error.y,
+          zIndex: 999
+        }}>
+          <Text style={{ fontSize: 12, color: 'white', padding: 10 }}>{this.state.error}</Text>
+          <Icon 
+          name="md-close" 
+          style={{ color: 'white', fontSize: 20, padding: 10 }} 
+          onPress={()=>this.setState({ error: '', disabled: false })}
+          />
+        </Animated.View>
+      }
+        <View>
+          <InputAtom
+            onChangeText={email => this.setState({ email: email.trim() })}
+            value={this.state.email}
+            label="Email or Phone"
+            keyboardType="email-address"
+            itemStyle={{ height: 50 }}
+            input={{ height: 40 }}
+            maxLength={40}
+          />
+          <InputAtom
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+            label="Password"
+            secureTextEntry={true}
+            icon={true}
+            itemStyle={{ height: 50 }}
+            input={{ height: 40 }}
+            maxLength={20}
+          />
+        </View>
+        <View style={{ justifyContent: 'center' }}>
+          <ButtonAtom
+          style={styles.buttonContainer}
+          onPress={this.handleSubmit}
+          text={'LOGIN'}
+          normal={true}
+          disabled={this.state.disabled}
+          />
+        </View>
       </View>
     );
   }
@@ -106,16 +168,16 @@ export default LoginForm;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: Platform.OS === 'ios' ? 20 : 0,
     paddingBottom: Platform.OS === 'ios' ? 20 : 0,
-    width: Dimensions.get('window').width - 66,
+    width: Dimensions.get('window').width - 42,
     alignSelf: 'center'
   },
   buttonContainer: {
     backgroundColor: '#BE64FF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 18,
     borderWidth: 1,
     borderColor: '#C190C7',
     borderRadius: 25,

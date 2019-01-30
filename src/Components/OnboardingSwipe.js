@@ -5,43 +5,13 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  ImageBackground,
   Platform
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import ButtonAtom from '../Atoms/ButtonAtom';
 import TinyWhiteButton from '../Atoms/TinyWhiteButton';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-class TriangleUp extends React.Component {
-  render(){
-    return (
-      <View style={[styles.triangle, this.props.style]} />
-    )
-  }
-}
-
-class TriangleDown extends React.Component {
-  render(){
-    return (
-      <TriangleUp style={[styles.triangleDown, this.props.style]}/>
-    )
-  }
-}
-
-class Parallelogram extends React.Component {
-  render(){
-    return (
-      <View style={styles.parallelogram}>
-        <View style={styles.parallelogramInner}>
-          {this.props.children}
-        </View>
-        <TriangleDown style={styles.parallelogramLeft} />
-        <TriangleUp style={styles.parallelogramRight} />
-      </View>
-    )
-  }
-}
+import * as Keychain from 'react-native-keychain';
 
 const width = Platform.OS === 'ios' ? 235 : 200;
 const height = Platform.OS === 'ios' ? 325 : 275;
@@ -82,14 +52,24 @@ export default class OnboardingSwipe extends React.Component {
                 source={require('../assests/onboarding2.png')}
               />
             </View>
-            <Parallelogram>
-              <Text style={styles.firstText}>
-          Aut dignissimos
-              </Text>
-              <Text style={styles.secondText}>
-          Aut dignissimos quibusdam et laborum quibusdam.
-              </Text>
-            </Parallelogram>
+            <ImageBackground 
+            source={require('../assests/images/rectangleOnboard.png')} 
+            style={{ 
+              alignSelf: 'center', 
+              marginTop: 20, 
+              padding: 10,
+              paddingVertical: 20,
+
+            }}
+            resizeMode="contain"
+            >
+                <Text style={styles.firstText}>
+                  Aut dignissimos
+                </Text>
+                <Text style={styles.secondText}>
+                  Aut dignissimos quibusdam et laborum quibusdam.
+                </Text>
+            </ImageBackground>
           </View>
           <View>
             <View style={styles.cover}>
@@ -98,14 +78,24 @@ export default class OnboardingSwipe extends React.Component {
                 source={require('../assests/onboarding1.png')}
               />
             </View>
-            <Parallelogram>
-              <Text style={styles.firstText}>
-          Aut dignissimos
-              </Text>
-              <Text style={styles.secondText}>
-          Aut dignissimos quibusdam et laborum quibusdam.
-              </Text>
-              </Parallelogram>
+            <ImageBackground 
+            source={require('../assests/images/rectangleOnboard.png')} 
+            style={{ 
+              alignSelf: 'center', 
+              marginTop: 20, 
+              padding: 10,
+              paddingVertical: 20,
+
+            }}
+            resizeMode="contain"
+            >
+                <Text style={styles.firstText}>
+                  Aut dignissimos
+                </Text>
+                <Text style={styles.secondText}>
+                  Aut dignissimos quibusdam et laborum quibusdam.
+                </Text>
+            </ImageBackground>
           </View>
           <View>
             <View style={styles.cover}>
@@ -114,14 +104,24 @@ export default class OnboardingSwipe extends React.Component {
                 source={require('../assests/onboarding3.png')}
               />
             </View>
-            <Parallelogram>
-              <Text style={styles.firstText}>
-          Aut dignissimos
-              </Text>
-              <Text style={styles.secondText}>
-          Aut dignissimos quibusdam et laborum quibusdam.
-              </Text>
-              </Parallelogram>
+            <ImageBackground 
+            source={require('../assests/images/rectangleOnboard.png')} 
+            style={{ 
+              alignSelf: 'center', 
+              marginTop: 20, 
+              padding: 10,
+              paddingVertical: 20,
+
+            }}
+            resizeMode="contain"
+            >
+                <Text style={styles.firstText}>
+                  Aut dignissimos
+                </Text>
+                <Text style={styles.secondText}>
+                  Aut dignissimos quibusdam et laborum quibusdam.
+                </Text>
+            </ImageBackground>
           </View>
         </Swiper>
         <View>
@@ -131,7 +131,6 @@ export default class OnboardingSwipe extends React.Component {
           />
           <ButtonAtom
           style={[ styles.disabled, { backgroundColor: this.state.disabled ? '#d4c1dd' : '#BE64FF' } ]}
-          //style={(this.state.disabled === true) ? styles.disabled : styles.footer}
           disabled={this.state.disabled}
           onPress={this.goToLogin}
           text={'Next'}
@@ -157,6 +156,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#4F4F4F',
     fontWeight: 'bold',
+    fontFamily: 'Lato-Regular',
   },
   secondText: {
     fontSize: 14,
@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
     paddingLeft: 38,
     paddingRight: 38,
     textAlign: 'center',
-    color: '#C190C7'
+    color: '#C190C7',
+    fontFamily: 'Lato-Regular',
   },
   textContainer: {
     height: 85,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PushNotificationIOS, View, Text, AlertIOS, Alert, TouchableOpacity, TextInput } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
 // import PushNotification from '@aws-amplify/pushnotification';
-import awsmobile from './aws-exports';
+import awsmobile from '../aws-exports';
 import Amplify/*, { Analytics }*/ from 'aws-amplify';
 import RNPaystack from 'react-native-paystack';
 
@@ -26,9 +26,7 @@ const analyticsConfig = {
   }
 }
 
-// PushNotification need to work with Analytics
 Analytics.configure(awsmobile);
-// PushNotification.configure(awsmobile);
 
 export default class App extends React.Component {
   /*componentDidMount() {
@@ -37,12 +35,44 @@ export default class App extends React.Component {
       // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     });
+
+    /*async createNotificationListeners() {
+  /*
+  * Triggered when a particular notification has been received in foreground
+
+  this.notificationListener = firebase.notifications().onNotification((notification) => {
+    const { title, body } = notification;
+    this.showAlert(title, body);
+});
+
+/*
+* If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+    const { title, body } = notificationOpen.notification;
+    this.showAlert(title, body);
+});
+
+/*
+* If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+const notificationOpen = await firebase.notifications().getInitialNotification();
+if (notificationOpen) {
+    const { title, body } = notificationOpen.notification;
+    this.showAlert(title, body);
+}
+/*
+* Triggered for data only payload in foreground
+
+this.messageListener = firebase.messaging().onMessage((message) => {
+  //process data message
+  console.log(JSON.stringify(message));
+});
+}*/
   
     // gets the registration token
-    PushNotification.onRegister((token) => {
+    /*PushNotification.onRegister((token) => {
       AlertIOS.alert('in app registration', token);
     });
-  }*/
+}*/
   state = {
     amount: 0,
     email: '',
@@ -76,7 +106,7 @@ export default class App extends React.Component {
       .then(response => {
         console.log(response);
         console.log('successfully charged');
-        AlertIOS.alert('User was charged 1 Naira'); // do stuff with the token
+        AlertIOS.alert('User was charged 1 Naira');
         fetch('https://api.paystack.co/transaction/verify/jh234uh438iwuei96', {
               method: 'GET',
               headers: {
@@ -145,7 +175,7 @@ export default class App extends React.Component {
         })
   }
   intialize = () => {
-    fetch('https://api.paystack.co/transaction/initialize', {
+    /*fetch('https://api.paystack.co/transaction/initialize', {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer sk_test_fecd0cd226bd1265bee5d526e03d6f280bf3d056',
@@ -169,22 +199,23 @@ export default class App extends React.Component {
             })
         .catch((error) => {
           console.log(error);
-        })
+        })*/
 
-    /*RNPaystack.chargeCard({
-      cardNumber: this.state.card, 
-      expiryMonth: this.state.month, 
-      expiryYear: this.state.year, 
-      cvc: this.state.ccv,
+    RNPaystack.chargeCard({
+      cardNumber: '4084084084084081', 
+      expiryMonth: '11', 
+      expiryYear: '20', 
+      cvc: '408',
       email: this.state.email,
       amountInKobo: 100,
     })
     .then(response => {
       console.log(response); // do stuff with the token
+      AlertIOS.alert(response.reference);
     })
     .catch(error => {
       console.log(error.message);
-    })*/
+    })
   }
   render(){
     return (
@@ -324,3 +355,153 @@ const styles = StyleSheet.create({
 
 // [GMSServices provideAPIKey:@"AIzaSyA4Px93uD9nzyzcMvVtk0g3yR1oicwTzbE"];
 */
+
+/*<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/wheelsWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:foregroundGravity="center"
+        >
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            app:npv_ShowCount="5"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="false"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_DividerColor="#cccccc"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            app:npv_ShowCount="5"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="true"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_DividerColor="#cccccc"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            app:npv_ShowCount="5"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="true"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_DividerColor="#cccccc"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            app:npv_ShowCount="5"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="false"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_DividerColor="#cccccc"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/hour"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_toEndOf="@+id/day"
+            android:layout_toRightOf="@+id/day"
+            app:npv_DividerColor="#cccccc"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_ShowCount="5"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="true"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_toEndOf="@+id/hour"
+            android:layout_toRightOf="@+id/hour"
+            app:npv_DividerColor="#cccccc"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_ShowCount="5"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="true"
+            app:npv_ItemPaddingHorizontal="3dp"
+            />
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/ampm"
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_toEndOf="@+id/minutes"
+            android:layout_toRightOf="@+id/minutes"
+            app:npv_DividerColor="#cccccc"
+            app:npv_RespondChangeOnDetached="false"
+            app:npv_ShowCount="5"
+            app:npv_TextColorNormal="#aaaaaa"
+            app:npv_TextColorSelected="#000000"
+            app:npv_TextSizeNormal="18sp"
+            app:npv_TextSizeSelected="21sp"
+            app:npv_WrapSelectorWheel="true"
+            app:npv_ItemPaddingHorizontal="3dp"
+            android:foregroundGravity="center"
+
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/overlay_top"
+        android:src="@drawable/overlay"
+        android:layout_width="match_parent"
+        android:contentDescription="@string/overlay"
+        android:layout_height="20dp"
+        android:rotation="180"
+        />
+
+    <ImageView
+        android:id="@+id/overlay_bottom"
+        android:src="@drawable/overlay"
+        android:layout_width="match_parent"
+        android:contentDescription="@string/overlay"
+        android:layout_height="20dp"
+        android:layout_marginTop="140dp"
+        />
+
+
+</RelativeLayout>*/

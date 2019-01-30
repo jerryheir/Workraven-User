@@ -1,12 +1,12 @@
 import React from "react";
-import { createStackNavigator} from 'react-navigation';
-import UserProfileScreen from "../Screens/UserProfileScreen";
-import EditProfile from "../Components/EditProfile";
+import { createStackNavigator } from 'react-navigation';
+import NewUserProfile from "../Components/NewUserProfile";
+import NewEditProfile from "../Components/NewEditProfile";
 
 const profileStack = createStackNavigator(
     {
-        First: UserProfileScreen,
-        EditProfile: EditProfile
+        First: NewUserProfile,
+        NewEditProfile: NewEditProfile 
     },
     {
         initialRouteName: "First",

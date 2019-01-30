@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
-import Icon from "native-base";
+import { View, Text, TouchableOpacity, Image, ImageBackground, NetInfo } from "react-native";
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from "react-navigation";
 import OnboardingSwipe from "../Components/OnboardingSwipe";
 import WelcomeImage from "../Components/WelcomeImage";
@@ -15,11 +14,13 @@ import BookingScreen from "../Screens/BookingScreen";
 import TabIcons from "../Atoms/TabIcons";
 import stackNav from "./StackNav";
 import Invite from "../Components/Invite";
+//import BookingChatScreen from "../Screens/BookingChatScreen";
+import BookingNav from "./BookingNav";
 
 const CustomTabNavigator = createBottomTabNavigator(
     {
         WorkRaven: {
-            screen: BookingScreen
+            screen: BookingNav
         },
         Profile: {
             screen: stackNav
@@ -32,7 +33,7 @@ const CustomTabNavigator = createBottomTabNavigator(
         }
     },
     {
-        initialRouteName: 'Profile',
+        initialRouteName: 'WorkRaven',
         tabBarComponent: (props) => {
             const {
                 navigation: {state: {index, routes}},
@@ -42,7 +43,6 @@ const CustomTabNavigator = createBottomTabNavigator(
                 renderIcon,
                 jumpTo
             } = props;
-            console.log(routes[0].routeName);
             return (
                 <View style={{
                     flexDirection: 'row',
@@ -104,11 +104,11 @@ const SignUpStack = createStackNavigator(
         SignUp: {
             screen: SignUpScreen
         },
-        Phone: {
-            screen: PhoneVerificationScreen
-        },
         CreditCard: {
             screen: CreditCardScreen
+        },
+        Phone: {
+            screen: PhoneVerificationScreen
         },
         Terms: {
             screen: TermsScreen
@@ -147,7 +147,7 @@ const OverAllStack = createSwitchNavigator(
         Tabs: CustomTabNavigator
     },
     {
-        initialRouteName: 'FirstTime'
+        initialRouteName: 'Auth'
     }
 );
 

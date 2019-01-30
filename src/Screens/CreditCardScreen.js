@@ -7,7 +7,7 @@ class CreditCardScreen extends React.Component {
         return (
                 <SignUpWrapper
                 headerText="Almost there"
-                subHeaderText="Please take a minute to verify your phone number"
+                subHeaderText="Please add a payment method with your credit card"
                 navigation={this.props.navigation}
                 >
                     <CreditCard navigation={this.props.navigation} />

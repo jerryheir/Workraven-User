@@ -3,10 +3,14 @@ import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Image } from 'rea
 import { color } from '../Styles/Color';
 
 export default class GridBookingAtom extends React.Component {
+    ChangeColorFunction = () => {
+        let ColorCode = 'rgb(' + (Math.floor(Math.random() * 250)) + ',' + (Math.floor(Math.random() * 250)) + ',' + (Math.floor(Math.random() * 250 )) + ')';
+        return ColorCode
+    }
   render() {
     return (
           <View style={styles.gridView}>
-            <View style={[styles.circle, {backgroundColor: this.props.item.color}]}><Text style={{fontSize: 13, fontStyle: 'italic', fontWeight: '400'}}>{this.props.item.date}</Text></View>
+            <View style={[styles.circle, {backgroundColor: this.ChangeColorFunction() /*this.props.item.color*/}]}><Text style={{fontSize: 13, color: color.white, fontStyle: 'italic', fontWeight: '400'}}>{this.props.item.date}</Text></View>
                 <TouchableOpacity style={styles.elevated}>
                     <View style={{ flexDirection: 'row', height: 50, width: 80, alignSelf: 'center', alignItems: 'center' }}>
                         <Image style={styles.tagImage} source={require('../assests/images/pipe.png')} /><Image style={{ width: 40, height: 40, borderRadius: 21 }} source={{ uri: this.props.item.uri }} />
@@ -33,6 +37,7 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 0, 0.3)',
     shadowOpacity: 2.5,
     shadowOffset: { width: 2, height: 3 },
+    elevation: 3,
     position: "absolute",
     padding: 15,
     top: 32,

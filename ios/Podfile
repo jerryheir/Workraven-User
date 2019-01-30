@@ -40,13 +40,30 @@ target 'workRavenUser' do
     pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
     pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
 
+    pod 'GooglePlaces'
+
+    pod 'GooglePlacePicker'
+
     pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
     pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
-    pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
-
     pod 'Paystack'
+
+    pod 'Firebase/Core'
+    
+    pod 'Firebase/Messaging'
+
+    pod 'GoogleSignIn'
+
+    pod 'RNShare', :path => '../node_modules/react-native-share'
+
+    pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+
+    pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
+    pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
 
   end
   

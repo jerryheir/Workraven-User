@@ -30,8 +30,7 @@ export default class  LoginWrapper extends Component {
             source={require('../assests/images/map_backgroundclear.png')}
           />
         </View>
-        <View style={styles.secondContainer}>
-        <View style={{ width: Dimensions.get('window').width - 64, alignSelf: 'center'}}>
+        <View style={{ width: Dimensions.get('window').width - 42, alignSelf: 'center'}}>
           <Text style={styles.headerText}>
             {this.props.headerText}
           </Text>
@@ -61,7 +60,6 @@ export default class  LoginWrapper extends Component {
           </TouchableOpacity>
         </View>
         </View>
-        </View>
         </KeyboardAwareScrollView>
     );
   }
@@ -70,11 +68,11 @@ export default class  LoginWrapper extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: Platform.OS === "ios" ? Dimensions.get('window').height : Dimensions.get('window').height - 30,
     backgroundColor: '#FFFFFF'
   },
   imageMap: {
-    height: Platform.OS === 'ios' ? 145 : 150,
+    height: Platform.OS === 'ios' ? 150 : 150,
     width: '100%'
   },
   pointerContainer: {
@@ -93,37 +91,37 @@ const styles = StyleSheet.create({
   headerText: {
    height: 46,
    fontSize: 24,
-   fontWeight: 'bold',
    color: '#000000',
    marginTop: 15,
-   marginLeft: 0,
+   fontFamily: "Lato-Bold"
   },
   headerContent: {
    height: 36,
    width: 250,
-   marginLeft: 0,
+   marginBottom: 10,
    color: '#828282',
-   fontWeight: 'normal',
-   fontSize: 13
+   fontSize: 13,
+   fontFamily: "Lato-Regular"
   },
   formContainer: {
-   marginTop: 20,
+    flex: 1
   },
   viewForText: {
     width: 180,
     alignSelf: 'center',
-    paddingTop: 21,
-    marginBottom: Platform.OS === 'ios' ? 15 : 0,
-    paddingBottom: 21,
+    // paddingTop: 21,
+    marginBottom: Platform.OS === 'ios' ? 40 : 0,
+    // paddingBottom: 21,
   },
   passText: {
     textAlign: 'center',
     color: '#C190C7',
-    fontWeight: 'bold',
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: "Lato-Bold",
+    paddingBottom: 10,
   },
   footer: {
-    width: Dimensions.get('window').width - 64,
+    width: Dimensions.get('window').width - 42,
     borderTopWidth: 2,
     alignSelf: 'center',
     borderTopColor: '#F2F2F2',
@@ -149,13 +147,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 10,
     color: color.gray,
-    fontWeight: '700',
     marginTop: 10,
+    fontFamily: "Lato-Regular"
   },
   footerButtonText: {
     color: '#4F4F4F',
     textAlign: 'center',
     fontSize: 10,
-    fontWeight: '700',
+    fontFamily: "Lato-Regular"
   }
 });

@@ -1,3 +1,8 @@
 <resources>
+
+
     <string name="app_name">workRavenUser</string>
+    <string name="facebook_app_id">2522261231135989</string>
+    <string name="facebook_application_id" translatable="false">2522261231135989</string>
+    <string name="fb_login_protocol_scheme">fb2522261231135989</string>
 </resources>
