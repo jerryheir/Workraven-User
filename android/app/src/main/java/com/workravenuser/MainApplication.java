@@ -3,11 +3,13 @@ package com.workravenuser;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.keychain.KeychainPackage;
 import cl.json.RNSharePackage;   
+import cl.json.ShareApplication;
 import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -29,7 +31,7 @@ import com.henninghall.date_picker.DatePickerPackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
   private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
@@ -47,6 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFSPackage(),
             new RNFetchBlobPackage(),
             new RNGooglePlacesPackage(),
             new DatePickerPackage(),

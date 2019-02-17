@@ -5706,11 +5706,6 @@ react-native-call@^0.1.0:
   resolved "https://registry.yarnpkg.com/react-native-call/-/react-native-call-0.1.0.tgz#623454f819994412d9d71ee9d2d1b6014e3af470"
   integrity sha512-dytUPppDHT4fifw3dJKgAiw9jL4k8Cek4MERuDaYGoWvNaWOAI78k9+bfzKk43mfLiagnFwEvbz/EG3ML/OVnw==
 
-react-native-camera-roll-picker@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-camera-roll-picker/-/react-native-camera-roll-picker-1.2.3.tgz#b117fd3a2b9012dcccee1261a9bc427226b8d6d2"
-  integrity sha1-sRf9OiuQEtzM7hJhqbxCcia41tI=
-
 react-native-card-flip@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-card-flip/-/react-native-card-flip-1.0.4.tgz#cf01fccbb98697842de7134a4f7b51ee69da430a"

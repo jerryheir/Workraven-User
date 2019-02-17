@@ -124,6 +124,7 @@ export default class Working extends Component {
                 <JobHeaderWrapper
                 title={"Working"}
                 indeterminate={true}
+                navigation={this.props.navigation}
                 removeClose={true}
                 subtitle={this.state.completed === "true" ? "Artisan is done, please accept or reject his work" : this.state.completed === "rejected" ? "Please tell us why you are rejecting" : "Artisan is working..."}
                 completed={this.state.completed}
@@ -145,6 +146,7 @@ export default class Working extends Component {
                 <JobHeaderWrapper
                 title={"Working"}
                 indeterminate={true}
+                navigation={this.props.navigation}
                 subtitle={this.state.completed === "true" ? "Artisan is done, please accept or reject his work" : this.state.completed === "rejected" ? "Please tell us why you are rejecting" : "Artisan is working..."}
                 completed={this.state.completed}
                 >

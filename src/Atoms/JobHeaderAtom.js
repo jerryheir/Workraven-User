@@ -15,7 +15,7 @@ export default class JobHeaderAtom extends PureComponent {
         <View style={styles.topView}>
           <Icon 
           name="md-close" 
-          style={{ fontSize: 27, marginTop: 15, color: this.props.removeClose ? "transparent" : "orange" }} 
+          style={{ fontSize: 27, marginTop: 15, color: this.props.removeClose ? "transparent" : color.primary }} 
           disabled={this.props.removeClose ? true : false}
           />
 
@@ -26,6 +26,7 @@ export default class JobHeaderAtom extends PureComponent {
               type={'Entypo'}
               name="chat"
               style={{ fontSize: 21, color: '#828282' }}
+              onPress={this.props.onChat}
               />
               <Icon 
               name="md-call"
@@ -92,7 +93,7 @@ export default class JobHeaderAtom extends PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-      height: Platform.OS === 'ios' ? 148 : 148,
+      height: 142,
       width: '100%',
       backgroundColor: color.white,
       padding: 21

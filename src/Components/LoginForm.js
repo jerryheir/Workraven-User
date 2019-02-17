@@ -6,8 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Platform,
-  Animated,
-  AsyncStorage
+  Animated
 } from 'react-native';
 import { Icon } from "native-base";
 import ButtonAtom from '../Atoms/ButtonAtom';
@@ -61,7 +60,6 @@ class LoginForm extends Component {
           this.displayError()
         })
       } else {
-        console.log(this.state.email, this.state.password)
         fetch(`${BASE_URL}/v1/users/login?type=user`, {
           method: 'POST',
           headers: {
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#C190C7',
-    borderRadius: 25,
-    height: 50
+    borderRadius: 23,
+    height: 46
   }
 });

@@ -19,6 +19,7 @@ export default class Waiting extends Component {
         <View style={styles.container}>
         <JobHeaderWrapper
         title={"Waiting"}
+        navigation={this.props.navigation}
         indeterminate={true}
         >   
             <View style={styles.elevatedView}>

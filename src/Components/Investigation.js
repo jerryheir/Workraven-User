@@ -9,6 +9,7 @@ export default class Investigation extends Component {
       <View style={styles.container}>
         <JobHeaderWrapper
         indeterminate={true}
+        navigation={this.props.navigation}
         title={"Investigation"}
         subtitle={"Investigation issue"}
         >

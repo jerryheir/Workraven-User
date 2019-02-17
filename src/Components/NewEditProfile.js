@@ -7,7 +7,8 @@ import {
     ActivityIndicator,
     StyleSheet,
     Text,
-    YellowBox,
+    ImageEditor,
+    ImageStore,
     Animated,
     TouchableOpacity
  } from "react-native";
@@ -28,17 +29,19 @@ import {
     MenuOption,
     MenuProvider
 } from 'react-native-popup-menu';
+import { offset_width, offset_height, c_width, c_height } from '../config/constants';
+
 const { width, height } = Dimensions.get('window');
 const halfWidth = width / 2;
 
 const config = {
-    apiKey: "AIzaSyDmNFWR9pDVNq__U0dp5G409U4xmJUwUxQ",
-    authDomain: "image-upload-84f38.firebaseapp.com",
-    databaseURL: "https://image-upload-84f38.firebaseio.com",
-    projectId: "image-upload-84f38",
-    storageBucket: "image-upload-84f38.appspot.com",
-    messagingSenderId: "839714486165"
-  }
+    apiKey: "AIzaSyBk7zpKToQkbjqN6beYYO9puZsJU-Hskj0",
+    authDomain: "workraven-4cae3.firebaseapp.com",
+    databaseURL: "https://workraven-4cae3.firebaseio.com",
+    projectId: "workraven-4cae3",
+    storageBucket: "workraven-4cae3.appspot.com",
+    messagingSenderId: "55823499582"
+  };
   firebase.initializeApp(config);
   // console.disableYellowBox = true
 export default class NewEditProfile extends React.Component {
@@ -127,6 +130,148 @@ export default class NewEditProfile extends React.Component {
         }
     }
 
+    showCamera = async () => {
+        this.setState({ loading: true });
+        const Blob = RNFetchBlob.polyfill.Blob
+        const fs = RNFetchBlob.fs
+        let uploadBlob = '';
+        let mime = 'image/jpg'
+        window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+        window.Blob = Blob
+        const Fetch = RNFetchBlob.polyfill.Fetch
+        window.fetch = new Fetch({
+            auto : true,
+            binaryContentTypes : [
+                'image/',
+                'video/',
+                'audio/',
+                'foo/',
+            ]
+        }).build()
+        const uid = 'v1_3i9' + this.state.userId + 'hp04';
+        const image = await ImagePicker.openCamera({ useFrontCamera: true });
+        let formData = new FormData();
+        console.log(image.path);
+        let stuff = await fs.readFile(image.path, 'base64');
+        console.log(stuff);
+        formData.append('image_attr', stuff)
+        fetch('http://106.51.58.118:5000/get_image_attr?face_det=1', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            user_id: 'fcf26198c91833c1e2b9',
+            user_key: 'fd3b240f1b7a7d03a78e'
+          },
+          body: formData
+        })
+        .then((res)=>res.json())
+        .then((response)=>{
+            console.log(response);
+              console.log(response.image_size[0], response.image_size[1]);
+              if (response.face_id_1){
+                alert('Error: More than one face detected. Try again later')
+              } else {
+              let image_width = response.image_size[0];
+              let image_height = response.image_size[1];
+              let face_rect = response.face_id_0.face_rectangle;
+              let cX = offset_width * image_width;
+              let cY = offset_height * image_height;
+              let cW = c_width * image_width;
+              let cH = c_height * image_height;
+              this.setState({ face_rectangle: response.face_id_0.face_rectangle, image_size: response.image_size });
+            let cropData = {
+              offset:{x: face_rect[0] - cX,y: face_rect[1] - cY},
+              size:{width: face_rect[2] - cW, height: face_rect[3] - cH}
+            };
+             ImageEditor.cropImage(
+               image.path,
+               cropData,
+               (uri)=>{
+                 ImageStore.getBase64ForTag(
+                   uri,
+                   async (uriNew) => {
+                     console.log(uriNew);
+                    const imagePath = uriNew
+                    const imageRef = firebase.storage().ref('mobile').child(`${uid}.jpg`)
+                    mime = 'image/jpg';
+                    let blo = await Blob.build(imagePath, { type: `${mime};BASE64` });
+                    uploadBlob = await blo;
+                    await imageRef.put(blo, { contentType: mime })
+                    await uploadBlob.close()
+                    let url = await imageRef.getDownloadURL();
+                    this.setState({ loading: false, image: url })
+                   },
+                   (err)=>{
+                     console.log(err)
+                     this.setState({ error: 'An error occured here' }, 
+                     ()=>{
+                       this.displayError()
+                     })
+                    }
+                 )
+                 // console.log(uri);
+                 // this.setState({ uri, width: face_rect[2] - cW, height: face_rect[3] - cH })
+                 // this.setState({ uri, width: 300, height: 300 })
+               },
+               (err)=>{
+                 console.log(err)
+               }
+             )
+            }
+        })
+        .catch((err)=>{
+          // alert('Error: Invalid image, please check the brightness and make sure your face is visible.')
+            console.log(err)
+            this.setState({ loading: false, error: 'Error: Invalid image, please check the brightness and make sure your face is visible.' }, 
+            ()=>{
+              this.displayError()
+            })
+        })
+
+        /*ImagePicker.openCropper({
+            path: image.path,
+            width: image.width,
+            height: (image.width * 9) / 16
+        }).then((image)=>{
+            const imagePath = image.path
+            uploadBlob = '';
+            const imageRef = firebase.storage().ref('mobile').child(`${uid}.jpg`)
+            mime = 'image/jpg';
+            fs.readFile(imagePath, 'base64')
+              .then((data) => {
+                return Blob.build(data, { type: `${mime};BASE64` })
+            })
+            .then((blob) => {
+                uploadBlob = blob
+                return imageRef.put(blob, { contentType: mime })
+              })
+              .then(() => {
+                uploadBlob.close()
+                return imageRef.getDownloadURL()
+              })
+              .then((url) => {
+                let obj = {}
+                obj["loading"] = false
+                obj["image"] = url
+                this.setState(obj);
+              })
+              .catch((error) => {
+                console.log(error);
+                this.setState({ error: 'An error occured here' }, 
+                ()=>{
+                  this.displayError()
+                })
+              })
+        })
+        .catch((error) => {
+            console.log(error);
+            this.setState({ loading: false, error: 'You cancelled selection' }, 
+            ()=>{
+              this.displayError()
+            })
+          })*/
+    }
+
     showPicker = () => {
         this.setState({ loading: true });
         const Blob = RNFetchBlob.polyfill.Blob
@@ -165,7 +310,7 @@ export default class NewEditProfile extends React.Component {
           const imagePath = image.path
           uploadBlob = '';
           const imageRef = firebase.storage().ref(uid).child(`${uid}.jpg`)
-          mime = 'image/jpg'
+          mime = 'image/jpg';
           fs.readFile(imagePath, 'base64')
             .then((data) => {
               return Blob.build(data, { type: `${mime};BASE64` })
@@ -212,7 +357,7 @@ export default class NewEditProfile extends React.Component {
               return (
                 <Thumbnail 
                 source={{ uri: this.state.image }}
-                style={{ width: 168, height: 168, borderRadius: 84 }}
+                style={{ width: 168, height: 168, borderRadius: 84, resizeMode: 'stretch' }}
                 />
               )
           }
@@ -248,7 +393,8 @@ export default class NewEditProfile extends React.Component {
                 elevation: 3
             }}
             activeOpacity={.8}
-            onPress={()=>this.showPicker()}
+            // onPress={()=>this.showPicker()}
+            onPress={()=>this.showCamera()}
             >
                 <Icon name="ios-camera" style={{ color: color.darkGray, fontSize: 32 }} />
             </TouchableOpacity>

@@ -5,7 +5,45 @@ import { color } from '../Styles/Color';
 import * as firebase from 'firebase';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Share, { ShareSheet } from 'react-native-share';
 import { shuffle, GenerateRandomNumber } from '../Functions';
+import { RAVEN_BIRD } from '../config/ravenBase64';
+import { Icon } from "native-base";
+
+/*const whatsappBase64 = {
+  title: "React Native",
+  message: "Hola mundo",
+  url: RAVEN_BIRD,
+  social: Share.Social.WHATSAPP
+};
+
+const facebookBase64 = {
+  title: "React Native",
+  message: "Hola mundo",
+  url: RAVEN_BIRD,
+  social: Share.Social.FACEBOOK
+};
+
+const instagramBase64 = {
+  title: "React Native",
+  message: "Hola mundo",
+  url: RAVEN_BIRD,
+  social: Share.Social.INSTAGRAM
+};
+
+const twitterBase64 = {
+  title: "React Native",
+  message: "Hola mundo",
+  url: RAVEN_BIRD,
+  social: "twitter"
+};*/
+
+let shareImageBase64 = {
+  title: "React Native",
+  message: "Hola mundo",
+  url: RAVEN_BIRD,
+  subject: "Share Link" //  for email
+};
 
 class ShareExperience extends Component {
   async componentDidMount(){
@@ -31,7 +69,24 @@ class ShareExperience extends Component {
     proName: '',
     accepted: false,
     latlng: {},
-    bookingId: ''
+    bookingId: '',
+    visible: false
+  }
+
+  openIt = () => {
+    console.log('openIt ran');
+    Share.open(shareImageBase64)
+    .then((res) => { console.log(res) })
+    .catch((err) => { err && console.log(err); });
+  }
+
+  onCancel = () => {
+    console.log("CANCEL")
+    this.setState({ visible:false });
+  }
+  onOpen = () => {
+    console.log("OPEN")
+    this.setState({ visible:true });
   }
 
   getArtisans = async (category) => {
@@ -173,9 +228,25 @@ class ShareExperience extends Component {
               shadowOpacity: 1,
               shadowOffset: { width: 0, height: 1 },
               elevation: 2
-            }}>
+            }}
+            onPress={this.openIt}
+            >
               <Text style={{ color: color.white, fontSize: 12, fontFamily: 'Lato-Regular' }}>Share your experience</Text>
           </TouchableOpacity>
+          {/*<ShareSheet visible={this.state.visible} onCancel={this.onCancel}>
+            <TouchableOpacity onPress={()=>Share.shareSingle(facebookBase64)}>
+              <Icon type="FontAwesome" name="facebook-square" style={{ padding: 11 }} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Share.shareSingle(whatsappBase64)}>
+              <Icon name="logo-whatsapp" style={{ padding: 11 }} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Share.shareSingle(instagramBase64)}>
+              <Icon type="FontAwesome" name="instagram" style={{ padding: 11 }} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>Share.shareSingle(twitterBase64)}>
+              <Icon type="FontAwesome" name="twitter-square" style={{ padding: 11 }} />
+            </TouchableOpacity>
+          </ShareSheet>*/}
       </View>
     )
   }

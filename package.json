@@ -25,7 +25,6 @@
     "react": "16.4.1",
     "react-native": "0.55.4",
     "react-native-call": "^0.1.0",
-    "react-native-camera-roll-picker": "^1.2.3",
     "react-native-card-flip": "^1.0.4",
     "react-native-credit-card-input": "^0.4.1",
     "react-native-date-picker": "^2.2.1",

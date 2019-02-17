@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, ImageBackground, NetInfo } from "react-native";
+import { View, Text, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from "react-navigation";
 import OnboardingSwipe from "../Components/OnboardingSwipe";
 import WelcomeImage from "../Components/WelcomeImage";
@@ -12,10 +12,10 @@ import CreditCardScreen from "../Screens/CreditCardScreen";
 import TermsScreen from "../Screens/TermsScreen";
 import BookingScreen from "../Screens/BookingScreen";
 import TabIcons from "../Atoms/TabIcons";
-import stackNav from "./StackNav";
-import Invite from "../Components/Invite";
-//import BookingChatScreen from "../Screens/BookingChatScreen";
+import ProfileStack from "./StackNav";
 import BookingNav from "./BookingNav";
+import InviteStack from "./InviteStack";
+import PaymentStack from "./PaymentStack";
 
 const CustomTabNavigator = createBottomTabNavigator(
     {
@@ -23,13 +23,16 @@ const CustomTabNavigator = createBottomTabNavigator(
             screen: BookingNav
         },
         Profile: {
-            screen: stackNav
+            screen: ProfileStack
         },
         Booking: {
             screen: BookingScreen
         },
+        Payments: {
+            screen: PaymentStack
+        },
         Invite: {
-            screen: Invite
+            screen: InviteStack
         }
     },
     {
@@ -57,7 +60,7 @@ const CustomTabNavigator = createBottomTabNavigator(
                                 style={{
                                     flexDirection: 'column',
                                     height: 62,
-                                    width: '25%',
+                                    width: '20%',
                                     backgroundColor: "#FFF" 
                                 }}
                             >

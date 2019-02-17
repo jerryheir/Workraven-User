@@ -25,13 +25,13 @@ YellowBox.ignoreWarnings([
 ]);
 
 const config = {
-  apiKey: "AIzaSyDmNFWR9pDVNq__U0dp5G409U4xmJUwUxQ",
-  authDomain: "image-upload-84f38.firebaseapp.com",
-  databaseURL: "https://image-upload-84f38.firebaseio.com",
-  projectId: "image-upload-84f38",
-  storageBucket: "image-upload-84f38.appspot.com",
-  messagingSenderId: "839714486165"
-}
+  apiKey: "AIzaSyBk7zpKToQkbjqN6beYYO9puZsJU-Hskj0",
+  authDomain: "workraven-4cae3.firebaseapp.com",
+  databaseURL: "https://workraven-4cae3.firebaseio.com",
+  projectId: "workraven-4cae3",
+  storageBucket: "workraven-4cae3.appspot.com",
+  messagingSenderId: "55823499582"
+};
 firebase.initializeApp(config);
 
 export default class ImageAtom extends React.PureComponent {

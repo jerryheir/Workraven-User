@@ -20,7 +20,9 @@ const initialState = {
     issues: [],
     showGoogle: false,
     currentLocate: {},
-    address: ''
+    address: '',
+    neighborhood: '',
+    admin2: ''
 }
 
 export default function(state = initialState, action) {

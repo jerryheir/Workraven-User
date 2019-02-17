@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { PushNotificationIOS, Platform, AsyncStorage, View, Text, AlertIOS, Alert, TouchableOpacity, TextInput, YellowBox } from 'react-native';
+import { 
+  PushNotificationIOS, 
+  Platform, 
+  AsyncStorage, 
+  Image,
+  View,
+  ImageEditor,
+  ImageStore,
+  ScrollView,
+  Text,
+  AlertIOS, 
+  YellowBox } from 'react-native';
 import OverAllStack from './src/Navigation/Sprint3';
 import Routes from './src/Navigation/Routes';
 import {
@@ -7,12 +18,18 @@ import {
 } from 'react-native-popup-menu';
 import { Provider } from "react-redux";
 import { store } from "./src/Store";
-// import TabIcons from './src/Atoms/TabIcons';
 import firebase from 'react-native-firebase';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-import { LoginManager, LoginButton, AccessToken } from 'react-native-fbsdk';
-// import InTransit from './src/Components/InTransit';
-import DatePickerAtom from './src/Atoms/DatePickerAtom';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import RNFetchBlob from "rn-fetch-blob";
+import InTransitScreen from './src/Screens/InTransitScreen';
+import InAppChat from './src/Components/InAppChat';
+import MultiBookings from './src/Components/MultiBookings';
+import Payments from './src/Components/Payments';
+import FundWallet from './src/Components/FundWallet';
+import WithdrawFund from './src/Components/WithdrawFund';
+import PaymentInvoice from './src/Components/PaymentInvoice';
+import { offset_width, offset_height, c_width, c_height } from './src/config/constants';
 
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
@@ -20,8 +37,8 @@ YellowBox.ignoreWarnings([
   'Module RNFetchBlob requires main queue setup',
   "Can't call",
   "Remote",
+  'Class RCTCxxModule',
   ''
-  // "Warning: Can't call setState"
 ]);
 
 /*GoogleSignin.configure({
@@ -38,7 +55,14 @@ async componentDidMount() {
 }
 
 state = {
-  userInfo: null
+  userInfo: null,
+  uri: require("./src/assests/images/test_man.png"),
+  // uri: "https://i.dlpng.com/static/png/247599_preview.png",
+  //uri: "https://purepng.com/public/uploads/large/purepng.com-women-facesfaceshumansfrontalhuman-identitywomen-1421526884785x6tfr.png",
+  face_rectangle: [],
+  image_size: [],
+  width: 300,
+  height: 300
 }
 
 ////////////////////// Add these methods //////////////////////
@@ -212,12 +236,99 @@ callFacebook = async () => {
     console.log(`Facebook Login Fails with error: ${error}`)
   });
 }
+  /*send = () => {
+    fetch('http://106.51.58.118:5000/get_image_attr?face_det=1', {
+      method: 'POST',
+      headers: {
+        user_id: 'fcf26198c91833c1e2b9',
+        user_key: 'fd3b240f1b7a7d03a78e'
+      },
+      body: JSON.stringify({
+        image_attr: this.state.base64
+      })
+    })
+    .then((res)=>res.json())
+    .then((response)=>{
+        console.log(response);
+        if (response.face_id_0){
+          console.log(response.face_id_0);
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+  }*/
+
+   crop = () => {
+      let formData = new FormData();
+      formData.append('image_attr', {
+        uri: "./src/assests/images/test_man.png",
+        type: 'image/jpg',
+        name: 'test_man.jpg'});
+      fetch('http://106.51.58.118:5000/get_image_attr?face_det=1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          user_id: 'fcf26198c91833c1e2b9',
+          user_key: 'fd3b240f1b7a7d03a78e'
+        },
+        body: formData
+      })
+      .then((res)=>res.json())
+      .then((response)=>{
+          console.log(response);
+            console.log(response.image_size[0], response.image_size[1]);
+            if (response.face_id_1){
+              alert('Error: More than one face detected. Try again later')
+            } else {
+            let image_width = response.image_size[0];
+            let image_height = response.image_size[1];
+            let face_rect = response.face_id_0.face_rectangle;
+            let cX = offset_width * image_width;
+            let cY = offset_height * image_height;
+            let cW = c_width * image_width;
+            let cH = c_height * image_height;
+            this.setState({ face_rectangle: response.face_id_0.face_rectangle, image_size: response.image_size });
+          let cropData = {
+            offset:{x: face_rect[0] - cX,y: face_rect[1] - cY},
+            size:{width: face_rect[2] - cW, height: face_rect[3] - cH}
+          };
+           ImageEditor.cropImage(
+             this.state.uri,
+             cropData,
+             (uri)=>{
+               console.log(uri);
+               // this.setState({ uri, width: face_rect[2] - cW, height: face_rect[3] - cH })
+               this.setState({ uri, width: 300, height: 300 })
+             },
+             (err)=>{
+               console.log(err)
+             }
+           )
+          }
+      })
+      .catch((err)=>{
+        alert('Error: Invalid image, please check the brightness and make sure your face is visible.')
+          console.log(err)
+      })
+   }
 
   render(){
     return (
       <Provider store={store}>
         <MenuProvider style={{ flex: 1, justifyContent: 'center', backgroundColor: '#FFF' }}>
           <Routes />
+          {/*<ScrollView style={{ backgroundColor: 'white', alignSelf: 'center'}}>
+            <Image 
+            source={this.state.uri} 
+            style={{ width: this.state.width, height: this.state.height, resizeMode: 'contain' }}
+            />
+            <Text 
+            style={{ padding: 21, alignSelf: 'center' }}
+            onPress={this.crop}
+            >CROP</Text>
+          </ScrollView>*/
+          }
         </MenuProvider>
       </Provider>
     );

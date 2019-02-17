@@ -15,6 +15,7 @@ export default class JobHeaderWrapper extends PureComponent {
         completed={this.props.completed}
         indeterminate={this.props.indeterminate}
         progress={this.props.progress}
+        onChat={()=>this.props.navigation.navigate('InAppChat')}
         remove={this.props.remove === true ? true : false}
         removeClose={this.props.removeClose === true ? true : false}
         />

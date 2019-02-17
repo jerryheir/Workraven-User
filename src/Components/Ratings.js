@@ -187,6 +187,7 @@ export default class Ratings extends Component {
                 <JobHeaderWrapper
                 title={"Conclude"}
                 subtitle={"Please rate the Artisan's service"}
+                navigation={this.props.navigation}
                 indeterminate={this.state.indeterminate}
                 progress={this.state.progress}
                 remove={true}
@@ -246,6 +247,7 @@ export default class Ratings extends Component {
             title={"Conclude"}
             subtitle={"Please rate the Artisan's service"}
             indeterminate={this.state.indeterminate}
+            navigation={this.props.navigation}
             progress={this.state.progress}
             remove={true}
             removeClose={true}
