@@ -21,14 +21,6 @@ import { store } from "./src/Store";
 import firebase from 'react-native-firebase';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import RNFetchBlob from "rn-fetch-blob";
-import InTransitScreen from './src/Screens/InTransitScreen';
-import InAppChat from './src/Components/InAppChat';
-import MultiBookings from './src/Components/MultiBookings';
-import Payments from './src/Components/Payments';
-import FundWallet from './src/Components/FundWallet';
-import WithdrawFund from './src/Components/WithdrawFund';
-import PaymentInvoice from './src/Components/PaymentInvoice';
 import { offset_width, offset_height, c_width, c_height } from './src/config/constants';
 
 YellowBox.ignoreWarnings([
