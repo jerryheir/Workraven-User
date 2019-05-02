@@ -1,0 +1,10 @@
+git_url "https://adeb6600:35er43de@gitlab.com/adeb6600/workrave-ios-certs.git"
+
+
+type "adhoc" # The default type, can be: appstore, adhoc or development
+
+app_identifier ["com.karixchange.workravenuser"]
+username "jerry@karixchange.com" # Your Apple Developer Portal username
+
+# For all available options run `match --help`
+# Remove the # in the beginning of the line to enable the other options

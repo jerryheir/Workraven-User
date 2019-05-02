@@ -1,0 +1,183 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.29.0"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+   
+
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+  desc "Submit a new Beta Build to Hockeyapp"
+     lane :deploy_hockey do |options|
+    appcenter_upload(
+      api_token: "b759198a5192b468fdd8e2a18b62ece553835828",
+      owner_name: "adebanjo inioluwa",
+      app_name: "workRavenUser",
+      ipa: "./workRavenUser.ipa",
+      notes: "Changelog",
+    )
+  end
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+
+  desc "Trying to build trying the app config"
+  
+  desc "This will also make sure the profile is up to date"
+  lane :beta do
+
+    
+    match(
+      type: "adhoc",
+      force_for_new_devices: true,
+      readonly:false
+
+    ) # more information: https://codesigning.guid
+
+    gym(scheme: "workRavenUser",
+      silent: true,
+      suppress_xcode_output:false,
+      workspace:"./ios/workRavenUser.xcworkspace",
+      clean:true,
+        configuration:"Release") # Build your app - more options available
+
+    deploy_hockey
+
+    # pilot
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+  end
+
+  desc "Deploy a new version to the app store"
+  lane :release  do
+  
+    currentVersion= get_version_number(xcodeproj: "ios/workRavenUser.xcodeproj",
+                                      target:"workRavenUser")
+    latestBuildNumber= get_build_number_from_plist(xcodeproj: "ios/workRavenUser.xcodeproj",
+                                      target:"workRavenUser")
+  # latestBuildNumber = latest_testflight_build_number(version: currentVersion )
+     increment_build_number_in_plist(
+       build_number: latestBuildNumber
+    )
+    create_keychain(
+      name: 'dollaride123',
+      password: 'dollaride123',
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      add_to_search_list: true
+ )
+    match(
+      type: "appstore",
+      keychain_name: 'dollaride123',
+      keychain_password: 'dollaride123',
+      readonly:true
+    ) # more information: https://codesigning.guid
+    increment_build_number_in_plist(
+       build_number: latestBuildNumber.to_i + 1
+    )
+ 
+   gym(scheme: "workRavenUser",
+      silent: true,
+      suppress_xcode_output:true,
+      workspace:"./ios/workRavenUser.xcworkspace",
+      clean:true,
+        configuration:"Release") # Build your app - more options available
+
+       deliver(force: true,
+            skip_metadata: true,
+            skip_screenshots: true
+            )
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here (run `fastlane actions`)
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+   
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+platform :android do
+  desc "Deploy a new version to Hockeyapp"
+  lane :beta do
+    gradle(
+      task: "clean",
+      project_dir: "android/"
+    )
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      project_dir: "android/"
+    )
+    deploy_hockey
+  end
+
+  desc "Deploy a new version to the Google Play Store"
+    lane :release do
+      gradle(
+        task: "clean",
+        project_dir: "android/"
+      )
+      increment_android_version_code(path: "./android/app/build.gradle")
+      increment_android_version_name(path: "./android/app/build.gradle", type: "patch")   
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        project_dir: "android/"
+      )
+      supply(
+        track: "alpha",
+        package_name:"com.dollaride.drivermobile",
+        apk_paths: "#{lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS]}"
+      )
+    end
+    lane :deploy_hockey do |options|
+      hockey(
+        api_token: "f6d801e1eb2448379d3af463e9175041",
+        ipa: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}",
+        notes: "Changelog",
+        public_identifier: "f5100a41285742b69ea02dc6989331e0"
+      )
+    end
+  end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://docs.fastlane.tools/actions
+
+# fastlane reports which actions are used. No personal data is recorded.
+# Learn more at https://github.com/fastlane/fastlane#metrics

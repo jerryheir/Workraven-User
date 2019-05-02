@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { 
-  PushNotificationIOS, 
   Platform, 
   AsyncStorage, 
-  Image,
-  View,
   ImageEditor,
-  ImageStore,
-  ScrollView,
-  Text,
   AlertIOS, 
+  TouchableOpacity,
   YellowBox } from 'react-native';
-import OverAllStack from './src/Navigation/Sprint3';
 import Routes from './src/Navigation/Routes';
 import {
   MenuProvider
@@ -22,6 +16,11 @@ import firebase from 'react-native-firebase';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { offset_width, offset_height, c_width, c_height } from './src/config/constants';
+import JobHeaderAtom from './src/Atoms/JobHeaderAtom';
+import GiveQuote from './src/Components/GiveQuote';
+import NotificationIconAtom from './src/Atoms/NotificationIconAtom';
+import Payments from './src/Components/Payments';
+import AddCard from './src/Components/AddCard';
 
 YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
@@ -49,8 +48,6 @@ async componentDidMount() {
 state = {
   userInfo: null,
   uri: require("./src/assests/images/test_man.png"),
-  // uri: "https://i.dlpng.com/static/png/247599_preview.png",
-  //uri: "https://purepng.com/public/uploads/large/purepng.com-women-facesfaceshumansfrontalhuman-identitywomen-1421526884785x6tfr.png",
   face_rectangle: [],
   image_size: [],
   width: 300,
@@ -142,7 +139,6 @@ async createNotificationListeners() {
 
   const notificationOpen= await firebase.notifications().getInitialNotification();
   if (notificationOpen) {
-      const action = notificationOpen.action;
       const notification = notificationOpen.notification;
       var seen = [];
       alert(JSON.stringify(notification.data, function(key, val) {
@@ -305,24 +301,38 @@ callFacebook = async () => {
       })
    }
 
-  render(){
+   render(){
     return (
       <Provider store={store}>
         <MenuProvider style={{ flex: 1, justifyContent: 'center', backgroundColor: '#FFF' }}>
           <Routes />
-          {/*<ScrollView style={{ backgroundColor: 'white', alignSelf: 'center'}}>
-            <Image 
-            source={this.state.uri} 
-            style={{ width: this.state.width, height: this.state.height, resizeMode: 'contain' }}
-            />
-            <Text 
-            style={{ padding: 21, alignSelf: 'center' }}
-            onPress={this.crop}
-            >CROP</Text>
-          </ScrollView>*/
-          }
         </MenuProvider>
       </Provider>
     );
   }
+  // render(){
+  //   return (
+  //     <Provider store={store}>
+  //       <MenuProvider style={{ flex: 1, /*justifyContent: 'center',*/ backgroundColor: '#F2F2F2' }}>
+  //         {/*<TouchableOpacity style={{
+  //           position: 'absolute',
+  //           top: 30, 
+  //           right: 21,
+  //           zIndex: 999
+  //         }}
+  //         onPress={()=>alert('Go back to booking')}
+  //         >
+  //           <NotificationIconAtom />
+  //       </TouchableOpacity>
+  //         <JobHeaderAtom 
+  //         title={'Investigation'}
+  //         subtitle={'Its time for professional to start investigation and get back to you...'}
+  //         />
+  //       <GiveQuote />*/}
+  //       {/*<Payments />*/}
+  //       <AddCard />
+  //       </MenuProvider>
+  //     </Provider>
+  //   );
+  // }
 }
